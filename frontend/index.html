@@ -3,456 +3,1546 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meridian — Cuadernos de viaje</title>
+<title>The pale blue dot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#14110F;
-    --paper:#F7F3EA;
-    --paper-dim: rgba(247,243,234,0.62);
-    --paper-faint: rgba(247,243,234,0.28);
-    --africa:#E8935B;
-    --asia:#4FA98A;
-    --australia:#D9683B;
+  :root {
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'General Sans', 'Inter', sans-serif;
+    --ink: #14110F;
+    --paper: #FAF7F2;
+    --paper-soft: rgba(250, 247, 242, 0.88);
+    --paper-dim: rgba(247, 243, 234, 0.65);
+    --paper-faint: rgba(247, 243, 234, 0.28);
+    --africa: #E8935B;
+    --asia: #4FA98A;
+    --australia: #D9683B;
+    --street: #6C7A89;
     --accent: var(--africa);
-    --bg-tone: #1a140f;
-    --dur: 1050ms;
+    --bg-tone: #0e0c0b;
+    --gold-glow: rgba(235, 185, 145, 0.07);
+    --mist: rgba(240, 230, 218, 0.04);
+    --panel-bg: rgba(14, 12, 10, 0.76);
+    --panel-border: rgba(255, 255, 255, 0.14);
   }
 
-  *{ box-sizing:border-box; }
-  html,body{ height:100%; }
-  body{
-    margin:0;
-    background:var(--bg-tone);
-    color:var(--paper);
-    font-family:'Inter', sans-serif;
-    overflow:hidden;
-    transition:background-color 1.1s ease;
+  * { box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--bg-tone);
+    color: var(--paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 1.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .stage{
-    position:relative;
-    width:100vw;
-    height:100vh;
-    height:100dvh;
-    overflow:hidden;
-    background:radial-gradient(circle at 20% 20%, rgba(255,255,255,.12), transparent 24%);
+  .stage {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: #0e0c0b;
   }
 
-  /* ---------- background layers ---------- */
-  .bg-layer{
-    position:absolute; inset:0;
-    background-size:cover;
-    background-position:center;
-    opacity:0;
-    transform:scale(1.06);
-    transition: opacity 1200ms cubic-bezier(.22,1,.36,1), transform 12000ms cubic-bezier(.22,1,.36,1);
-    z-index:0;
+  /* =========================================================
+     GLOBAL DUAL-BUFFER CINEMATIC BACKGROUND SYSTEM
+     ========================================================= */
+  .bg-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
   }
-  .bg-layer.active{
-    opacity:1;
-    transform:scale(1);
+
+  .bg-layer {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.025);
+    filter: none;
+    pointer-events: none;
+    transition: opacity 4800ms cubic-bezier(0.22, 1, 0.36, 1), transform 4800ms cubic-bezier(0.22, 1, 0.36, 1), filter 4800ms cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 0;
+    image-rendering: -webkit-optimize-contrast;
+    will-change: opacity, transform;
   }
-  .bg-layer[data-bg="asia"]{
-    background-position:68% center;
+
+  .bg-layer.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
   }
-  .stage::after{
-    content:"";
-    position:absolute; inset:0;
+
+  /* A barely perceptible, continuous movement keeps each gallery image alive. */
+  .view-gallery .bg-layer.active,
+  .view-gallery .bg-layer.prev {
+    animation: gallery-drift 28s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+    animation-delay: var(--gallery-drift-delay, 0ms);
+  }
+
+  .bg-layer.prev {
+    opacity: 0;
+    transform: scale(0.99);
+    z-index: 0;
+  }
+
+  /* Atmospheric overlays */
+  .stage-overlay {
+    position: absolute;
+    inset: 0;
     background:
       linear-gradient(100deg, rgba(10,9,7,.86) 0%, rgba(10,9,7,.55) 30%, rgba(10,9,7,.12) 56%, rgba(10,9,7,.38) 100%),
       linear-gradient(to top, rgba(8,7,6,.65) 0%, rgba(8,7,6,0) 28%);
-    z-index:1;
-    pointer-events:none;
-  }
-  .stage::before{
-    content:"";
-    position:absolute; inset:0;
-    background:linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 60%);
-    z-index:2;
-    pointer-events:none;
-    opacity:.75;
-    transition:opacity .9s ease;
+    z-index: 2;
+    pointer-events: none;
+    transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* ---------- nav ---------- */
-  .nav{
-    position:absolute; top:0; left:0; right:0; z-index:5;
-    display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
-    padding:30px 44px 0 44px;
-  }
-  .wordmark{
-    display:flex; align-items:baseline; gap:8px;
-    font-family:'Fraunces', serif; font-weight:600; font-size:20px; letter-spacing:.01em;
-    color:#fff;
-  }
-  .nav-links{
-    display:flex; gap:34px; list-style:none; margin:0; padding:0;
-    justify-self:center;
-  }
-  .nav-links a{
-    color:#fff; text-decoration:none; font-size:13px; letter-spacing:.02em;
-    position:relative; padding-bottom:4px; transition:color .3s ease;
-  }
-  .nav-links a:hover, .nav-links a:focus-visible{ color:#fff; }
-  .nav-links a::after{
-    content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
-    background:var(--accent); transform:scaleX(0); transform-origin:left;
-    transition:transform .35s ease, background .5s ease;
-  }
-  .nav-links a:hover::after, .nav-links a:focus-visible::after{ transform:scaleX(1); }
-
-  .nav-cta{
-    display:flex; align-items:center; gap:14px;
-  }
-  .icon-btn{
-    width:34px; height:34px; border-radius:50%;
-    border:1px solid var(--paper-faint); background:transparent;
-    color:var(--paper); display:flex; align-items:center; justify-content:center;
-    cursor:pointer; transition:border-color .3s ease, background .3s ease;
-  }
-  .icon-btn:hover{ border-color:var(--paper); background:rgba(247,243,234,.08); }
-  .signup{
-    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
-    color:var(--ink); background:var(--paper); border:none; border-radius:999px;
-    padding:11px 20px; cursor:pointer; transition:background .35s ease, transform .2s ease;
-  }
-  .signup:hover{ transform:translateY(-1px); }
-
-  /* ---------- spine index ---------- */
-  .spine{
-    position:absolute; top:0; bottom:0; left:0; z-index:6;
-    width:76px; display:flex; flex-direction:column; align-items:center;
-    justify-content:center; gap:0;
-  }
-  .spine-line{
-    position:absolute; left:37px; top:14%; bottom:14%; width:1px;
-    background:linear-gradient(to bottom, transparent, var(--paper-faint) 20%, var(--paper-faint) 80%, transparent);
-  }
-  .spine-item{
-    position:relative; z-index:1;
-    background:none; border:none; cursor:pointer;
-    padding:22px 0; display:flex; align-items:center; gap:10px;
-    writing-mode:vertical-rl; transform:rotate(180deg);
-    font-family:'Fraunces', serif; font-size:15px; letter-spacing:.03em;
-    color:var(--paper-faint); transition:color .5s ease;
-  }
-  .spine-item .num{
-    font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:.1em;
-    color:inherit; opacity:.7;
-  }
-  .spine-item .dot{
-    width:5px; height:5px; border-radius:50%; background:currentColor; opacity:0;
-    transition:opacity .5s ease, background .5s ease;
-  }
-  .spine-item.active{ color:var(--paper); }
-  .spine-item.active .dot{ opacity:1; background:var(--accent); }
-  .spine-item:hover{ color:var(--paper-dim); }
-
-  /* ---------- main content ---------- */
-  .content{
-    position:relative; z-index:4;
-    height:100%;
-    overflow:hidden;
-  }
-  .panel-stack{
-    position:relative;
-    height:100%;
-  }
-  .panel{
-    position:absolute;
-    inset:0;
-    width:100%;
-    min-height:100vh;
-    min-height:100dvh;
-    display:flex; align-items:center; justify-content:flex-start;
-    padding-left:150px;
-    opacity:0; transform:scale(.995);
-    pointer-events:none;
-    transition:opacity 1180ms cubic-bezier(.22,1,.36,1), transform 1180ms cubic-bezier(.22,1,.36,1);
-  }
-  .panel.is-active{ opacity:1; transform:scale(1); pointer-events:auto; }
-
-  .panel-body{
-    width:min(100%, 480px);
-    min-height:280px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:flex-start;
-  }
-  .coords{
-    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.18em;
-    color:var(--accent); text-transform:uppercase; margin:0 0 18px 0;
-    display:flex; align-items:center; gap:10px;
-    opacity:0; transform:translate3d(0,18px,0);
-    transition:opacity 700ms ease, transform 700ms ease;
-  }
-  .coords::before{
-    content:""; width:26px; height:1px; background:var(--accent);
+  .stage-vignette {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 60%);
+    z-index: 3;
+    pointer-events: none;
+    opacity: .75;
+    transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  h1.title{
-    font-family:'Fraunces', serif; font-weight:500; font-style:italic;
-    font-size:clamp(56px, 9vw, 118px); line-height:0.92; margin:0 0 22px 0;
-    color:#fff; overflow:hidden;
-  }
-  .title-word{
-    display:block; transform:none; opacity:0;
-    transition:opacity 860ms ease;
+  /* In contact view, enhance background blur & mood */
+  .view-contact .bg-layer {
+    filter: blur(4px) brightness(0.7);
+    transform: scale(1.05);
   }
 
-  .desc{
-    font-size:15.5px; line-height:1.7; color:var(--paper-dim);
-    max-width:400px; margin:0 0 32px 0; font-weight:400;
-    opacity:0; transform:none;
-    transition:opacity 900ms ease 100ms;
+  @keyframes gallery-drift {
+    from { transform: scale(1.01) translate3d(-0.35%, -0.25%, 0); }
+    to { transform: scale(1.065) translate3d(0.35%, 0.25%, 0); }
   }
 
-  .explore{
-    font-family:'Inter', sans-serif; font-size:13px; font-weight:600; letter-spacing:.03em;
-    color:var(--ink); background:var(--accent); border:none; border-radius:999px;
-    padding:15px 30px; cursor:pointer; display:inline-flex; align-items:center; gap:10px;
-    transition:background .5s ease, transform .2s ease, box-shadow .3s ease;
-    box-shadow:0 8px 24px -8px rgba(0,0,0,.5);
-    opacity:0; transform:none;
-    transition:opacity 980ms ease 160ms, background .5s ease, box-shadow .3s ease;
+  @media (prefers-reduced-motion: reduce) {
+    .view-gallery .bg-layer.active,
+    .view-gallery .bg-layer.prev { animation: none; }
   }
-  .explore:hover{ transform:translateY(-2px); }
-  .explore svg{ width:14px; height:14px; }
+
+
+  /* =========================================================
+     PERSISTENT TOP NAVIGATION BAR (ANIMATED ACCENT LINE)
+     ========================================================= */
+  .main-nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 34px 48px 0;
+    pointer-events: auto;
+    transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .wordmark {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .wordmark:hover { opacity: 0.9; }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-self: center;
+    transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1), transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nav-links a {
+    color: rgba(255, 255, 255, 0.68);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    letter-spacing: .03em;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.4s ease;
+    cursor: pointer;
+    font-weight: 400;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  }
+
+  .nav-links a:hover, .nav-links a:focus-visible { color: #fff; }
+  .nav-links a.active {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1.5px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), background 0.6s ease;
+  }
+
+  .nav-links a.active::after,
+  .nav-links a:hover::after {
+    transform: scaleX(1);
+  }
+
+
+  /* =========================================================
+     SECTION 1: HERO & FULLSCREEN VIDEO LAYER (HOME)
+     ========================================================= */
+  .hero-section {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: clamp(120px, 18vh, 190px);
+    padding-left: 28px;
+    padding-right: 28px;
+    text-align: center;
+    pointer-events: auto;
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+    transition: opacity 4.8s cubic-bezier(0.22, 1, 0.36, 1), transform 4.8s cubic-bezier(0.22, 1, 0.36, 1), filter 4.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hero-video-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: transparent;
+    overflow: hidden;
+    transition: opacity 4.8s cubic-bezier(0.22, 1, 0.36, 1), filter 4.8s cubic-bezier(0.22, 1, 0.36, 1), transform 4.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Epic Alpine Cinematic Color Grade & Mountain Atmosphere matching PJO05334 */
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    filter: contrast(1.05) brightness(0.98) saturate(1.04);
+    transform: scale(1.0);
+    will-change: opacity, transform;
+    transition: opacity 2.8s cubic-bezier(0.16, 1, 0.3, 1), transform 8s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .hero-epic-atmosphere {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 12%, rgba(144, 176, 202, 0.08) 0%, transparent 65%),
+      radial-gradient(circle at 50% 50%, transparent 40%, rgba(5, 4, 3, 0.42) 100%),
+      linear-gradient(to bottom, rgba(5, 4, 3, 0.28) 0%, transparent 35%, transparent 65%, rgba(5, 4, 3, 0.45) 100%);
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 2s ease;
+  }
+
+  .is-starting .hero-video {
+    filter: contrast(1.06) brightness(0.98) saturate(1.05);
+  }
+
+  .hero-text-wrapper {
+    max-width: 920px;
+    margin-bottom: 34px;
+    z-index: 6;
+    transition: opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1), transform 1200ms cubic-bezier(0.16, 1, 0.3, 1), filter 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-phrase {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(28px, 4.5vw, 54px);
+    line-height: 1.22;
+    color: #FAF7F2;
+    margin: 0;
+    letter-spacing: -0.01em;
+    text-shadow: 0 4px 40px rgba(0, 0, 0, 0.95), 0 2px 14px rgba(0, 0, 0, 0.85);
+  }
+
+  .hero-start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 28px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #FFFFFF;
+    font-family: var(--font-sans);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: pointer;
+    z-index: 6;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5), inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
+    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .hero-start-btn svg {
+    width: 9px;
+    height: 9px;
+    fill: currentColor;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .hero-start-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.65), 0 0 20px rgba(255, 255, 255, 0.18), inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  .hero-start-btn:hover svg {
+    transform: translateX(2px);
+  }
+
+  .hero-start-btn:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+
+  /* =========================================================
+     SECTION 2: GALLERY SECTION
+     ========================================================= */
+  .gallery-section {
+    position: absolute;
+    inset: 0;
+    z-index: 15;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.015);
+    filter: blur(5px);
+    transition: opacity 3.5s cubic-bezier(0.22, 1, 0.36, 1), transform 3.5s cubic-bezier(0.22, 1, 0.36, 1), filter 3.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Spine Index (01 02 03 04) */
+  .spine {
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    z-index: 20;
+    width: 76px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.35s, transform 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.35s;
+  }
+  .spine-line {
+    position: absolute;
+    left: 37px; top: 14%; bottom: 14%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--paper-faint) 20%, var(--paper-faint) 80%, transparent);
+  }
+  .spine-item {
+    position: relative;
+    z-index: 1;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 22px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    letter-spacing: .03em;
+    color: var(--paper-faint);
+    transition: color .5s ease, transform 0.3s ease;
+  }
+  .spine-item .num {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    color: inherit;
+    opacity: .7;
+  }
+  .spine-item .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity .5s ease, background .5s ease;
+  }
+  .spine-item.active { color: var(--paper); }
+  .spine-item.active .dot { opacity: 1; background: var(--accent); }
+  .spine-item:hover { color: var(--paper-dim); }
+
+  /* Gallery Content Panels */
+  .gallery-content {
+    position: relative;
+    z-index: 15;
+    height: 100%;
+    overflow: hidden;
+  }
+  .panel-stack {
+    position: relative;
+    height: 100%;
+  }
+  .panel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 150px;
+    opacity: 0;
+    transform: scale(.995);
+    pointer-events: none;
+    transition: opacity 2200ms cubic-bezier(.16,1,.3,1), transform 2200ms cubic-bezier(.16,1,.3,1);
+  }
+  .panel.is-active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  .panel-body {
+    width: min(100%, 480px);
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  /* Soft Ethereal Typography */
+  .coords {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .16em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 18px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+    filter: blur(4px);
+    transition: opacity 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, filter 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+  }
+  .coords::before {
+    content: "";
+    width: 26px; height: 1px;
+    background: var(--accent);
+  }
+
+  h1.title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-style: normal;
+    font-size: clamp(52px, 8.5vw, 110px);
+    line-height: 0.94;
+    margin: 0 0 22px 0;
+    color: #fff;
+    letter-spacing: -0.03em;
+    overflow: hidden;
+  }
+  .title-word {
+    display: block;
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    filter: blur(6px);
+    transition: opacity 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s, transform 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s, filter 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s;
+  }
+
+  .desc {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.7;
+    color: #b3b3b3;
+    max-width: 400px;
+    margin: 0 0 32px 0;
+    font-weight: 300;
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+    filter: blur(4px);
+    transition: opacity 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, transform 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, filter 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+  }
+
+  .explore {
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: .03em;
+    color: var(--ink);
+    background: var(--accent);
+    border: none;
+    border-radius: 999px;
+    padding: 15px 32px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 24px -8px rgba(0,0,0,.5);
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+    text-decoration: none;
+    transition: opacity 2.4s cubic-bezier(0.16, 1, 0.3, 1) 1.05s, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background .5s ease, box-shadow .4s ease;
+  }
+  .explore:hover { transform: translateY(-2px) scale(1.025); }
+  .explore:active { transform: translateY(0) scale(0.98); }
+  .explore svg { width: 14px; height: 14px; }
 
   .panel.is-active .coords,
   .panel.is-active .desc,
   .panel.is-active .explore,
-  .panel.is-active .title-word{ opacity:1; transform:none; }
+  .panel.is-active .title-word {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0px);
+  }
 
-  /* ---------- destination card stack ---------- */
-  .cardzone{
-    position:absolute; right:64px; top:50%; transform:translateY(-50%);
-    z-index:4; display:flex; align-items:center; gap:14px; pointer-events:none;
+  /* Gallery Side Card Stack */
+  .cardzone {
+    position: absolute;
+    right: 64px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 18;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    pointer-events: auto;
+    opacity: 0;
+    transition: opacity 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
   }
-  .dcard{
-    position:relative; width:126px; height:192px; border-radius:18px; overflow:hidden;
-    background-size:cover; background-position:center;
-    box-shadow:none;
-    border:none;
-    opacity:0; transform:translate3d(24px,24px,0) scale(.96); filter:blur(6px);
-    transition:opacity 1180ms cubic-bezier(.22,1,.36,1), transform 1180ms cubic-bezier(.22,1,.36,1), filter 1180ms ease, width 820ms ease, height 820ms ease;
+  .dcard {
+    position: relative;
+    width: 126px; height: 192px;
+    border-radius: 18px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    box-shadow: none;
+    border: none;
+    opacity: 0;
+    transform: translate3d(24px,24px,0) scale(.96);
+    filter: blur(6px);
+    cursor: pointer;
+    transition: opacity 2800ms cubic-bezier(.22,1,.36,1), transform 2800ms cubic-bezier(.22,1,.36,1), filter 2800ms ease, width 1200ms ease, height 1200ms ease, box-shadow 0.4s ease;
   }
-  .dcard.a{ width:150px; height:228px; margin:0 4px; }
-  .dcard.b{ width:118px; height:176px; margin-bottom:10px; opacity:.85; }
-  .dcard.c{ width:118px; height:176px; margin-bottom:10px; opacity:.85; }
-  .cardzone.show .dcard{ opacity:.85; transform:translate3d(0,0,0) scale(1); filter:blur(0); }
-  .cardzone.show .dcard.a{ transition-delay:120ms; }
-  .cardzone.show .dcard.b{ transition-delay:220ms; }
-  .cardzone.show .dcard.c{ transition-delay:320ms; }
-  .dcard::after{
-    content:"";
-    position:absolute; inset:0;
+  .dcard:hover {
+    transform: translate3d(0,-6px,0) scale(1.04);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.7);
+  }
+  .dcard:active {
+    transform: translate3d(0,-2px,0) scale(0.97);
+    transition-duration: 0.15s;
+  }
+  .dcard.a { width: 150px; height: 228px; margin: 0 4px; }
+  .dcard.b { width: 118px; height: 176px; margin-bottom: 10px; opacity: .85; }
+  .dcard.c { width: 118px; height: 176px; margin-bottom: 10px; opacity: .85; }
+  .cardzone.show .dcard { opacity: .85; transform: translate3d(0,0,0) scale(1); filter: blur(0); }
+  .cardzone.show .dcard.a { transition-delay: 180ms; }
+  .cardzone.show .dcard.b { transition-delay: 280ms; }
+  .cardzone.show .dcard.c { transition-delay: 380ms; }
+  .dcard::after {
+    content: "";
+    position: absolute;
+    inset: 0;
     background:
-      linear-gradient(100deg, rgba(10,9,7,.86) 0%, rgba(10,9,7,.55) 30%, rgba(10,9,7,.12) 56%, rgba(10,9,7,.38) 100%),
+      linear-gradient(100deg, rgba(10,9,7,.75) 0%, rgba(10,9,7,.35) 30%, transparent 60%, rgba(10,9,7,.25) 100%),
       linear-gradient(to top, rgba(8,7,6,.65) 0%, rgba(8,7,6,0) 28%);
-    pointer-events:none;
+    pointer-events: none;
   }
-  .dcard .meta{
-    display:none;
-  }
-  .dcard .place{ font-family:'Fraunces', serif; font-size:12px; color:var(--paper); margin:0 0 4px 0; line-height:1.2; }
-  .dcard .stars{ font-family:'IBM Plex Mono', monospace; font-size:8.5px; letter-spacing:.06em; color:var(--accent); }
-  .caption-eyebrow{
-    position:absolute; right:64px; bottom:calc(50% + 128px);
-    font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:.14em;
-    color:var(--paper-dim); text-transform:uppercase; z-index:4;
-    opacity:0; transition:opacity var(--dur) ease;
-  }
-  .caption-eyebrow.active{ opacity:1; }
+  .dcard .meta { display: none; }
+  .dcard .place { font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--paper); margin: 0 0 4px 0; line-height: 1.2; }
+  .dcard .stars { font-family: var(--font-sans); font-size: 9px; font-weight: 500; letter-spacing: .06em; color: var(--accent); }
 
-  /* ---------- bottom bar ---------- */
-  .bottombar{
-    position:absolute; left:150px; right:64px; bottom:38px; z-index:5;
-    display:flex; align-items:center; justify-content:space-between;
+  /* Gallery Bottom Bar */
+  .bottombar {
+    position: absolute;
+    left: 150px; right: 64px; bottom: 38px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .track{
-    flex:1; max-width:280px; height:1px; background:var(--paper-faint);
-    position:relative; margin:0 26px;
+  .track {
+    flex: 1; max-width: 280px; height: 1px;
+    background: var(--paper-faint);
+    position: relative;
+    margin: 0 26px;
   }
-  .track-fill{
-    position:absolute; left:0; top:0; bottom:0; width:0%;
-    background:var(--accent); transition:background .5s ease;
+  .track-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0; width: 0%;
+    background: var(--accent);
+    transition: background .6s ease, width .6s ease;
   }
-  .arrows{ display:flex; gap:10px; }
-  .arrow-btn{
-    width:38px; height:38px; border-radius:50%; border:1px solid var(--paper-faint);
-    background:transparent; color:var(--paper); cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    transition:border-color .3s ease, background .3s ease;
+  .arrows { display: flex; gap: 10px; }
+  .arrow-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--paper-faint);
+    background: transparent;
+    color: var(--paper);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .35s ease, background .35s ease, transform 0.3s ease;
   }
-  .arrow-btn:hover{ border-color:var(--paper); background:rgba(247,243,234,.08); }
-  .pagecount{
-    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.08em; color:var(--paper-dim);
+  .arrow-btn:hover { border-color: var(--paper); background: rgba(247,243,234,.08); transform: scale(1.06); }
+  .arrow-btn:active { transform: scale(0.95); }
+  .pagecount {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    color: var(--paper-dim);
   }
-  .pagecount b{ color:var(--paper); font-weight:500; }
+  .pagecount b { color: var(--paper); font-weight: 500; }
 
-  @media (prefers-reduced-motion: reduce){
-    .bg-layer{ transition:opacity 400ms ease; transform:none !important; }
-    .panel{ transition:opacity 200ms ease; }
-  }
 
-  @media (max-width: 860px){
-    .nav{
-      grid-template-columns:1fr;
-      justify-items:center;
-      gap:14px;
-      padding:18px 16px 0;
-    }
-    .wordmark{ font-size:clamp(18px, 6vw, 24px); }
-    .nav-links{
-      display:flex;
-      gap:18px;
-      background:rgba(16,14,12,.45);
-      border:1px solid var(--paper-faint);
-      border-radius:999px;
-      padding:8px 14px;
-      backdrop-filter:blur(8px);
-    }
-    .nav-links a{ font-size:12px; }
-    .spine{ display:none; }
-    .content{ padding-left:0; }
-    .panel{
-      padding-left:16px;
-      padding-right:16px;
-      padding-top:108px;
-      align-items:flex-start;
-    }
-    .panel-body{
-      width:min(100%, 560px);
-      min-height:auto;
-    }
-    h1.title{ font-size:clamp(38px, 14vw, 64px); margin-bottom:16px; }
-    .desc{ max-width:100%; font-size:14px; line-height:1.6; margin-bottom:24px; }
-    .explore{ padding:13px 24px; }
-    .cardzone{ display:none; }
-    .caption-eyebrow{ display:none; }
-    .bottombar{
-      left:16px;
-      right:16px;
-      bottom:16px;
-      gap:12px;
-    }
-    .track{ margin:0; max-width:none; }
+  /* =========================================================
+     EXPLORATION MODE (FRAMELESS BOTTOM CARDS — 90% TRANSPARENT ON IDLE)
+     ========================================================= */
+  .explore-cards-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 24px;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1), transform 1s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
-  @media (max-width: 520px){
-    .nav{ padding-top:14px; }
-    .nav-links{ gap:12px; padding:7px 12px; }
-    .nav-links a{ font-size:11px; }
-    .panel{ padding-top:100px; }
-    .bottombar{ bottom:12px; }
-    .bg-layer[data-bg="asia"]{ background-position:64% center; }
+  .explore-mode .explore-cards-wrap {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .explore-floating-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+    opacity: 0.12;
+    transform: scale(0.85);
+    transition: opacity 0.55s cubic-bezier(0.19, 1, 0.22, 1), transform 0.55s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .explore-cards-wrap:hover .explore-floating-header,
+  .explore-cards-wrap:focus-within .explore-floating-header {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .explore-cat-badge {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    font-style: normal;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+  }
+
+  .explore-photo-counter {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: rgba(0, 0, 0, 0.55);
+    padding: 4px 12px;
+    border-radius: 999px;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .explore-close-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    padding: 5px 16px;
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    transition: background 0.35s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease;
+  }
+  .explore-close-pill:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.04);
+  }
+  .explore-close-pill:active {
+    transform: scale(0.97);
+  }
+
+  .explore-cards-track {
+    width: 100vw;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 8px 36px;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    opacity: 0.10;
+    transform: scale(0.72) translateY(18px);
+    transform-origin: bottom center;
+    transition: opacity 0.65s cubic-bezier(0.19, 1, 0.22, 1), transform 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .explore-cards-track::-webkit-scrollbar { display: none; }
+
+  .explore-cards-wrap:hover .explore-cards-track,
+  .explore-cards-wrap:focus-within .explore-cards-track {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  /* On arrival, the bottom photos remain fully visible before resting quietly. */
+  .explore-mode.explore-cards-intro .explore-cards-track {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .explore-card {
+    flex: 0 0 68px;
+    height: 98px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    will-change: transform, border-color, box-shadow;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .explore-card:hover {
+    transform: translateY(-4px) scale(1.06);
+    border-color: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.85);
+  }
+
+  .explore-card:active {
+    transform: translateY(-1px) scale(0.97);
+    transition-duration: 0.12s;
+  }
+
+  .explore-card.active {
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 20px var(--accent), 0 12px 28px rgba(0, 0, 0, 0.9);
+    transform: scale(1.05) translateY(-2px);
+  }
+
+  /* Explore Mode Active States: 70% Screen Main Photo over Contact Card Color */
+  .explore-mode .stage-vignette {
+    opacity: 0 !important;
+    pointer-events: none;
+  }
+
+  .explore-mode .main-nav,
+  .explore-mode .spine,
+  .explore-mode .gallery-content,
+  .explore-mode .bottombar {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(18px) !important;
+  }
+
+  .explore-mode .cardzone {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(80px) scale(0.9) !important;
+  }
+
+  /* Explore Fullscreen/Lightbox Main Photo (Bottom-aligned above thumbnails track, object-fit contain) */
+  .explore-viewer-container {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 24px 24px 165px;
+    box-sizing: border-box;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.98);
+    transition: opacity 2.0s cubic-bezier(0.22, 1, 0.36, 1), transform 2.0s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .explore-mode .explore-viewer-container {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  .explore-viewer-img {
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 16px;
+    box-shadow: 0 28px 80px -8px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.18);
+    opacity: 0;
+    transform: scale(0.985);
+    filter: blur(5px);
+    transition: opacity 2.0s cubic-bezier(0.22, 1, 0.36, 1), transform 2.0s cubic-bezier(0.22, 1, 0.36, 1), filter 2.0s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform, filter;
+  }
+
+  .explore-viewer-img.is-loaded {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+
+  /* Vertical / Portrait photos - bottom-aligned at exact same baseline as horizontals, zero overlap */
+  .explore-viewer-img.is-portrait {
+    max-height: min(calc(100vh - 195px), 1050px);
+    max-width: min(92vw, 1200px);
+    height: auto;
+    width: auto;
+  }
+
+  /* Horizontal / Landscape photos - bottom-aligned at exact same baseline */
+  .explore-viewer-img.is-landscape {
+    max-width: min(94vw, 1750px);
+    max-height: min(calc(100vh - 195px), 1050px);
+    width: auto;
+    height: auto;
+  }
+
+
+  /* =========================================================
+     SECTION 3: CONTACT & ABOUT SECTION
+     ========================================================= */
+  .contact-section {
+    position: absolute;
+    inset: 0;
+    z-index: 25;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 72px 28px 20px;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.02);
+    filter: blur(6px);
+    transition: opacity 1.5s cubic-bezier(0.22, 1, 0.36, 1), transform 1.5s cubic-bezier(0.22, 1, 0.36, 1), filter 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+    overflow: hidden;
+  }
+
+  .contact-layout {
+    max-width: min(1180px, 94vw);
+    width: 100%;
+    height: min(85vh, 780px);
+    margin: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.25fr);
+    gap: 30px;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .contact-panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 24px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 24px 60px -20px rgba(0,0,0,0.85);
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .contact-photo {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--panel-bg);
+  }
+
+  .contact-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 24px;
+  }
+
+  .contact-info-panel {
+    width: 100%;
+    height: 100%;
+    padding: 32px 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 24px;
+    gap: 12px;
+  }
+
+  .about-block {
+    margin-bottom: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .about-pill {
+    display: inline-flex;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .about-title {
+    margin: 0 0 8px;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(2.4rem, 3.6vw, 3.4rem);
+    line-height: 1.06;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  .about-desc {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-style: normal;
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 13.5px;
+    color: #c4c4c4;
+    font-weight: 300;
+  }
+
+  .contact-block-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: #fff;
+    margin: 0 0 10px 0;
+    letter-spacing: -0.01em;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .form-field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-input, .form-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.8rem 1.15rem;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 400;
+    color: #fff;
+    transition: border-color .35s ease, background .35s ease;
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.42);
+    font-family: var(--font-sans);
+    font-weight: 300;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .form-textarea {
+    min-height: 130px;
+    height: clamp(130px, 16vh, 160px);
+    line-height: 1.55;
+    resize: none;
+  }
+
+  .form-bottom-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .form-btn {
+    align-self: flex-start;
+    border: none;
+    border-radius: 26px;
+    padding: 11px 32px;
+    background: var(--accent);
+    color: #14110f;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    cursor: pointer;
+    box-shadow: 0 6px 18px -4px rgba(0,0,0,.4);
+    transition: transform .3s cubic-bezier(0.2, 0.8, 0.2, 1), background .35s ease, opacity .2s ease;
+  }
+
+  .form-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  .form-btn:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  .form-feedback {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--paper-dim);
+    margin: 0;
+  }
+
+  /* Contact Social & Direct Links Section */
+  .contact-social-section {
+    margin-top: 10px;
+    padding-top: 6px;
+  }
+
+  .social-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.14);
+    margin-bottom: 12px;
+  }
+
+  .social-label {
+    margin: 0 0 10px 0;
+    font-family: var(--font-sans);
+    font-size: 11.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 16px -3px rgba(0,0,0,0.35);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .social-link:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.55);
+  }
+
+  .social-link:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .social-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    stroke: currentColor;
+  }
+
+  .social-sep {
+    display: none;
+  }
+
+
+  /* =========================================================
+     VIEW STATES (ACTIVE / INACTIVE SECTIONS & MORPHING)
+     ========================================================= */
+
+  /* 1. HOME VIEW */
+  .view-home .hero-section {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+  .view-home .hero-video-layer { opacity: 1; }
+  .view-home .nav-links {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px);
+  }
+
+  /* The welcome copy leaves immediately and cleanly, while the video continues its quiet transition. */
+  .is-starting .hero-text-wrapper {
+    opacity: 0 !important;
+    transform: translateY(-24px) !important;
+    filter: blur(8px) !important;
+    pointer-events: none !important;
+    transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease !important;
+  }
+  .is-starting .hero-start-btn {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(14px) scale(0.95) !important;
+    filter: blur(6px) !important;
+    transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease !important;
+  }
+
+  /* 2. GALLERY VIEW */
+  .view-gallery .hero-section {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.035);
+    filter: blur(3px);
+  }
+  .view-gallery .hero-video-layer { opacity: 0; }
+  .view-gallery .hero-text-wrapper,
+  .view-gallery .hero-start-btn,
+  .view-contact .hero-text-wrapper,
+  .view-contact .hero-start-btn {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .view-gallery .gallery-section {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+  .view-gallery .spine {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  .view-gallery .cardzone {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .view-gallery .bottombar {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* 3. CONTACT VIEW */
+  .view-contact .hero-section {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.97) translateY(-20px);
+    filter: blur(8px);
+  }
+  .view-contact .hero-video-layer { opacity: 0; }
+
+  .view-contact .gallery-section {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.97);
+    filter: blur(8px);
+  }
+
+  .view-contact .contact-section {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+
+
+  /* =========================================================
+     RESPONSIVE DESIGN
+     ========================================================= */
+  @media (max-width: 980px) {
+    .main-nav {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 14px;
+      padding: 20px 20px 0;
+    }
+    .wordmark { font-size: 19px; }
+    .nav-links {
+      gap: 20px;
+      background: rgba(16, 14, 12, 0.6);
+      border: 1px solid var(--paper-faint);
+      border-radius: 999px;
+      padding: 8px 16px;
+      backdrop-filter: blur(12px);
+    }
+    .nav-links a { font-size: 12.5px; }
+
+    .hero-section { padding-top: 105px; padding-left: 20px; padding-right: 20px; }
+    .hero-phrase { font-size: clamp(22px, 5.5vw, 34px); }
+    .hero-start-btn { padding: 13px 38px; font-size: 12.5px; }
+
+    .spine { display: none; }
+    .panel { padding-left: 20px; padding-right: 20px; padding-top: 110px; align-items: flex-start; }
+    .panel-body { width: min(100%, 560px); min-height: auto; }
+    h1.title { font-size: clamp(38px, 14vw, 64px); margin-bottom: 16px; }
+    .desc { max-width: 100%; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+    .cardzone { display: none; }
+    .bottombar { left: 20px; right: 20px; bottom: 18px; gap: 12px; }
+    .track { margin: 0; max-width: none; }
+
+    .contact-section { padding: 100px 20px 20px; }
+    .contact-layout { grid-template-columns: 1fr; height: auto; max-height: none; min-height: 0; }
+    .contact-photo { width: min(100%, 540px); height: auto; min-height: 0; max-height: none; aspect-ratio: 5304 / 6630; margin: 0 auto; }
+    .contact-photo img { width: 100%; height: 100%; min-height: 0; max-height: none; object-position: center; }
+    .contact-info-panel { width: min(100%, 540px); margin: 0 auto; padding: 24px; height: auto; min-height: 0; }
+    .explore-viewer-container { padding: 16px 14px 140px; }
+    .explore-viewer-img.is-portrait { max-height: calc(100vh - 155px); max-width: 96vw; }
+    .explore-viewer-img.is-landscape { max-width: 96vw; max-height: calc(100vh - 155px); }
+    .explore-card { flex: 0 0 54px; height: 76px; border-radius: 9px; }
+    .explore-cards-track { padding: 6px 16px; gap: 8px; }
+  }
+
+  @media (max-width: 520px) {
+    .main-nav { padding-top: 14px; }
+    .nav-links { gap: 14px; padding: 6px 14px; }
+    .nav-links a { font-size: 11.5px; }
+    .panel { padding-top: 100px; }
+    .bottombar { bottom: 12px; }
+    .explore-viewer-container { padding: 10px 10px 120px; }
+    .explore-viewer-img.is-portrait { max-height: calc(100vh - 135px); max-width: 98vw; }
+    .explore-viewer-img.is-landscape { max-width: 98vw; max-height: calc(100vh - 135px); }
+    .explore-card { flex: 0 0 44px; height: 62px; border-radius: 8px; }
+    .explore-cards-track { padding: 4px 12px; gap: 6px; }
+    .form-row { grid-template-columns: 1fr; gap: 8px; }
+    .social-links {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .social-sep {
+      display: none;
+    }
   }
 </style>
 </head>
-<body>
+<body class="view-home">
 
 <div class="stage" id="stage">
 
-  <!-- background photo layers -->
-  <div class="bg-layer" data-bg="africa" style="background-image:url('images/Landscape/PJO05334.jpg')"></div>
-  <div class="bg-layer" data-bg="asia" style="background-image:url('images/Nature/3.jpg')"></div>
-  <div class="bg-layer" data-bg="australia" style="background-image:url('images/Sport/PJO01917.jpg')"></div>
-  <div class="bg-layer" data-bg="street" style="background-image:url('images/Street/PJO02812.jpg')"></div>
+  <div class="bg-canvas">
+    <div class="bg-layer active" id="bgLayerA" style="background-image:url('images/optimized/Landscape/PJO05334.webp')"></div>
+    <div class="bg-layer" id="bgLayerB"></div>
+  </div>
 
-  <!-- nav -->
-  <nav class="nav">
-    <div class="wordmark">The pale blue dot</div>
-    <ul class="nav-links">
-      <li><a href="meridian.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
+  <div class="stage-overlay" id="stageOverlay"></div>
+  <div class="stage-vignette" id="stageVignette"></div>
+
+  <!-- ================= PERSISTENT TOP NAVIGATION ================= -->
+  <header class="main-nav" id="mainNav">
+    <a class="wordmark" data-nav="home">The pale blue dot</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a class="nav-item active" data-nav="home" href="#home">Home</a></li>
+      <li><a class="nav-item" data-nav="gallery" href="#gallery">Gallery</a></li>
+      <li><a class="nav-item" data-nav="contact" href="#contact">Contact</a></li>
     </ul>
-  </nav>
+  </header>
 
-  <!-- vertical continent index (signature element) -->
-  <div class="spine">
-    <div class="spine-line"></div>
-    <button class="spine-item active" data-target="africa"><span class="num">01</span><span class="dot"></span></button>
-    <button class="spine-item" data-target="asia"><span class="num">02</span><span class="dot"></span></button>
-    <button class="spine-item" data-target="australia"><span class="num">03</span><span class="dot"></span></button>
-    <button class="spine-item" data-target="street"><span class="num">04</span><span class="dot"></span></button>
-  </div>
 
-  <!-- content panels -->
-  <div class="content">
-    <div class="panel-stack" id="panelStack">
-      <div class="panel is-active" data-panel="africa">
-        <div class="panel-body">
-          <h1 class="title"><span class="title-word">Landscape</span></h1>
-          <p class="desc">Paisajes que se abren en cada encuadre, luz natural y una atmósfera que invita a caminar lentamente.</p>
-          <button class="explore">Explorar
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
+  <!-- ================= SECTION 1: HERO (HOME) ================= -->
+  <section class="hero-section" id="heroSection">
+    <div class="hero-video-layer" id="heroVideoLayer">
+      <video class="hero-video" id="heroBgVideo" playsinline muted preload="auto">
+        <source src="images/Inicio/intro_zoom.mp4" type="video/mp4">
+      </video>
+      <div class="hero-epic-atmosphere"></div>
+    </div>
+
+    <div class="hero-text-wrapper">
+      <h1 class="hero-phrase">Welcome to my creative world, where every image is not just seen, but deeply felt.</h1>
+    </div>
+    <button class="hero-start-btn" id="startBtn" type="button" aria-label="Start">
+      <span>Start</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
+    </button>
+  </section>
+
+
+  <!-- ================= SECTION 2: GALLERY ================= -->
+  <section class="gallery-section" id="gallerySection">
+
+    <!-- Spine Index (01 02 03 04) -->
+    <div class="spine" id="gallerySpine">
+      <div class="spine-line"></div>
+      <button class="spine-item active" data-target="africa"><span class="num">01</span><span class="dot"></span></button>
+      <button class="spine-item" data-target="asia"><span class="num">02</span><span class="dot"></span></button>
+      <button class="spine-item" data-target="australia"><span class="num">03</span><span class="dot"></span></button>
+      <button class="spine-item" data-target="street"><span class="num">04</span><span class="dot"></span></button>
+    </div>
+
+    <!-- Gallery Content Panels -->
+    <div class="gallery-content" id="galleryContent">
+      <div class="panel-stack" id="panelStack">
+        <div class="panel is-active" data-panel="africa">
+          <div class="panel-body">
+            <h1 class="title"><span class="title-word">Landscape</span></h1>
+            <p class="desc">Landscapes that unfold slowly, as if waiting to be seen. Natural light, silence, and an atmosphere that invites you to walk without hurry, letting the place speak first.</p>
+            <button class="explore" type="button" data-explore="africa">Explore
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="panel" data-panel="asia">
+          <div class="panel-body">
+            <h1 class="title"><span class="title-word">Nature</span></h1>
+            <p class="desc">Textures that only appear when you stop moving: dense vegetation, shapes that grow without asking permission. Here, nature isn't the background, it's the protagonist.</p>
+            <button class="explore" type="button" data-explore="asia">Explore
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="panel" data-panel="australia">
+          <div class="panel-body">
+            <h1 class="title"><span class="title-word">Sport</span></h1>
+            <p class="desc">The instant right before the body decides: pure energy, movement that never repeats itself. Scenes that live and vanish in a fraction of a second.</p>
+            <button class="explore" type="button" data-explore="australia">Explore
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="panel" data-panel="street">
+          <div class="panel-body">
+            <h1 class="title"><span class="title-word">Street</span></h1>
+            <p class="desc">Gestures that go unnoticed by most, yet tell a whole story. The street as an everyday stage where life happens without performing for anyone.</p>
+            <button class="explore" type="button" data-explore="street">Explore
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="panel" data-panel="asia">
-        <div class="panel-body">
-          <h1 class="title"><span class="title-word">Nature</span></h1>
-          <p class="desc">Texturas del entorno, vegetación densa y escenas donde la naturaleza toma el protagonismo.</p>
-          <button class="explore">explorar
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-        </div>
+    </div>
+
+    <!-- Destination Card Stack (Side Preview) -->
+    <div class="cardzone show" id="cardzone">
+      <div class="dcard b" id="cardB" style="background-image:url('images/thumbs/Landscape/PJO05300.webp')">
+        <div class="meta"><p class="place">Open landscape</p><p class="stars">★★★★☆ 4.7</p></div>
       </div>
-      <div class="panel" data-panel="australia">
-        <div class="panel-body">
-          <h1 class="title"><span class="title-word">Sport</span></h1>
-          <p class="desc">Movimiento, energía y escenas dinámicas capturadas en plena acción.</p>
-          <button class="explore">explorar
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-        </div>
+      <div class="dcard a" id="cardA" style="background-image:url('images/thumbs/Landscape/PJO05334.webp')">
+        <div class="meta"><p class="place">Mountain light</p><p class="stars">★★★★★ 4.9</p></div>
       </div>
-      <div class="panel" data-panel="street">
-        <div class="panel-body">
-          <h1 class="title"><span class="title-word">Street</span></h1>
-          <p class="desc">Gestos urbanos, textura de calle y una narrativa visual que nace de los espacios cotidianos.</p>
-          <button class="explore">explorar
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-        </div>
+      <div class="dcard c" id="cardC" style="background-image:url('images/thumbs/Landscape/faro-fb33fbb3.webp')">
+        <div class="meta"><p class="place">Lighthouse</p><p class="stars">★★★★☆ 4.6</p></div>
       </div>
     </div>
-  </div>
 
-  <p class="caption-eyebrow active" id="eyebrow"></p>
+    <!-- Gallery Bottom Bar -->
+    <div class="bottombar" id="bottomBar">
+      <div class="pagecount"><b id="pageNow">01</b>&nbsp;/&nbsp;04</div>
+      <div class="track"><div class="track-fill" id="trackFill"></div></div>
+      <div class="arrows">
+        <button class="arrow-btn" id="prevBtn" aria-label="Anterior">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="arrow-btn" id="nextBtn" aria-label="Siguiente">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
 
-  <!-- destination card stack -->
-  <div class="cardzone show" id="cardzone">
-    <div class="dcard b" id="cardB">
-      <div class="meta"><p class="place">Destino</p><p class="stars">★★★★☆ 4.6</p></div>
+    <!-- ================= EXPLORE MAIN PHOTO VIEWER (EXPANDED SCREEN SIZE) ================= -->
+    <div class="explore-viewer-container" id="exploreViewerContainer">
+      <img class="explore-viewer-img" id="exploreViewerImg" src="" alt="" />
     </div>
-    <div class="dcard a" id="cardA">
-      <div class="meta"><p class="place">Destino</p><p class="stars">★★★★★ 4.9</p></div>
-    </div>
-    <div class="dcard c" id="cardC">
-      <div class="meta"><p class="place">Destino</p><p class="stars">★★★★☆ 4.7</p></div>
-    </div>
-  </div>
 
-  <!-- bottom bar -->
-  <div class="bottombar">
-    <div class="pagecount"><b id="pageNow">01</b>&nbsp;/&nbsp;04</div>
-    <div class="track"><div class="track-fill" id="trackFill"></div></div>
-    <div class="arrows">
-      <button class="arrow-btn" id="prevBtn" aria-label="Anterior">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
-      </button>
-      <button class="arrow-btn" id="nextBtn" aria-label="Siguiente">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
-      </button>
+    <div class="explore-cards-wrap" id="exploreCardsWrap">
+      <div class="explore-floating-header">
+        <span class="explore-cat-badge" id="exploreCatBadge">Landscape</span>
+        <span class="explore-photo-counter" id="explorePhotoCounter">01 / 29</span>
+        <button class="explore-close-pill" id="exploreClosePill" type="button" aria-label="Cerrar exploración">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Overview
+        </button>
+      </div>
+      <div class="explore-cards-track" id="exploreCardsTrack"></div>
     </div>
-  </div>
+
+  </section>
+
+
+  <!-- ================= SECTION 3: CONTACT & ABOUT ================= -->
+  <section class="contact-section" id="contactSection">
+    <div class="contact-layout">
+
+      <div class="contact-panel contact-photo">
+        <img src="images/optimized/contact/PJO05448.webp" alt="Patricio Jiménez — Fotógrafo" loading="lazy">
+      </div>
+
+      <div class="contact-panel contact-info-panel">
+        <div class="about-block">
+          <span class="about-pill">SOBRE MI</span>
+          <h2 class="about-title">Patricio Jiménez</h2>
+          <p class="about-desc">
+            My relationship with nature began long before the camera entered my life: it was a desire to understand it, to observe it closely, to recognize in every creature the same right to exist. Over time, that way of seeing grew deeper, and photography became the natural way to continue that silent dialogue. Today, I try to capture landscapes, natural scenes, and urban details that often go unnoticed, translating into images what my imagination sees in them. When I'm not behind the camera, you'll probably find me with my two little cats.
+          </p>
+        </div>
+
+        <h3 class="contact-block-title">If my work has moved something in you, feel free to reach out to me.</h3>
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="form-field">
+              <input class="form-input" id="contactName" type="text" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-field">
+              <input class="form-input" id="contactEmail" type="email" name="email" placeholder="Your email" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <textarea class="form-textarea" id="contactMessage" name="message" placeholder="How can I help you?" required></textarea>
+          </div>
+          <div class="form-bottom-row">
+            <button class="form-btn" id="contactSubmitBtn" type="submit">Send Message</button>
+            <div class="form-feedback" id="contactFeedback"></div>
+          </div>
+        </form>
+
+        <div class="contact-social-section">
+          <div class="social-divider"></div>
+          <p class="social-label">You can also find me here</p>
+          <div class="social-links">
+            <a href="https://instagram.com/thepale_blue_dot" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram @thepale_blue_dot">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>@thepale_blue_dot</span>
+            </a>
+            <a href="mailto:pato.geojimenez@gmail.com" class="social-link" aria-label="Email pato.geojimenez@gmail.com">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+              <span>pato.geojimenez@gmail.com</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
 </div>
 
@@ -460,49 +1550,170 @@
 (function(){
   const continents = [
     {
-      key:'africa', accent:'#E8935B', bgTone:'#1a140f', eyebrow:'Landscape',
+      key:'africa', name:'Landscape', accent:'#E8935B', bgTone:'#1a140f', eyebrow:'Landscape',
+      hero:'images/Landscape/PJO05334.jpg',
       cards:[
-        {img:'images/Landscape/PJO052632.jpg', place:'Landscape 01', stars:'★★★★★ 4.9'},
-        {img:'images/Landscape/PJO05300.jpg', place:'Landscape 02', stars:'★★★★☆ 4.6'},
-        {img:'images/Landscape/PJO05602.jpg', place:'Landscape 03', stars:'★★★★☆ 4.7'}
+        {img:'images/Landscape/PJO05334.jpg',    place:'Mountain light',      stars:'★★★★★ 4.9'},
+        {img:'images/Landscape/PJO05300.jpg',    place:'Open landscape',      stars:'★★★★☆ 4.7'},
+        {img:'images/Landscape/faro-fb33fbb3.jpg', place:'Lighthouse',        stars:'★★★★☆ 4.6'}
+      ],
+      all:[
+        'images/Landscape/20250331_133655.jpg',
+        'images/Landscape/DSC02503.jpg',
+        'images/Landscape/DSC03310-HDR.jpg',
+        'images/Landscape/DSC03490-HDR.jpg',
+        'images/Landscape/DSC06227.jpg',
+        'images/Landscape/JIMENEZ_Patricio_Landschappen_Foto8_mistsunrise.jpg',
+        'images/Landscape/PJO04545.jpg',
+        'images/Landscape/PJO04652.jpg',
+        'images/Landscape/PJO04671.jpg',
+        'images/Landscape/PJO04719.jpg',
+        'images/Landscape/PJO04734.jpg',
+        'images/Landscape/PJO05066 (1).jpg',
+        'images/Landscape/PJO05097.jpg',
+        'images/Landscape/PJO05132.jpg',
+        'images/Landscape/PJO05177.jpg',
+        'images/Landscape/PJO05282.jpg',
+        'images/Landscape/PJO05300.jpg',
+        'images/Landscape/PJO05301.jpg',
+        'images/Landscape/PJO05322.jpg',
+        'images/Landscape/PJO05334.jpg',
+        'images/Landscape/PJO05376.jpg',
+        'images/Landscape/PJO05378.jpg',
+        'images/Landscape/PJO05505.jpg',
+        'images/Landscape/PJO05602.jpg',
+        'images/Landscape/PJO06132.jpg',
+        'images/Landscape/PJO06311.jpg',
+        'images/Landscape/PJO06498.jpg',
+        'images/Landscape/PJO06643.jpg',
+        'images/Landscape/faro-fb33fbb3.jpg'
       ]
     },
     {
-      key:'asia', accent:'#4FA98A', bgTone:'#142522', eyebrow:'Nature',
+      key:'asia', name:'Nature', accent:'#4FA98A', bgTone:'#142522', eyebrow:'Nature',
+      hero:'images/Nature/DSC03039.jpg',
       cards:[
-        {img:'images/Nature/PJO08967.jpg', place:'Nature 01', stars:'★★★★★ 4.8'},
-        {img:'images/Nature/PJO09062.jpg', place:'Nature 02', stars:'★★★★☆ 4.7'},
-        {img:'images/Nature/PJO08967.jpg', place:'Nature 03', stars:'★★★★☆ 4.7'}
+        {img:'images/Nature/DSC03039.jpg',       place:'Wildlife light',      stars:'★★★★★ 4.9'},
+        {img:'images/Nature/PJO09920.jpg',        place:'Golden meadow',       stars:'★★★★☆ 4.7'},
+        {img:'images/Nature/PJO08967.jpg',        place:'Macro life',          stars:'★★★★★ 4.8'}
+      ],
+      all:[
+        'images/Nature/2021-06-1922-15-47(B,Radius8,Smoothing4).jpg',
+        'images/Nature/3.jpg',
+        'images/Nature/DSC00088.jpg',
+        'images/Nature/DSC00345.jpg',
+        'images/Nature/DSC01761.jpg',
+        'images/Nature/DSC01770.jpg',
+        'images/Nature/DSC01788.jpg',
+        'images/Nature/DSC03039.jpg',
+        'images/Nature/DSC03123.jpg',
+        'images/Nature/DSC03520.jpg',
+        'images/Nature/DSC03711.jpg',
+        'images/Nature/DSC04789.jpg',
+        'images/Nature/DSC05597.jpg',
+        'images/Nature/DSC05612.jpg',
+        'images/Nature/DSC05627.jpg',
+        'images/Nature/DSC06112-2.jpg',
+        'images/Nature/DSC06286-2-2.jpg',
+        'images/Nature/DSC06998.jpg',
+        'images/Nature/DSC07034.jpg',
+        'images/Nature/DSC08590.jpg',
+        'images/Nature/DSC08682.jpg',
+        'images/Nature/DSC09699.jpg',
+        'images/Nature/DSC09981-2.jpg',
+        'images/Nature/IMAG0019.jpg',
+        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.jpg',
+        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto6_Springand.jpg',
+        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.jpg',
+        'images/Nature/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.jpg',
+        'images/Nature/JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.jpg',
+        'images/Nature/JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.jpg',
+        'images/Nature/Jimenez_Patricio_DSC_03112.jpg',
+        'images/Nature/PJO00370.jpg',
+        'images/Nature/PJO00934.jpg',
+        'images/Nature/PJO01455.jpg',
+        'images/Nature/PJO01504-2.jpg',
+        'images/Nature/PJO02719.jpg',
+        'images/Nature/PJO02818-65d061d6.jpg',
+        'images/Nature/PJO02818.jpg',
+        'images/Nature/PJO03799.jpg',
+        'images/Nature/PJO03852.jpg',
+        'images/Nature/PJO04035.jpg',
+        'images/Nature/PJO05101.jpg',
+        'images/Nature/PJO05149.jpg',
+        'images/Nature/PJO05965.jpg',
+        'images/Nature/PJO06296.jpg',
+        'images/Nature/PJO069652.jpg',
+        'images/Nature/PJO08967.jpg',
+        'images/Nature/PJO09062.jpg',
+        'images/Nature/PJO09283.jpg',
+        'images/Nature/PJO09863.jpg',
+        'images/Nature/PJO09920.jpg',
+        'images/Nature/caracol.jpg',
+        'images/Nature/definitivosaltamonteenano.jpg',
+        'images/Nature/inbound4878903916891533968.jpg'
       ]
     },
     {
-      key:'australia', accent:'#D9683B', bgTone:'#23140e', eyebrow:'Sport',
+      key:'australia', name:'Sport', accent:'#D9683B', bgTone:'#23140e', eyebrow:'Sport',
+      hero:'images/Sport/PJO01917.jpg',
       cards:[
-        {img:'images/Sport/PJO01917.jpg', place:'Sport 01', stars:'★★★★★ 4.9'},
-        {img:'images/Sport/PJO01917.jpg', place:'Sport 02', stars:'★★★★☆ 4.7'}
+        {img:'images/Sport/PJO01917.jpg',            place:'Action',              stars:'★★★★★ 4.9'},
+        {img:'images/Sport/DSC07377_-_2-f8a343cf.jpg', place:'Motion',            stars:'★★★★☆ 4.7'},
+        {img:'images/Sport/PJO04973-f6a2848a.jpg',   place:'Intensity',           stars:'★★★★☆ 4.7'}
+      ],
+      all:[
+        'images/Sport/DSC07377_-_2-f8a343cf.jpg',
+        'images/Sport/DSC07386-f7ad26b2.jpg',
+        'images/Sport/PJO01917.jpg',
+        'images/Sport/PJO04973-f6a2848a.jpg'
       ]
     },
     {
-      key:'street', accent:'#6C7A89', bgTone:'#161a20', eyebrow:'Street',
+      key:'street', name:'Street', accent:'#6C7A89', bgTone:'#161a20', eyebrow:'Street',
+      hero:'images/Street/PJO08972.jpg',
       cards:[
-        {img:'images/Street/PJO02812.jpg', place:'Street 01', stars:'★★★★★ 4.8'},
-        {img:'images/Street/PJO08972.jpg', place:'Street 02', stars:'★★★★☆ 4.6'}
+        {img:'images/Street/PJO08972.jpg',           place:'Urban life',          stars:'★★★★★ 4.9'},
+        {img:'images/Street/PJO02812.jpg',            place:'Street frame',        stars:'★★★★☆ 4.7'},
+        {img:'images/Street/PJO09005.jpg',            place:'City shadows',        stars:'★★★★★ 4.8'}
+      ],
+      all:[
+        'images/Street/DSC01032-250a524f.jpg',
+        'images/Street/PJO02812.jpg',
+        'images/Street/PJO02840.jpg',
+        'images/Street/PJO04575-d7bdd0bc.jpg',
+        'images/Street/PJO04590-176b30ca.jpg',
+        'images/Street/PJO04622-60cc4ccb.jpg',
+        'images/Street/PJO08972.jpg',
+        'images/Street/PJO09005.jpg'
       ]
     }
   ];
 
+  let currentView = 'home'; // 'home', 'gallery', 'contact'
   let idx = 0;
   let timer = null;
   let cardSwapTimer = null;
   let wheelLock = false;
   let touchStartY = null;
   let renderToken = 0;
-  const TRANSITION_MS = 1220;
-  const CARD_SWAP_DELAY = 380;
+  let inExploreMode = false;
+  let activePhotoIndex = 0;
+  let exploreCardsIntroTimer = null;
+  let currentBgSlot = 'A';
+  let currentBgUrl = '';
+  const TRANSITION_MS = 4800;
+  const CARD_SWAP_DELAY = 800;
+  const GALLERY_DRIFT_MS = 28000;
+  let galleryDriftStartedAt = 0;
   const AUTOPLAY_MS = 12000;
 
   const root = document.documentElement;
-  const bgLayers = document.querySelectorAll('.bg-layer');
+  const stage = document.getElementById('stage');
+  const startBtn = document.getElementById('startBtn');
+  const heroBgVideo = document.getElementById('heroBgVideo');
+  const bgLayerA = document.getElementById('bgLayerA');
+  const bgLayerB = document.getElementById('bgLayerB');
   const panels = document.querySelectorAll('.panel');
   const panelStack = document.getElementById('panelStack');
   const spineItems = document.querySelectorAll('.spine-item');
@@ -512,9 +1723,180 @@
   const cardzone = document.getElementById('cardzone');
   const pageNow = document.getElementById('pageNow');
   const trackFill = document.getElementById('trackFill');
-  const stage = document.getElementById('stage');
-  const eyebrow = document.getElementById('eyebrow');
+  const navItems = document.querySelectorAll('.nav-item');
 
+  // Explore Elements
+  const exploreCardsTrack = document.getElementById('exploreCardsTrack');
+  const exploreCatBadge = document.getElementById('exploreCatBadge');
+  const explorePhotoCounter = document.getElementById('explorePhotoCounter');
+  const exploreClosePill = document.getElementById('exploreClosePill');
+  const exploreViewerContainer = document.getElementById('exploreViewerContainer');
+  const exploreViewerImg = document.getElementById('exploreViewerImg');
+
+  function imageVariantUrl(imageUrl, variant) {
+    if (!imageUrl) return '';
+    const clean = imageUrl
+      .replace(/^images\/(?:optimized\/|thumbs\/|display\/)?/, '')
+      .replace(/\.jpe?g$/i, '.webp');
+
+    const parts = clean.split('/');
+    if (parts.length >= 2) {
+      const section = parts[0];
+      const filename = parts.slice(1).join('/');
+      return `images/${section}/${variant}/${filename}`;
+    }
+    return `images/${variant}/${clean}`;
+  }
+
+  const displayImageUrl = (imageUrl) => imageVariantUrl(imageUrl, 'display');
+  const optimizedImageUrl = displayImageUrl; // Backward-compatible alias
+  const thumbnailImageUrl = (imageUrl) => imageVariantUrl(imageUrl, 'thumbs');
+
+  function preloadGalleryAssets() {
+    const assets = continents.flatMap(category => [
+      displayImageUrl(category.hero),
+      ...category.cards.map(card => thumbnailImageUrl(card.img))
+    ]);
+    assets.forEach((src) => {
+      const image = new Image();
+      image.src = src;
+    });
+  }
+
+  function updateExploreViewerPhoto(imgUrl) {
+    if (!exploreViewerImg) return;
+    const fullUrl = displayImageUrl(imgUrl);
+
+    exploreViewerImg.classList.remove('is-loaded');
+
+    const tempImg = new Image();
+    tempImg.onerror = function() {
+      const fallbackUrl = fullUrl.replace('/display/', '/optimized/');
+      exploreViewerImg.src = fallbackUrl;
+      requestAnimationFrame(() => {
+        exploreViewerImg.classList.add('is-loaded');
+      });
+    };
+    tempImg.onload = function() {
+      exploreViewerImg.src = this.src;
+      const isLandscape = (this.naturalWidth || 1) >= (this.naturalHeight || 1);
+      exploreViewerImg.classList.toggle('is-landscape', isLandscape);
+      exploreViewerImg.classList.toggle('is-portrait', !isLandscape);
+      requestAnimationFrame(() => {
+        exploreViewerImg.classList.add('is-loaded');
+      });
+    };
+    tempImg.src = fullUrl;
+  }
+
+  /* =========================================================
+     DUAL-BUFFER CINEMATIC PHOTO CROSSFADE
+     ========================================================= */
+  function setCinematicBackground(imageUrl) {
+    imageUrl = displayImageUrl(imageUrl);
+    if (!imageUrl || imageUrl === currentBgUrl) return;
+    currentBgUrl = imageUrl;
+
+    const nextSlot = currentBgSlot === 'A' ? 'B' : 'A';
+    const incomingLayer = nextSlot === 'A' ? bgLayerA : bgLayerB;
+    const outgoingLayer = currentBgSlot === 'A' ? bgLayerA : bgLayerB;
+    const driftDelay = `-${Math.max(0, performance.now() - galleryDriftStartedAt) % GALLERY_DRIFT_MS}ms`;
+
+    incomingLayer.style.setProperty('--gallery-drift-delay', driftDelay);
+    outgoingLayer.style.setProperty('--gallery-drift-delay', driftDelay);
+
+    incomingLayer.style.backgroundImage = `url('${imageUrl}')`;
+    incomingLayer.classList.remove('prev');
+    incomingLayer.classList.add('active');
+
+    outgoingLayer.classList.remove('active');
+    outgoingLayer.classList.add('prev');
+
+    currentBgSlot = nextSlot;
+  }
+
+  /* =========================================================
+     SEAMLESS VIEW SWITCHER (HOME, GALLERY, CONTACT)
+     ========================================================= */
+  function switchView(targetView, opts) {
+    opts = opts || {};
+    if (targetView === currentView && !opts.force) return;
+
+    const previousView = currentView;
+
+    if (inExploreMode && targetView !== 'gallery') {
+      exitExploreMode();
+    }
+
+    currentView = targetView;
+
+    // Update navigation active item
+    navItems.forEach(item => {
+      item.classList.toggle('active', item.dataset.nav === targetView);
+    });
+
+    // Update body classes with smooth morphing
+    document.body.className = `view-${targetView}`;
+
+    if (targetView === 'home') {
+      isStartingGallery = false;
+      stage.classList.remove('is-starting');
+      root.style.setProperty('--accent', '#E8935B');
+      root.style.setProperty('--bg-tone', '#0e0c0b');
+      if (timer) clearInterval(timer);
+      try {
+        if (heroBgVideo) {
+          heroBgVideo.currentTime = 0;
+          heroBgVideo.pause();
+        }
+      } catch(e){}
+    }
+    else if (targetView === 'gallery') {
+      if (previousView !== 'gallery') {
+        galleryDriftStartedAt = performance.now();
+        bgLayerA.style.setProperty('--gallery-drift-delay', '0ms');
+        bgLayerB.style.setProperty('--gallery-drift-delay', '0ms');
+      }
+      render(idx, { keepPhoto: opts.keepPhoto });
+      restartAutoplay();
+    }
+    else if (targetView === 'contact') {
+      if (timer) clearInterval(timer);
+      root.style.setProperty('--accent', '#E8935B');
+      root.style.setProperty('--bg-tone', '#14110f');
+      setCinematicBackground('images/contact/PJO05448.jpg');
+    }
+
+    if (!opts.skipHistory) {
+      const hash = targetView === 'home' ? '' : `#${targetView}`;
+      if (window.location.hash !== hash) {
+        history.pushState(null, '', hash || window.location.pathname);
+      }
+    }
+  }
+
+  // Handle Top Nav Clicks
+  document.querySelectorAll('[data-nav]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView(el.dataset.nav);
+    });
+  });
+
+  // Handle Browser Back/Forward buttons smoothly
+  window.addEventListener('popstate', () => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash === 'gallery' || hash === 'contact') {
+      switchView(hash, { skipHistory: true });
+    } else {
+      switchView('home', { skipHistory: true });
+    }
+  });
+
+
+  /* =========================================================
+     GALLERY RENDERING & CATEGORIES
+     ========================================================= */
   function render(newIdx, opts){
     opts = opts || {};
     renderToken += 1;
@@ -525,13 +1907,13 @@
 
     root.style.setProperty('--accent', c.accent);
     root.style.setProperty('--bg-tone', c.bgTone);
-    document.body.style.backgroundColor = c.bgTone;
 
-    bgLayers.forEach(l => l.classList.toggle('active', l.dataset.bg === c.key));
+    if (!opts.keepPhoto && currentView === 'gallery') {
+      setCinematicBackground(c.hero);
+    }
+
     panels.forEach(p => p.classList.toggle('is-active', p.dataset.panel === c.key));
     spineItems.forEach(s => s.classList.toggle('active', s.dataset.target === c.key));
-    eyebrow.textContent = '';
-    eyebrow.classList.add('active');
     panelStack.style.transform = 'none';
 
     if(cardSwapTimer){
@@ -539,17 +1921,17 @@
       cardSwapTimer = null;
     }
 
-    if(!opts.skipCards){
+    if(!opts.skipCards && !inExploreMode && currentView === 'gallery'){
       cardzone.classList.remove('show');
       cardSwapTimer = window.setTimeout(() => {
         if(thisRender !== renderToken) return;
-        cardA.style.backgroundImage = `url('${c.cards[0].img}')`;
+        cardA.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[0].img)}')`;
         cardA.querySelector('.place').textContent = c.cards[0].place;
         cardA.querySelector('.stars').textContent = c.cards[0].stars;
-        cardB.style.backgroundImage = `url('${c.cards[1].img}')`;
+        cardB.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[1].img)}')`;
         cardB.querySelector('.place').textContent = c.cards[1].place;
         cardB.querySelector('.stars').textContent = c.cards[1].stars;
-        cardC.style.backgroundImage = `url('${c.cards[2] ? c.cards[2].img : c.cards[0].img}')`;
+        cardC.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[2] ? c.cards[2].img : c.cards[0].img)}')`;
         cardC.querySelector('.place').textContent = c.cards[2] ? c.cards[2].place : c.cards[0].place;
         cardC.querySelector('.stars').textContent = c.cards[2] ? c.cards[2].stars : c.cards[0].stars;
         cardzone.classList.add('show');
@@ -562,6 +1944,7 @@
 
   function go(newIdx, opts){
     opts = opts || {};
+    if(inExploreMode || currentView !== 'gallery') return;
     if(wheelLock && !opts.force) return;
 
     wheelLock = true;
@@ -571,12 +1954,271 @@
   }
 
   function restartAutoplay(){
+    if(currentView !== 'gallery' || inExploreMode) return;
     if(timer) clearInterval(timer);
     timer = window.setInterval(() => go(idx + 1), AUTOPLAY_MS);
   }
 
+
+  /* =========================================================
+     EXPLORATION MODE (FRAMELESS BOTTOM CARDS)
+     ========================================================= */
+  function enterExploreMode(categoryKey) {
+    if (categoryKey) {
+      const catIndex = continents.findIndex(c => c.key === categoryKey);
+      if (catIndex !== -1 && catIndex !== idx) {
+        render(catIndex, { skipCards: true });
+      }
+    }
+
+    inExploreMode = true;
+    if (timer) clearInterval(timer);
+
+    const currentCat = continents[idx];
+    exploreCatBadge.textContent = currentCat.name;
+
+    exploreCardsTrack.innerHTML = '';
+    activePhotoIndex = 0;
+
+    const heroMatchIdx = currentCat.all.indexOf(currentCat.hero);
+    if (heroMatchIdx !== -1) {
+      activePhotoIndex = heroMatchIdx;
+    }
+
+    setCinematicBackground(currentCat.all[activePhotoIndex]);
+    updateExploreViewerPhoto(currentCat.all[activePhotoIndex]);
+
+    currentCat.all.forEach((imgUrl, i) => {
+      const card = document.createElement('div');
+      card.className = `explore-card ${i === activePhotoIndex ? 'active' : ''}`;
+      card.style.backgroundImage = `url('${thumbnailImageUrl(imgUrl)}')`;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', `Foto ${i + 1}`);
+
+      card.addEventListener('click', () => {
+        selectExplorePhoto(i);
+      });
+
+      exploreCardsTrack.appendChild(card);
+    });
+
+    updateExploreCount();
+    if (exploreCardsIntroTimer) clearTimeout(exploreCardsIntroTimer);
+    stage.classList.add('explore-mode', 'explore-cards-intro');
+    exploreCardsIntroTimer = window.setTimeout(() => {
+      stage.classList.remove('explore-cards-intro');
+      exploreCardsIntroTimer = null;
+    }, 3000);
+
+    setTimeout(() => {
+      scrollActiveCardIntoView();
+    }, 150);
+  }
+
+  function selectExplorePhoto(photoIdx) {
+    const currentCat = continents[idx];
+    if (photoIdx < 0 || photoIdx >= currentCat.all.length) return;
+
+    activePhotoIndex = photoIdx;
+    const selectedImg = currentCat.all[photoIdx];
+
+    setCinematicBackground(selectedImg);
+    updateExploreViewerPhoto(selectedImg);
+
+    exploreCardsTrack.querySelectorAll('.explore-card').forEach((c, i) => {
+      c.classList.toggle('active', i === activePhotoIndex);
+    });
+
+    updateExploreCount();
+    scrollActiveCardIntoView();
+  }
+
+  function scrollActiveCardIntoView() {
+    const activeCard = exploreCardsTrack.querySelector('.explore-card.active');
+    if (activeCard) {
+      const trackCenter = exploreCardsTrack.clientWidth / 2;
+      const cardLeft = activeCard.offsetLeft + (activeCard.clientWidth / 2);
+      exploreCardsTrack.scrollTo({
+        left: cardLeft - trackCenter,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  function updateExploreCount() {
+    const currentCat = continents[idx];
+    const cur = String(activePhotoIndex + 1).padStart(2, '0');
+    const tot = String(currentCat.all.length).padStart(2, '0');
+    explorePhotoCounter.textContent = `${cur} / ${tot}`;
+  }
+
+  function exitExploreMode() {
+    inExploreMode = false;
+    if (exploreCardsIntroTimer) clearTimeout(exploreCardsIntroTimer);
+    exploreCardsIntroTimer = null;
+    stage.classList.remove('explore-mode', 'explore-cards-intro');
+    if (exploreViewerImg) {
+      exploreViewerImg.classList.remove('is-loaded');
+      exploreViewerImg.src = '';
+    }
+    render(idx);
+    restartAutoplay();
+  }
+
+  document.querySelectorAll('.explore').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      enterExploreMode(btn.dataset.explore);
+    });
+  });
+
+  [cardA, cardB, cardC].forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      enterExploreMode(continents[idx].key);
+    });
+  });
+
+  exploreClosePill.addEventListener('click', (e) => {
+    e.stopPropagation();
+    exitExploreMode();
+  });
+
+  exploreCardsTrack.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    exploreCardsTrack.scrollLeft += e.deltaY;
+  }, { passive: false });
+
+
+  /* =========================================================
+     CINEMATIC VIDEO ZOOM TRANSITION INTO GALLERY
+     ========================================================= */
+  let isStartingGallery = false;
+
+  function startCinematicVideoTransition() {
+    if (currentView !== 'home' || isStartingGallery) return;
+    isStartingGallery = true;
+    stage.classList.add('is-starting');
+    preloadGalleryAssets();
+    setCinematicBackground(continents[0].hero);
+
+    let entered = false;
+    const enterGallery = () => {
+      if (entered || currentView !== 'home') return;
+      entered = true;
+      stage.classList.remove('is-starting');
+      switchView('gallery');
+
+      // Allow video to smoothly complete playing through the slow 4.8s crossfade before pausing
+      setTimeout(() => {
+        try {
+          if (currentView === 'gallery' && heroBgVideo) {
+            heroBgVideo.pause();
+          }
+        } catch(e){}
+      }, 5400);
+    };
+
+    if (heroBgVideo) {
+      heroBgVideo.currentTime = 0;
+      const playPromise = heroBgVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          setTimeout(enterGallery, 800);
+        });
+      }
+
+      const onTimeUpdate = () => {
+        // Trigger the luxurious, slow blending crossfade as the video zoom is nearing its finish (7.2s)
+        if (heroBgVideo.currentTime >= 7.2 || (heroBgVideo.duration && heroBgVideo.currentTime >= heroBgVideo.duration - 2.8)) {
+          heroBgVideo.removeEventListener('timeupdate', onTimeUpdate);
+          enterGallery();
+        }
+      };
+
+      heroBgVideo.addEventListener('timeupdate', onTimeUpdate);
+      heroBgVideo.addEventListener('ended', enterGallery, { once: true });
+      window.setTimeout(enterGallery, 9800);
+    } else {
+      setTimeout(enterGallery, 800);
+    }
+  }
+
+  startBtn.addEventListener('click', startCinematicVideoTransition);
+
+
+  /* =========================================================
+     CONTACT FORM SUBMISSION
+     ========================================================= */
+  const contactForm = document.getElementById('contactForm');
+  const contactFeedback = document.getElementById('contactFeedback');
+  const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      contactFeedback.textContent = 'Enviando mensaje...';
+      contactSubmitBtn.disabled = true;
+
+      const payload = {
+        name: document.getElementById('contactName').value.trim(),
+        email: document.getElementById('contactEmail').value.trim(),
+        message: document.getElementById('contactMessage').value.trim()
+      };
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok) {
+          contactFeedback.style.color = '#4FA98A';
+          contactFeedback.textContent = '¡Mensaje recibido con éxito! Me pondré en contacto pronto.';
+          contactForm.reset();
+        } else {
+          contactFeedback.style.color = '#E8935B';
+          contactFeedback.textContent = data.message || 'Ocurrió un error al enviar.';
+        }
+      } catch(err) {
+        contactFeedback.style.color = '#E8935B';
+        contactFeedback.textContent = 'Error de conexión. Inténtalo de nuevo.';
+      } finally {
+        contactSubmitBtn.disabled = false;
+      }
+    });
+  }
+
+
+  /* =========================================================
+     KEYBOARD & WHEEL NAVIGATION
+     ========================================================= */
+  document.addEventListener('keydown', (e) => {
+    if (currentView === 'home' && (e.code === 'Space' || e.code === 'Enter')) {
+      e.preventDefault();
+      startCinematicVideoTransition();
+    } else if (inExploreMode) {
+      if (e.key === 'Escape') {
+        exitExploreMode();
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        if (activePhotoIndex < continents[idx].all.length - 1) {
+          selectExplorePhoto(activePhotoIndex + 1);
+        }
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        if (activePhotoIndex > 0) {
+          selectExplorePhoto(activePhotoIndex - 1);
+        }
+      }
+    } else if (currentView === 'gallery') {
+      if(e.key === 'ArrowRight' || e.key === 'ArrowDown') go(idx + 1);
+      if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(idx - 1);
+    }
+  });
+
   spineItems.forEach((btn) => {
     btn.addEventListener('click', () => {
+      if (inExploreMode) exitExploreMode();
       const target = continents.findIndex(c => c.key === btn.dataset.target);
       go(target);
     });
@@ -585,44 +2227,43 @@
   document.getElementById('nextBtn').addEventListener('click', () => go(idx + 1));
   document.getElementById('prevBtn').addEventListener('click', () => go(idx - 1));
 
-  stage.addEventListener('mouseenter', () => timer && clearInterval(timer));
-  stage.addEventListener('mouseleave', restartAutoplay);
-
   stage.addEventListener('wheel', (event) => {
+    if (currentView !== 'gallery' || inExploreMode) return;
     event.preventDefault();
     const direction = event.deltaY > 0 ? 1 : -1;
     go(idx + direction);
   }, { passive:false });
 
   stage.addEventListener('touchstart', (event) => {
+    if (currentView !== 'gallery' || inExploreMode) return;
     touchStartY = event.touches[0].clientY;
   }, { passive:true });
 
   stage.addEventListener('touchend', (event) => {
-    if (touchStartY === null) return;
+    if (currentView !== 'gallery' || inExploreMode || touchStartY === null) return;
     const endY = event.changedTouches[0].clientY;
     const deltaY = touchStartY - endY;
     touchStartY = null;
     if (Math.abs(deltaY) < 35) return;
-
     go(idx + (deltaY > 0 ? 1 : -1));
   }, { passive:true });
 
-  document.addEventListener('visibilitychange', () => {
-    if(document.hidden){
-      if(timer) clearInterval(timer);
-    } else {
-      restartAutoplay();
-    }
-  });
 
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'ArrowRight') go(idx + 1);
-    if(e.key === 'ArrowLeft') go(idx - 1);
-  });
+  /* =========================================================
+     INITIALIZE BASED ON URL HASH OR PATH
+     ========================================================= */
+  const initialHash = window.location.hash.replace('#', '').toLowerCase();
+  const initialPath = window.location.pathname.replace('/', '').toLowerCase();
 
-  render(0);
-  restartAutoplay();
+  if (initialHash === 'gallery' || initialPath === 'gallery' || initialPath === 'gallery.html') {
+    switchView('gallery', { skipHistory: true });
+  } else if (initialHash === 'contact' || initialPath === 'contact' || initialPath === 'contact.html' || initialPath === 'about' || initialPath === 'about.html') {
+    switchView('contact', { skipHistory: true });
+  } else {
+    currentBgUrl = displayImageUrl(continents[0].hero);
+    switchView('home', { skipHistory: true });
+  }
+
 })();
 </script>
 

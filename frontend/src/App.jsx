@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import contactImage from '../../images/contact/PJO05448.jpg';
+import contactImage from '../../images/optimized/contact/PJO05448.webp';
 
 const slides = [
   {

@@ -289,7 +289,7 @@ function App() {
     return React.createElement(
       'div',
       { className: 'stage contact-view', style: { '--accent': '#E8935B' } },
-      React.createElement('div', { className: 'bg-layer bg-idle', style: { backgroundImage: "url('/images/contact/PJO05448.jpg')" } }),
+      React.createElement('div', { className: 'bg-layer bg-idle', style: { backgroundImage: "url('/images/optimized/contact/PJO05448.webp')" } }),
       React.createElement('div', { className: 'overlay overlay-idle' }),
       React.createElement(
         'nav',
@@ -311,7 +311,7 @@ function App() {
           'section',
           { className: 'contact-hero' },
           React.createElement('div', { className: 'contact-copy' }, React.createElement('p', { className: 'coords' }, 'Contacto directo'), React.createElement('h1', { className: 'contact-title' }, 'Un espacio para preguntas, ideas y nuevas sesiones.'), React.createElement('p', { className: 'contact-desc' }, 'Si quieres reservar una sesión, pedir información o compartir una idea visual, este espacio reúne las preguntas más comunes y un punto claro de contacto.')),
-          React.createElement('div', { className: 'contact-image-frame' }, React.createElement('img', { src: '/images/contact/PJO05448.jpg', alt: 'Sesión fotográfica de contacto', className: 'contact-image' }))
+          React.createElement('div', { className: 'contact-image-frame' }, React.createElement('img', { src: '/images/optimized/contact/PJO05448.webp', alt: 'Sesión fotográfica de contacto', className: 'contact-image' }))
         ),
         React.createElement(
           'section',

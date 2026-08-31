@@ -3,7 +3,13 @@ import mimetypes
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, unquote
+
+mimetypes.add_type("image/webp", ".webp")
+mimetypes.add_type("video/mp4", ".mp4")
+mimetypes.add_type("image/svg+xml", ".svg")
+mimetypes.add_type("application/javascript", ".js")
+mimetypes.add_type("text/css", ".css")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
@@ -65,9 +71,50 @@ class MeridianHandler(BaseHTTPRequestHandler):
         if content_type is None:
             content_type = "application/octet-stream"
 
+        if candidate.suffix.lower() in {".webp", ".mp4"}:
+            cache_control = "public, max-age=31536000, immutable"
+        elif candidate.suffix.lower() in {".css", ".js"}:
+            cache_control = "public, max-age=86400"
+        else:
+            cache_control = "no-cache"
+
+        file_size = candidate.stat().st_size
+        range_header = self.headers.get("Range")
+
+        if range_header and range_header.startswith("bytes="):
+            try:
+                ranges = range_header[6:].split("-")
+                start = int(ranges[0]) if ranges[0] else 0
+                end = int(ranges[1]) if len(ranges) > 1 and ranges[1] else file_size - 1
+                if start >= file_size or end >= file_size or start > end:
+                    self.send_response(416)
+                    self.send_header("Content-Range", f"bytes */{file_size}")
+                    self.end_headers()
+                    return
+
+                length = end - start + 1
+                with candidate.open("rb") as f:
+                    f.seek(start)
+                    chunk = f.read(length)
+
+                self.send_response(206)
+                self.send_header("Content-Type", content_type)
+                self.send_header("Content-Range", f"bytes {start}-{end}/{file_size}")
+                self.send_header("Content-Length", str(length))
+                self.send_header("Accept-Ranges", "bytes")
+                self.send_header("Cache-Control", cache_control)
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.end_headers()
+                self.wfile.write(chunk)
+                return
+            except Exception:
+                pass
+
         body = candidate.read_bytes()
         self.send_response(200)
         self.send_header("Content-Type", content_type)
+        self.send_header("Accept-Ranges", "bytes")
+        self.send_header("Cache-Control", cache_control)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
@@ -83,19 +130,41 @@ class MeridianHandler(BaseHTTPRequestHandler):
             self._send_json(200, {"submissions": self._read_contact_submissions()})
             return
 
-        if parsed_path.path in {"/", "/index.html", "/contact"}:
+        if parsed_path.path in {"/", "/index.html"}:
             self._send_static(FRONTEND_DIR / "index.html")
             return
 
-        if parsed_path.path.startswith("/images/"):
-            # requested_path = parsed_path.path.removeprefix("/images/")
-            requested_path = parsed_path.path.removeprefix("/images/")
+        if parsed_path.path in {"/gallery", "/gallery.html", "/about", "/about.html", "/contact", "/contact.html"}:
+            self._send_static(FRONTEND_DIR / "index.html")
+            return
+
+        raw_path = unquote(parsed_path.path)
+        if raw_path.startswith("/images/"):
+            requested_path = raw_path.removeprefix("/images/")
             safe_path = (IMAGES_DIR / requested_path).resolve()
-            if safe_path.is_relative_to(IMAGES_DIR.resolve()):
+            if safe_path.is_relative_to(IMAGES_DIR.resolve()) and safe_path.is_file():
                 self._send_static(safe_path)
                 return
 
-        requested_path = parsed_path.path.lstrip("/")
+            # Graceful fallbacks if display/ or thumbs/ have not been generated yet
+            # e.g., Landscape/display/foo.webp -> optimized/Landscape/foo.webp -> Landscape/foo.jpg
+            parts = Path(requested_path).parts
+            if len(parts) >= 3 and parts[1] in {"display", "thumbs"}:
+                section, variant, filename = parts[0], parts[1], Path(parts[2]).stem
+                fallback_paths = [
+                    IMAGES_DIR / ("optimized" if variant == "display" else "thumbs") / section / f"{filename}.webp",
+                    IMAGES_DIR / section / f"{filename}.webp",
+                    IMAGES_DIR / section / f"{filename}.jpg",
+                    IMAGES_DIR / section / f"{filename}.jpeg",
+                    IMAGES_DIR / section / f"{filename}.png"
+                ]
+                for fb in fallback_paths:
+                    fb_res = fb.resolve()
+                    if fb_res.is_relative_to(IMAGES_DIR.resolve()) and fb_res.is_file():
+                        self._send_static(fb_res)
+                        return
+
+        requested_path = raw_path.lstrip("/")
         if requested_path:
             root_safe_path = (BASE_DIR / requested_path).resolve()
             if root_safe_path.is_relative_to(BASE_DIR.resolve()) and root_safe_path.suffix == ".html":
