@@ -276,6 +276,8 @@
 
   .is-starting .hero-video {
     filter: contrast(1.06) brightness(0.98) saturate(1.05);
+    transform: scale(1.045);
+    transition: transform 9s cubic-bezier(0.25, 1, 0.5, 1), filter 3s ease;
   }
 
   .hero-text-wrapper {
@@ -1213,8 +1215,16 @@
     pointer-events: none;
     transform: scale(1.035);
     filter: blur(3px);
+    transform: scale(1.045);
+    filter: blur(2px);
+    transition: opacity 3.8s cubic-bezier(0.22, 1, 0.36, 1), transform 4.5s cubic-bezier(0.22, 1, 0.36, 1), filter 3.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .view-gallery .hero-video-layer { opacity: 0; }
+  .view-gallery .hero-video-layer {
+    opacity: 0;
+    transform: scale(1.055);
+    transition: opacity 3.8s cubic-bezier(0.22, 1, 0.36, 1), transform 4.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
   .view-gallery .hero-text-wrapper,
   .view-gallery .hero-start-btn,
   .view-contact .hero-text-wrapper,
@@ -1235,15 +1245,18 @@
     opacity: 1;
     transform: translateX(0);
     pointer-events: auto;
+    transition: opacity 2.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s, transform 2.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
   }
   .view-gallery .cardzone {
     opacity: 1;
     pointer-events: auto;
+    transition: opacity 3.0s cubic-bezier(0.16, 1, 0.3, 1) 0.7s, transform 3.0s cubic-bezier(0.16, 1, 0.3, 1) 0.7s;
   }
   .view-gallery .bottombar {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+    transition: opacity 3.0s cubic-bezier(0.16, 1, 0.3, 1) 0.7s, transform 3.0s cubic-bezier(0.16, 1, 0.3, 1) 0.7s;
   }
 
   /* 3. CONTACT VIEW */
@@ -1366,7 +1379,7 @@
   <section class="hero-section" id="heroSection">
     <div class="hero-video-layer" id="heroVideoLayer">
       <video class="hero-video" id="heroBgVideo" playsinline muted preload="auto">
-        <source src="images/Inicio/intro_zoom.mp4" type="video/mp4">
+        <source src="images/Inicio/Inicio video.mp4" type="video/mp4">
       </video>
       <div class="hero-epic-atmosphere"></div>
     </div>
@@ -2110,6 +2123,7 @@
       switchView('gallery');
 
       // Allow video to smoothly complete playing through the slow 4.8s crossfade before pausing
+      // Allow video to smoothly complete playing through the slow crossfade before pausing
       setTimeout(() => {
         try {
           if (currentView === 'gallery' && heroBgVideo) {
@@ -2117,6 +2131,7 @@
           }
         } catch(e){}
       }, 5400);
+      }, 4500);
     };
 
     if (heroBgVideo) {
@@ -2133,12 +2148,29 @@
         if (heroBgVideo.currentTime >= 7.2 || (heroBgVideo.duration && heroBgVideo.currentTime >= heroBgVideo.duration - 2.8)) {
           heroBgVideo.removeEventListener('timeupdate', onTimeUpdate);
           enterGallery();
+        const dur = heroBgVideo.duration;
+        // Wait until the final moment of the video (last 0.8s) or ended to start the slow, cinematic blend
+        if (dur && Number.isFinite(dur) && dur > 1.2) {
+          if (heroBgVideo.currentTime >= dur - 0.8) {
+            heroBgVideo.removeEventListener('timeupdate', onTimeUpdate);
+            enterGallery();
+          }
         }
       };
 
       heroBgVideo.addEventListener('timeupdate', onTimeUpdate);
       heroBgVideo.addEventListener('ended', enterGallery, { once: true });
       window.setTimeout(enterGallery, 9800);
+      heroBgVideo.addEventListener('ended', () => {
+        heroBgVideo.removeEventListener('timeupdate', onTimeUpdate);
+        enterGallery();
+      }, { once: true });
+
+      // Dynamic safety fallback based on actual video duration
+      const safetyTimeout = (heroBgVideo.duration && Number.isFinite(heroBgVideo.duration))
+        ? Math.max(2000, (heroBgVideo.duration * 1000) + 1200)
+        : 9500;
+      window.setTimeout(enterGallery, safetyTimeout);
     } else {
       setTimeout(enterGallery, 800);
     }
