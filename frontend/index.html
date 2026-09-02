@@ -654,52 +654,43 @@
 
 
   /* =========================================================
-     EXPLORATION MODE (FRAMELESS BOTTOM CARDS — 90% TRANSPARENT ON IDLE)
+     EXPLORATION MODE (TOP TOOLBAR + CENTERED VIEWER + BOTTOM THUMBNAILS)
      ========================================================= */
-  .explore-cards-wrap {
+  .explore-top-bar {
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 24px;
-    z-index: 30;
+    top: 22px;
+    left: 36px;
+    right: 36px;
+    z-index: 45;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     pointer-events: none;
     opacity: 0;
-    transform: translateY(60px);
-    transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1), transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: translateY(-16px);
+    transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
-  .explore-mode .explore-cards-wrap {
+  .explore-mode .explore-top-bar {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
   }
 
-  .explore-floating-header {
-    display: flex;
+  .explore-top-left {
+    display: inline-flex;
     align-items: center;
     gap: 14px;
-    margin-bottom: 12px;
-    opacity: 0.12;
-    transform: scale(0.85);
-    transition: opacity 0.55s cubic-bezier(0.19, 1, 0.22, 1), transform 0.55s cubic-bezier(0.19, 1, 0.22, 1);
-  }
-
-  .explore-cards-wrap:hover .explore-floating-header,
-  .explore-cards-wrap:focus-within .explore-floating-header {
-    opacity: 1;
-    transform: scale(1);
   }
 
   .explore-cat-badge {
-    font-family: var(--font-sans);
-    font-size: 15px;
-    font-weight: 600;
-    font-style: normal;
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 500;
+    font-style: italic;
     color: #fff;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
+    letter-spacing: -0.01em;
   }
 
   .explore-photo-counter {
@@ -708,37 +699,66 @@
     font-weight: 500;
     letter-spacing: 0.08em;
     color: var(--accent);
-    background: rgba(0, 0, 0, 0.55);
-    padding: 4px 12px;
+    background: rgba(14, 12, 11, 0.65);
+    padding: 5px 14px;
     border-radius: 999px;
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   }
 
   .explore-close-pill {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    background: rgba(0, 0, 0, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.22);
+    gap: 8px;
+    background: rgba(14, 12, 11, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 999px;
-    padding: 5px 16px;
+    padding: 7px 20px;
     color: #fff;
     font-family: var(--font-sans);
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.04em;
     cursor: pointer;
-    backdrop-filter: blur(12px);
-    transition: background 0.35s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
+
   .explore-close-pill:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.6);
-    transform: scale(1.04);
+    background: rgba(255, 255, 255, 0.18);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   }
+
   .explore-close-pill:active {
-    transform: scale(0.97);
+    transform: translateY(0) scale(0.97);
+  }
+
+  .explore-cards-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 16px;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.19, 1, 0.22, 1), transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .explore-mode .explore-cards-wrap {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .explore-cards-track {
@@ -754,8 +774,8 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
 
-    opacity: 0.10;
-    transform: scale(0.72) translateY(18px);
+    opacity: 0.22;
+    transform: scale(0.85) translateY(10px);
     transform-origin: bottom center;
     transition: opacity 0.65s cubic-bezier(0.19, 1, 0.22, 1), transform 0.65s cubic-bezier(0.19, 1, 0.22, 1);
   }
@@ -827,21 +847,21 @@
     transform: translateY(80px) scale(0.9) !important;
   }
 
-  /* Explore Fullscreen/Lightbox Main Photo (Bottom-aligned above thumbnails track, object-fit contain) */
+  /* Explore Fullscreen/Lightbox Main Photo (Maximized & Bottom-aligned right above thumbnails) */
   .explore-viewer-container {
     position: absolute;
     inset: 0;
-    z-index: 8;
+    z-index: 10;
     display: none;
     align-items: flex-end;
     justify-content: center;
-    padding: 24px 24px 165px;
+    padding: 68px 24px 130px;
     box-sizing: border-box;
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
-    transform: scale(0.98);
-    transition: opacity 2.0s cubic-bezier(0.22, 1, 0.36, 1), transform 2.0s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: scale(0.985);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .explore-mode .explore-viewer-container {
     display: flex;
@@ -852,36 +872,47 @@
   }
 
   .explore-viewer-img {
+    position: absolute;
     width: auto;
     height: auto;
     object-fit: contain;
-    border-radius: 16px;
+    border-radius: 14px;
     box-shadow: 0 28px 80px -8px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.18);
     opacity: 0;
-    transform: scale(0.985);
-    filter: blur(5px);
-    transition: opacity 2.0s cubic-bezier(0.22, 1, 0.36, 1), transform 2.0s cubic-bezier(0.22, 1, 0.36, 1), filter 2.0s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: scale(0.988);
+    filter: blur(4px);
+    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: opacity, transform, filter;
+    pointer-events: none;
   }
 
-  .explore-viewer-img.is-loaded {
+  .explore-viewer-img.active {
     opacity: 1;
     transform: scale(1);
     filter: blur(0px);
+    z-index: 2;
+    pointer-events: auto;
   }
 
-  /* Vertical / Portrait photos - bottom-aligned at exact same baseline as horizontals, zero overlap */
+  .explore-viewer-img.prev {
+    opacity: 0;
+    transform: scale(0.995);
+    filter: blur(2px);
+    z-index: 1;
+  }
+
+  /* Vertical / Portrait photos - Maximized height, baseline aligned above thumbnails */
   .explore-viewer-img.is-portrait {
-    max-height: min(calc(100vh - 195px), 1050px);
-    max-width: min(92vw, 1200px);
+    max-height: min(calc(100vh - 202px), 1250px);
+    max-width: min(94vw, 1300px);
     height: auto;
     width: auto;
   }
 
-  /* Horizontal / Landscape photos - bottom-aligned at exact same baseline */
+  /* Horizontal / Landscape photos - Maximized width & height, baseline aligned above thumbnails */
   .explore-viewer-img.is-landscape {
-    max-width: min(94vw, 1750px);
-    max-height: min(calc(100vh - 195px), 1050px);
+    max-width: min(96vw, 1920px);
+    max-height: min(calc(100vh - 202px), 1250px);
     width: auto;
     height: auto;
   }
@@ -1326,9 +1357,11 @@
     .contact-photo { width: min(100%, 540px); height: auto; min-height: 0; max-height: none; aspect-ratio: 5304 / 6630; margin: 0 auto; }
     .contact-photo img { width: 100%; height: 100%; min-height: 0; max-height: none; object-position: center; }
     .contact-info-panel { width: min(100%, 540px); margin: 0 auto; padding: 24px; height: auto; min-height: 0; }
-    .explore-viewer-container { padding: 16px 14px 140px; }
-    .explore-viewer-img.is-portrait { max-height: calc(100vh - 155px); max-width: 96vw; }
-    .explore-viewer-img.is-landscape { max-width: 96vw; max-height: calc(100vh - 155px); }
+    .explore-top-bar { top: 16px; left: 16px; right: 16px; }
+    .explore-cards-wrap { bottom: 12px; }
+    .explore-viewer-container { padding: 56px 12px 102px; }
+    .explore-viewer-img.is-portrait { max-height: calc(100vh - 164px); max-width: 96vw; }
+    .explore-viewer-img.is-landscape { max-width: 96vw; max-height: calc(100vh - 164px); }
     .explore-card { flex: 0 0 54px; height: 76px; border-radius: 9px; }
     .explore-cards-track { padding: 6px 16px; gap: 8px; }
   }
@@ -1339,9 +1372,13 @@
     .nav-links a { font-size: 11.5px; }
     .panel { padding-top: 100px; }
     .bottombar { bottom: 12px; }
-    .explore-viewer-container { padding: 10px 10px 120px; }
-    .explore-viewer-img.is-portrait { max-height: calc(100vh - 135px); max-width: 98vw; }
-    .explore-viewer-img.is-landscape { max-width: 98vw; max-height: calc(100vh - 135px); }
+    .explore-top-bar { top: 12px; left: 12px; right: 12px; }
+    .explore-cat-badge { font-size: 16px; }
+    .explore-close-pill { padding: 6px 14px; font-size: 12px; }
+    .explore-cards-wrap { bottom: 8px; }
+    .explore-viewer-container { padding: 48px 8px 82px; }
+    .explore-viewer-img.is-portrait { max-height: calc(100vh - 136px); max-width: 98vw; }
+    .explore-viewer-img.is-landscape { max-width: 98vw; max-height: calc(100vh - 136px); }
     .explore-card { flex: 0 0 44px; height: 62px; border-radius: 8px; }
     .explore-cards-track { padding: 4px 12px; gap: 6px; }
     .form-row { grid-template-columns: 1fr; gap: 8px; }
@@ -1479,20 +1516,27 @@
       </div>
     </div>
 
-    <!-- ================= EXPLORE MAIN PHOTO VIEWER (EXPANDED SCREEN SIZE) ================= -->
-    <div class="explore-viewer-container" id="exploreViewerContainer">
-      <img class="explore-viewer-img" id="exploreViewerImg" src="" alt="" />
-    </div>
-
-    <div class="explore-cards-wrap" id="exploreCardsWrap">
-      <div class="explore-floating-header">
+    <!-- ================= EXPLORATION MODE INTERFACE ================= -->
+    <!-- Explore Top Toolbar (Overview button, Category badge & Counter) -->
+    <div class="explore-top-bar" id="exploreTopBar">
+      <div class="explore-top-left">
         <span class="explore-cat-badge" id="exploreCatBadge">Landscape</span>
         <span class="explore-photo-counter" id="explorePhotoCounter">01 / 29</span>
-        <button class="explore-close-pill" id="exploreClosePill" type="button" aria-label="Cerrar exploración">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          Overview
-        </button>
       </div>
+      <button class="explore-close-pill" id="exploreClosePill" type="button" aria-label="Cerrar exploración">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Overview
+      </button>
+    </div>
+
+    <!-- Explore Main Photo Lightbox Viewer (Dual Buffer for 100% Fluid Zero-Flicker Transitions) -->
+    <div class="explore-viewer-container" id="exploreViewerContainer">
+      <img class="explore-viewer-img active" id="exploreViewerImgA" src="" alt="" />
+      <img class="explore-viewer-img" id="exploreViewerImgB" src="" alt="" />
+    </div>
+
+    <!-- Explore Bottom Thumbnails Track -->
+    <div class="explore-cards-wrap" id="exploreCardsWrap">
       <div class="explore-cards-track" id="exploreCardsTrack"></div>
     </div>
 
@@ -1742,13 +1786,23 @@
   const trackFill = document.getElementById('trackFill');
   const navItems = document.querySelectorAll('.nav-item');
 
-  // Explore Elements
+  // Explore Elements (Dual Buffer)
   const exploreCardsTrack = document.getElementById('exploreCardsTrack');
   const exploreCatBadge = document.getElementById('exploreCatBadge');
   const explorePhotoCounter = document.getElementById('explorePhotoCounter');
   const exploreClosePill = document.getElementById('exploreClosePill');
   const exploreViewerContainer = document.getElementById('exploreViewerContainer');
-  const exploreViewerImg = document.getElementById('exploreViewerImg');
+  const exploreViewerImgA = document.getElementById('exploreViewerImgA');
+  const exploreViewerImgB = document.getElementById('exploreViewerImgB');
+  let currentViewerSlot = 'A';
+  const imgMemoryCache = new Map();
+
+  function preloadImage(url) {
+    if (!url || imgMemoryCache.has(url)) return;
+    const img = new Image();
+    img.src = url;
+    imgMemoryCache.set(url, img);
+  }
 
   function imageVariantUrl(imageUrl, variant) {
     if (!imageUrl) return '';
@@ -1774,36 +1828,64 @@
       displayImageUrl(category.hero),
       ...category.cards.map(card => thumbnailImageUrl(card.img))
     ]);
-    assets.forEach((src) => {
-      const image = new Image();
-      image.src = src;
-    });
+    assets.forEach((src) => preloadImage(src));
   }
 
   function updateExploreViewerPhoto(imgUrl) {
-    if (!exploreViewerImg) return;
     const fullUrl = displayImageUrl(imgUrl);
+    if (!fullUrl) return;
 
-    exploreViewerImg.classList.remove('is-loaded');
+    const nextSlot = currentViewerSlot === 'A' ? 'B' : 'A';
+    const incomingImg = nextSlot === 'A' ? exploreViewerImgA : exploreViewerImgB;
+    const outgoingImg = currentViewerSlot === 'A' ? exploreViewerImgA : exploreViewerImgB;
 
-    const tempImg = new Image();
-    tempImg.onerror = function() {
-      const fallbackUrl = fullUrl.replace('/display/', '/optimized/');
-      exploreViewerImg.src = fallbackUrl;
-      requestAnimationFrame(() => {
-        exploreViewerImg.classList.add('is-loaded');
-      });
+    if (!incomingImg || !outgoingImg) return;
+
+    const applyImage = (loadedImg) => {
+      incomingImg.src = loadedImg.src;
+      const isLandscape = (loadedImg.naturalWidth || 1) >= (loadedImg.naturalHeight || 1);
+      incomingImg.classList.toggle('is-landscape', isLandscape);
+      incomingImg.classList.toggle('is-portrait', !isLandscape);
+
+      incomingImg.classList.remove('prev');
+      incomingImg.classList.add('active');
+
+      outgoingImg.classList.remove('active');
+      outgoingImg.classList.add('prev');
+
+      currentViewerSlot = nextSlot;
     };
-    tempImg.onload = function() {
-      exploreViewerImg.src = this.src;
-      const isLandscape = (this.naturalWidth || 1) >= (this.naturalHeight || 1);
-      exploreViewerImg.classList.toggle('is-landscape', isLandscape);
-      exploreViewerImg.classList.toggle('is-portrait', !isLandscape);
-      requestAnimationFrame(() => {
-        exploreViewerImg.classList.add('is-loaded');
-      });
-    };
-    tempImg.src = fullUrl;
+
+    if (imgMemoryCache.has(fullUrl) && imgMemoryCache.get(fullUrl).complete && imgMemoryCache.get(fullUrl).naturalWidth > 0) {
+      applyImage(imgMemoryCache.get(fullUrl));
+    } else {
+      const tempImg = new Image();
+      tempImg.onload = function() {
+        imgMemoryCache.set(fullUrl, this);
+        applyImage(this);
+      };
+      tempImg.onerror = function() {
+        const fallback = fullUrl.replace('/display/', '/optimized/');
+        incomingImg.src = fallback;
+        incomingImg.classList.remove('prev');
+        incomingImg.classList.add('active');
+        outgoingImg.classList.remove('active');
+        outgoingImg.classList.add('prev');
+        currentViewerSlot = nextSlot;
+      };
+      tempImg.src = fullUrl;
+    }
+
+    // Preload next and previous 2 images for instantaneous 0ms transitions!
+    const currentCat = continents[idx];
+    if (currentCat && currentCat.all) {
+      const total = currentCat.all.length;
+      for (let offset = -2; offset <= 2; offset++) {
+        if (offset === 0) continue;
+        const targetIdx = (activePhotoIndex + offset + total) % total;
+        preloadImage(displayImageUrl(currentCat.all[targetIdx]));
+      }
+    }
   }
 
   /* =========================================================
@@ -2074,13 +2156,35 @@
     if (exploreCardsIntroTimer) clearTimeout(exploreCardsIntroTimer);
     exploreCardsIntroTimer = null;
     stage.classList.remove('explore-mode', 'explore-cards-intro');
-    if (exploreViewerImg) {
-      exploreViewerImg.classList.remove('is-loaded');
-      exploreViewerImg.src = '';
+    if (exploreViewerImgA) {
+      exploreViewerImgA.classList.remove('active', 'prev');
+      exploreViewerImgA.src = '';
+    }
+    if (exploreViewerImgB) {
+      exploreViewerImgB.classList.remove('active', 'prev');
+      exploreViewerImgB.src = '';
     }
     render(idx);
     restartAutoplay();
   }
+
+  // Fluid keyboard navigation in explore mode
+  window.addEventListener('keydown', (e) => {
+    if (!inExploreMode) return;
+    const currentCat = continents[idx];
+    if (!currentCat || !currentCat.all || currentCat.all.length === 0) return;
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      exitExploreMode();
+    }
+  });
 
   document.querySelectorAll('.explore').forEach(btn => {
     btn.addEventListener('click', (e) => {
