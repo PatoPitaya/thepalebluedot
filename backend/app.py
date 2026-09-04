@@ -195,7 +195,7 @@ class MeridianHandler(BaseHTTPRequestHandler):
                 self._send_json(
                     400,
                     {
-                        "message": "Completa nombre, correo y consulta antes de enviar.",
+                        "message": "Please fill in your name, email, and message before sending.",
                     },
                 )
                 return

@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The pale blue dot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --font-serif: 'Playfair Display', serif;
-    --font-sans: 'General Sans', 'Inter', sans-serif;
+    --font-title: 'Cinzel Decorative', serif;
+    --font-body: 'Lora', Georgia, serif;
+    --font-serif: var(--font-title);
+    --font-sans: var(--font-body);
+    --font-main: var(--font-body);
     --ink: #14110F;
     --paper: #FAF7F2;
     --paper-soft: rgba(250, 247, 242, 0.88);
@@ -36,7 +39,9 @@
     overflow: hidden;
     background: var(--bg-tone);
     color: var(--paper);
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
+    font-style: normal;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 1.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -155,10 +160,11 @@
     display: flex;
     align-items: baseline;
     gap: 8px;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 500;
-    font-size: 20px;
+    font-family: var(--font-title);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    letter-spacing: 0.08em;
     color: #fff;
     text-decoration: none;
     cursor: pointer;
@@ -178,10 +184,11 @@
   }
 
   .nav-links a {
-    color: rgba(255, 255, 255, 0.68);
+    color: rgba(255, 255, 255, 0.75);
     text-decoration: none;
-    font-family: var(--font-sans);
-    font-size: 13.5px;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 15px;
     letter-spacing: .03em;
     position: relative;
     padding-bottom: 5px;
@@ -194,7 +201,8 @@
   .nav-links a:hover, .nav-links a:focus-visible { color: #fff; }
   .nav-links a.active {
     color: #fff;
-    font-weight: 500;
+    font-weight: 600;
+    font-style: normal;
   }
 
   .nav-links a::after {
@@ -288,60 +296,53 @@
   }
 
   .hero-phrase {
-    font-family: var(--font-serif);
+    font-family: var(--font-title);
     font-weight: 400;
-    font-style: italic;
-    font-size: clamp(28px, 4.5vw, 54px);
-    line-height: 1.22;
+    font-style: normal;
+    font-size: clamp(23px, 3.6vw, 46px);
+    line-height: 1.38;
     color: #FAF7F2;
     margin: 0;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.04em;
     text-shadow: 0 4px 40px rgba(0, 0, 0, 0.95), 0 2px 14px rgba(0, 0, 0, 0.85);
   }
 
   .hero-start-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 28px;
+    justify-content: center;
+    padding: 13px 40px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.32);
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     color: #FFFFFF;
-    font-family: var(--font-sans);
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
+    font-family: var(--font-title);
+    font-style: normal;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     cursor: pointer;
     z-index: 6;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5), inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
-    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  .hero-start-btn svg {
-    width: 9px;
-    height: 9px;
-    fill: currentColor;
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.6), inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(255, 255, 255, 0.03);
+    transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hero-start-btn:hover {
     transform: translateY(-2px) scale(1.02);
-    background: rgba(255, 255, 255, 0.18);
-    border-color: rgba(255, 255, 255, 0.75);
-    box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.65), 0 0 20px rgba(255, 255, 255, 0.18), inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
-  }
-
-  .hero-start-btn:hover svg {
-    transform: translateX(2px);
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 18px 46px -8px rgba(0, 0, 0, 0.75), 0 0 28px rgba(232, 147, 91, 0.22), inset 0 1px 1px 0 rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.32em;
+    color: #FFFFFF;
   }
 
   .hero-start-btn:active {
-    transform: translateY(0) scale(0.97);
+    transform: translateY(0) scale(0.98);
+    transition-duration: 0.15s;
   }
 
 
@@ -399,7 +400,7 @@
   }
   .spine-item .num {
     font-family: var(--font-sans);
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
     letter-spacing: .1em;
     color: inherit;
@@ -460,7 +461,7 @@
   /* Soft Ethereal Typography */
   .coords {
     font-family: var(--font-sans);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     letter-spacing: .16em;
     color: var(--accent);
@@ -481,18 +482,21 @@
   }
 
   h1.title {
-    font-family: var(--font-sans);
-    font-weight: 600;
+    font-family: var(--font-title);
+    font-weight: 400;
     font-style: normal;
-    font-size: clamp(52px, 8.5vw, 110px);
-    line-height: 0.94;
-    margin: 0 0 22px 0;
+    font-size: clamp(44px, 7.4vw, 98px);
+    line-height: 1.06;
+    margin: 0 0 6px 0;
+    padding-bottom: 0;
     color: #fff;
-    letter-spacing: -0.03em;
-    overflow: hidden;
+    letter-spacing: 0.04em;
+    overflow: visible;
   }
   .title-word {
-    display: block;
+    display: inline-block;
+    padding-bottom: 0.08em;
+    padding-right: 0.05em;
     opacity: 0;
     transform: translate3d(0, 18px, 0);
     filter: blur(6px);
@@ -500,13 +504,15 @@
   }
 
   .desc {
-    font-family: var(--font-sans);
-    font-size: 15px;
-    line-height: 1.7;
-    color: #b3b3b3;
-    max-width: 400px;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16.5px;
+    line-height: 1.75;
+    color: rgba(250, 247, 242, 0.82);
+    max-width: 440px;
     margin: 0 0 32px 0;
-    font-weight: 300;
+    letter-spacing: 0.01em;
     opacity: 0;
     transform: translate3d(0, 12px, 0);
     filter: blur(4px);
@@ -514,10 +520,11 @@
   }
 
   .explore {
-    font-family: var(--font-sans);
-    font-size: 13.5px;
-    font-weight: 500;
-    letter-spacing: .03em;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: .04em;
     color: var(--ink);
     background: var(--accent);
     border: none;
@@ -600,8 +607,8 @@
     pointer-events: none;
   }
   .dcard .meta { display: none; }
-  .dcard .place { font-family: var(--font-sans); font-size: 12px; font-weight: 600; color: var(--paper); margin: 0 0 4px 0; line-height: 1.2; }
-  .dcard .stars { font-family: var(--font-sans); font-size: 9px; font-weight: 500; letter-spacing: .06em; color: var(--accent); }
+  .dcard .place { font-family: var(--font-sans); font-size: 13px; font-weight: 600; color: var(--paper); margin: 0 0 4px 0; line-height: 1.2; }
+  .dcard .stars { font-family: var(--font-sans); font-size: 10px; font-weight: 500; letter-spacing: .06em; color: var(--accent); }
 
   /* Gallery Bottom Bar */
   .bottombar {
@@ -645,7 +652,7 @@
   .arrow-btn:active { transform: scale(0.95); }
   .pagecount {
     font-family: var(--font-sans);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     letter-spacing: .06em;
     color: var(--paper-dim);
@@ -684,18 +691,19 @@
   }
 
   .explore-cat-badge {
-    font-family: var(--font-serif);
-    font-size: 20px;
-    font-weight: 500;
-    font-style: italic;
+    font-family: var(--font-title);
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
     color: #fff;
     text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
-    letter-spacing: -0.01em;
+    letter-spacing: 0.06em;
   }
 
   .explore-photo-counter {
-    font-family: var(--font-sans);
-    font-size: 12px;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.08em;
     color: var(--accent);
@@ -717,8 +725,9 @@
     border-radius: 999px;
     padding: 7px 20px;
     color: #fff;
-    font-family: var(--font-sans);
-    font-size: 13px;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 14.5px;
     font-weight: 500;
     letter-spacing: 0.04em;
     cursor: pointer;
@@ -941,7 +950,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 72px 28px 20px;
+    padding: 60px 28px 60px;
     opacity: 0;
     pointer-events: none;
     transform: scale(1.02);
@@ -951,12 +960,12 @@
   }
 
   .contact-layout {
-    max-width: min(1180px, 94vw);
+    max-width: min(1150px, 94vw);
     width: 100%;
-    height: min(85vh, 780px);
+    height: min(84vh, 740px);
     margin: auto;
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.25fr);
+    grid-template-columns: 1fr 1fr;
     gap: 30px;
     align-items: stretch;
     justify-content: center;
@@ -996,79 +1005,80 @@
   .contact-info-panel {
     width: 100%;
     height: 100%;
-    padding: 32px 38px;
+    padding: 28px 36px 32px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     box-sizing: border-box;
     overflow: hidden;
     border-radius: 24px;
-    gap: 12px;
+    gap: 10px;
   }
 
   .about-block {
     margin-bottom: 0;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .about-pill {
     display: inline-flex;
-    padding: 5px 14px;
+    padding: 4px 13px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.08);
-    font-family: var(--font-sans);
-    font-size: 11px;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 11.5px;
     font-weight: 500;
     letter-spacing: .14em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .about-title {
-    margin: 0 0 8px;
-    font-family: var(--font-serif);
-    font-weight: 500;
-    font-style: italic;
-    font-size: clamp(2.4rem, 3.6vw, 3.4rem);
-    line-height: 1.06;
+    margin: 0 0 6px;
+    font-family: var(--font-title);
+    font-weight: 400;
+    font-style: normal;
+    font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+    line-height: 1.15;
     color: #fff;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.04em;
   }
 
   .about-desc {
     margin: 0;
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     font-style: normal;
     text-align: justify;
-    line-height: 1.6;
-    font-size: 13.5px;
-    color: #c4c4c4;
-    font-weight: 300;
+    line-height: 1.62;
+    font-size: 14.5px;
+    color: rgba(250, 247, 242, 0.85);
+    font-weight: 400;
   }
 
   .contact-block-title {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.35;
+    font-family: var(--font-title);
+    font-style: normal;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.45;
     color: #fff;
-    margin: 0 0 10px 0;
-    letter-spacing: -0.01em;
+    margin: 2px 0 6px 0;
+    letter-spacing: 0.03em;
   }
 
   .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
 
   .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
   }
 
   .form-field {
@@ -1081,11 +1091,12 @@
     width: 100%;
     box-sizing: border-box;
     border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 12px;
+    border-radius: 11px;
     background: rgba(255, 255, 255, 0.06);
-    padding: 0.8rem 1.15rem;
-    font-family: var(--font-sans);
-    font-size: 13.5px;
+    padding: 0.65rem 1rem;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 14.5px;
     font-weight: 400;
     color: #fff;
     transition: border-color .35s ease, background .35s ease;
@@ -1093,8 +1104,9 @@
 
   .form-input::placeholder, .form-textarea::placeholder {
     color: rgba(255, 255, 255, 0.42);
-    font-family: var(--font-sans);
-    font-weight: 300;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-weight: 400;
   }
 
   .form-input:focus, .form-textarea:focus {
@@ -1104,27 +1116,28 @@
   }
 
   .form-textarea {
-    min-height: 130px;
-    height: clamp(130px, 16vh, 160px);
-    line-height: 1.55;
+    min-height: 80px;
+    height: clamp(80px, 10vh, 105px);
+    line-height: 1.5;
     resize: none;
   }
 
   .form-bottom-row {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
   }
 
   .form-btn {
     align-self: flex-start;
     border: none;
-    border-radius: 26px;
-    padding: 11px 32px;
+    border-radius: 24px;
+    padding: 9px 28px;
     background: var(--accent);
     color: #14110f;
-    font-family: var(--font-sans);
-    font-size: 13.5px;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 14.5px;
     font-weight: 600;
     letter-spacing: .02em;
     cursor: pointer;
@@ -1141,29 +1154,32 @@
   }
 
   .form-feedback {
-    font-family: var(--font-sans);
-    font-size: 13px;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 14.5px;
     color: var(--paper-dim);
     margin: 0;
   }
 
   /* Contact Social & Direct Links Section */
   .contact-social-section {
-    margin-top: 10px;
-    padding-top: 6px;
+    margin-top: 6px;
+    padding-top: 4px;
+    padding-bottom: 8px;
   }
 
   .social-divider {
     height: 1px;
     background: rgba(255, 255, 255, 0.14);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   .social-label {
-    margin: 0 0 10px 0;
-    font-family: var(--font-sans);
-    font-size: 11.5px;
-    letter-spacing: .16em;
+    margin: 0 0 8px 0;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 12px;
+    letter-spacing: .14em;
     text-transform: uppercase;
     color: var(--accent);
     font-weight: 600;
@@ -1172,21 +1188,23 @@
   .social-links {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     flex-wrap: wrap;
+    margin-bottom: 4px;
   }
 
   .social-link {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 999px;
-    padding: 10px 22px;
-    font-family: var(--font-sans);
-    font-size: 15px;
-    font-weight: 500;
+    padding: 8px 20px;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 14.5px;
+    font-weight: 400;
     color: #fff;
     text-decoration: none;
     backdrop-filter: blur(12px);
@@ -1208,8 +1226,8 @@
   }
 
   .social-icon {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
     stroke: currentColor;
   }
@@ -1350,22 +1368,22 @@
       padding: 8px 16px;
       backdrop-filter: blur(12px);
     }
-    .nav-links a { font-size: 12.5px; }
+    .nav-links a { font-size: 13.5px; }
 
     .hero-section { padding-top: 105px; padding-left: 20px; padding-right: 20px; }
     .hero-phrase { font-size: clamp(22px, 5.5vw, 34px); }
-    .hero-start-btn { padding: 13px 38px; font-size: 12.5px; }
+    .hero-start-btn { padding: 12px 34px; font-size: 12px; letter-spacing: 0.24em; }
 
     .spine { display: none; }
     .panel { padding-left: 20px; padding-right: 20px; padding-top: 110px; align-items: flex-start; }
     .panel-body { width: min(100%, 560px); min-height: auto; }
-    h1.title { font-size: clamp(38px, 14vw, 64px); margin-bottom: 16px; }
-    .desc { max-width: 100%; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+    h1.title { font-size: clamp(38px, 14vw, 64px); line-height: 1.06; margin-bottom: 6px; padding-bottom: 0; overflow: visible; }
+    .desc { max-width: 100%; font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
     .cardzone { display: none; }
     .bottombar { left: 20px; right: 20px; bottom: 18px; gap: 12px; }
     .track { margin: 0; max-width: none; }
 
-    .contact-section { padding: 100px 20px 20px; }
+    .contact-section { padding: 90px 20px 40px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
     .contact-layout { grid-template-columns: 1fr; height: auto; max-height: none; min-height: 0; }
     .contact-photo { width: min(100%, 540px); height: auto; min-height: 0; max-height: none; aspect-ratio: 5304 / 6630; margin: 0 auto; }
     .contact-photo img { width: 100%; height: 100%; min-height: 0; max-height: none; object-position: center; }
@@ -1382,12 +1400,12 @@
   @media (max-width: 520px) {
     .main-nav { padding-top: 14px; }
     .nav-links { gap: 14px; padding: 6px 14px; }
-    .nav-links a { font-size: 11.5px; }
+    .nav-links a { font-size: 12.5px; }
     .panel { padding-top: 100px; }
     .bottombar { bottom: 12px; }
     .explore-top-bar { top: 12px; left: 12px; right: 12px; }
     .explore-cat-badge { font-size: 16px; }
-    .explore-close-pill { padding: 6px 14px; font-size: 12px; }
+    .explore-close-pill { padding: 6px 14px; font-size: 13px; }
     .explore-cards-wrap { bottom: 8px; }
     .explore-viewer-container { padding: 48px 8px 82px; }
     .explore-viewer-img.is-portrait { max-height: calc(100vh - 136px); max-width: 98vw; }
@@ -1441,10 +1459,7 @@
     <div class="hero-text-wrapper">
       <h1 class="hero-phrase">Welcome to my creative world, where every image is not just seen, but deeply felt.</h1>
     </div>
-    <button class="hero-start-btn" id="startBtn" type="button" aria-label="Start">
-      <span>Start</span>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
-    </button>
+    <button class="hero-start-btn" id="startBtn" type="button" aria-label="Start">Start</button>
   </section>
 
 
@@ -1520,10 +1535,10 @@
       <div class="pagecount"><b id="pageNow">01</b>&nbsp;/&nbsp;04</div>
       <div class="track"><div class="track-fill" id="trackFill"></div></div>
       <div class="arrows">
-        <button class="arrow-btn" id="prevBtn" aria-label="Anterior">
+        <button class="arrow-btn" id="prevBtn" aria-label="Previous">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
         </button>
-        <button class="arrow-btn" id="nextBtn" aria-label="Siguiente">
+        <button class="arrow-btn" id="nextBtn" aria-label="Next">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
         </button>
       </div>
@@ -1536,7 +1551,7 @@
         <span class="explore-cat-badge" id="exploreCatBadge">Landscape</span>
         <span class="explore-photo-counter" id="explorePhotoCounter">01 / 29</span>
       </div>
-      <button class="explore-close-pill" id="exploreClosePill" type="button" aria-label="Cerrar exploración">
+      <button class="explore-close-pill" id="exploreClosePill" type="button" aria-label="Close overview">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         Overview
       </button>
@@ -1561,12 +1576,12 @@
     <div class="contact-layout">
 
       <div class="contact-panel contact-photo">
-        <img src="images/optimized/contact/PJO05448.webp" alt="Patricio Jiménez — Fotógrafo" loading="lazy">
+        <img src="images/optimized/contact/PJO05448.webp" alt="Patricio Jiménez — Photographer" loading="lazy">
       </div>
 
       <div class="contact-panel contact-info-panel">
         <div class="about-block">
-          <span class="about-pill">SOBRE MI</span>
+          <span class="about-pill">ABOUT ME</span>
           <h2 class="about-title">Patricio Jiménez</h2>
           <p class="about-desc">
             My relationship with nature began long before the camera entered my life: it was a desire to understand it, to observe it closely, to recognize in every creature the same right to exist. Over time, that way of seeing grew deeper, and photography became the natural way to continue that silent dialogue. Today, I try to capture landscapes, natural scenes, and urban details that often go unnoticed, translating into images what my imagination sees in them. When I'm not behind the camera, you'll probably find me with my two little cats.
@@ -2105,7 +2120,7 @@
       card.className = `explore-card ${i === activePhotoIndex ? 'active' : ''}`;
       card.style.backgroundImage = `url('${thumbnailImageUrl(imgUrl)}')`;
       card.setAttribute('role', 'button');
-      card.setAttribute('aria-label', `Foto ${i + 1}`);
+      card.setAttribute('aria-label', `Photo ${i + 1}`);
 
       card.addEventListener('click', () => {
         selectExplorePhoto(i);
@@ -2303,7 +2318,7 @@
   if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      contactFeedback.textContent = 'Enviando mensaje...';
+      contactFeedback.textContent = 'Sending message...';
       contactSubmitBtn.disabled = true;
 
       const payload = {
@@ -2321,15 +2336,15 @@
         const data = await res.json();
         if (res.ok) {
           contactFeedback.style.color = '#4FA98A';
-          contactFeedback.textContent = '¡Mensaje recibido con éxito! Me pondré en contacto pronto.';
+          contactFeedback.textContent = 'Message sent successfully! I will be in touch soon.';
           contactForm.reset();
         } else {
           contactFeedback.style.color = '#E8935B';
-          contactFeedback.textContent = data.message || 'Ocurrió un error al enviar.';
+          contactFeedback.textContent = data.message || 'An error occurred while sending.';
         }
       } catch(err) {
         contactFeedback.style.color = '#E8935B';
-        contactFeedback.textContent = 'Error de conexión. Inténtalo de nuevo.';
+        contactFeedback.textContent = 'Connection error. Please try again.';
       } finally {
         contactSubmitBtn.disabled = false;
       }
