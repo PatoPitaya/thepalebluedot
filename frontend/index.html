@@ -83,6 +83,11 @@
     will-change: opacity, transform;
   }
 
+  .view-gallery .bg-layer,
+  .view-contact .bg-layer {
+    transition: opacity 450ms cubic-bezier(0.16, 1, 0.3, 1), transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
   .bg-layer.active {
     opacity: 1;
     transform: scale(1);
@@ -441,7 +446,7 @@
     opacity: 0;
     transform: scale(.995);
     pointer-events: none;
-    transition: opacity 2200ms cubic-bezier(.16,1,.3,1), transform 2200ms cubic-bezier(.16,1,.3,1);
+    transition: opacity 280ms cubic-bezier(.16,1,.3,1), transform 280ms cubic-bezier(.16,1,.3,1);
   }
   .panel.is-active {
     opacity: 1;
@@ -471,9 +476,9 @@
     align-items: center;
     gap: 10px;
     opacity: 0;
-    transform: translate3d(0, 14px, 0);
-    filter: blur(4px);
-    transition: opacity 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, filter 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+    transform: translate3d(0, 10px, 0);
+    filter: blur(2px);
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .coords::before {
     content: "";
@@ -498,9 +503,9 @@
     padding-bottom: 0.08em;
     padding-right: 0.05em;
     opacity: 0;
-    transform: translate3d(0, 18px, 0);
-    filter: blur(6px);
-    transition: opacity 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s, transform 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s, filter 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s;
+    transform: translate3d(0, 12px, 0);
+    filter: blur(3px);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), filter 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .desc {
@@ -514,9 +519,9 @@
     margin: 0 0 32px 0;
     letter-spacing: 0.01em;
     opacity: 0;
-    transform: translate3d(0, 12px, 0);
-    filter: blur(4px);
-    transition: opacity 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, transform 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, filter 2.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+    transform: translate3d(0, 10px, 0);
+    filter: blur(2px);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), filter 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .explore {
@@ -536,9 +541,9 @@
     gap: 10px;
     box-shadow: 0 8px 24px -8px rgba(0,0,0,.5);
     opacity: 0;
-    transform: translate3d(0, 10px, 0);
+    transform: translate3d(0, 8px, 0);
     text-decoration: none;
-    transition: opacity 2.4s cubic-bezier(0.16, 1, 0.3, 1) 1.05s, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background .5s ease, box-shadow .4s ease;
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background .3s ease, box-shadow .3s ease;
   }
   .explore:hover { transform: translateY(-2px) scale(1.025); }
   .explore:active { transform: translateY(0) scale(0.98); }
@@ -565,7 +570,7 @@
     gap: 14px;
     pointer-events: auto;
     opacity: 0;
-    transition: opacity 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .dcard {
     position: relative;
@@ -675,7 +680,7 @@
     pointer-events: none;
     opacity: 0;
     transform: translateY(-16px);
-    transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .explore-mode .explore-top-bar {
@@ -761,7 +766,7 @@
     pointer-events: none;
     opacity: 0;
     transform: translateY(40px);
-    transition: opacity 0.9s cubic-bezier(0.19, 1, 0.22, 1), transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .explore-mode .explore-cards-wrap {
@@ -883,7 +888,7 @@
     opacity: 0;
     visibility: hidden;
     transform: scale(0.985);
-    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .explore-mode .explore-viewer-container {
     display: flex;
@@ -901,17 +906,15 @@
     border-radius: 14px;
     box-shadow: 0 28px 80px -8px rgba(0, 0, 0, 0.98), 0 0 0 1px rgba(255, 255, 255, 0.18);
     opacity: 0;
-    transform: scale(0.988);
-    filter: blur(4px);
-    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: opacity, transform, filter;
+    transform: scale(0.99);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    will-change: opacity, transform;
     pointer-events: none;
   }
 
   .explore-viewer-img.active {
     opacity: 1;
     transform: scale(1);
-    filter: blur(0px);
     z-index: 2;
     pointer-events: auto;
   }
@@ -919,7 +922,6 @@
   .explore-viewer-img.prev {
     opacity: 0;
     transform: scale(0.995);
-    filter: blur(2px);
     z-index: 1;
   }
 
@@ -953,9 +955,8 @@
     padding: 60px 28px 60px;
     opacity: 0;
     pointer-events: none;
-    transform: scale(1.02);
-    filter: blur(6px);
-    transition: opacity 1.5s cubic-bezier(0.22, 1, 0.36, 1), transform 1.5s cubic-bezier(0.22, 1, 0.36, 1), filter 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: scale(1.01);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
   }
 
@@ -1298,30 +1299,47 @@
     opacity: 1;
     pointer-events: auto;
     transform: scale(1);
-    filter: blur(0px);
-    transition: opacity 3.8s cubic-bezier(0.22, 1, 0.36, 1), transform 4.5s cubic-bezier(0.22, 1, 0.36, 1), filter 3.8s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: none;
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .view-gallery .spine {
     opacity: 1;
     transform: translateX(0);
     pointer-events: auto;
-    transition: opacity 2.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, transform 2.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .view-gallery .cardzone {
     opacity: 1;
     pointer-events: auto;
-    transition: opacity 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, transform 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s;
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .view-gallery .bottombar {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
-    transition: opacity 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, transform 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s;
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .view-gallery .nav-links {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Cinematic entrance into Gallery from Home ONLY */
+  #stage.from-home .gallery-section {
+    transition: opacity 3.8s cubic-bezier(0.22, 1, 0.36, 1), transform 4.5s cubic-bezier(0.22, 1, 0.36, 1), filter 3.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  #stage.from-home .spine {
+    transition: opacity 2.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, transform 2.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+  }
+  #stage.from-home .cardzone {
+    transition: opacity 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, transform 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s;
+  }
+  #stage.from-home .bottombar {
+    transition: opacity 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, transform 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s;
+  }
+  #stage.from-home .nav-links {
     transition: opacity 2.4s cubic-bezier(0.16, 1, 0.3, 1) 1.4s, transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) 1.4s;
   }
 
@@ -1337,15 +1355,17 @@
   .view-contact .gallery-section {
     opacity: 0;
     pointer-events: none;
-    transform: scale(0.97);
-    filter: blur(8px);
+    transform: scale(0.99);
+    filter: none;
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .view-contact .contact-section {
     opacity: 1;
     pointer-events: auto;
     transform: scale(1);
-    filter: blur(0px);
+    filter: none;
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
 
@@ -1647,137 +1667,167 @@
         {img:'images/Landscape/faro-fb33fbb3.jpg', place:'Lighthouse',        stars:'★★★★☆ 4.6'}
       ],
       all:[
-        'images/Landscape/20250331_133655.jpg',
-        'images/Landscape/DSC02503.jpg',
-        'images/Landscape/DSC03310-HDR.jpg',
-        'images/Landscape/DSC03490-HDR.jpg',
-        'images/Landscape/DSC06227.jpg',
-        'images/Landscape/JIMENEZ_Patricio_Landschappen_Foto8_mistsunrise.jpg',
-        'images/Landscape/PJO04545.jpg',
-        'images/Landscape/PJO04652.jpg',
-        'images/Landscape/PJO04671.jpg',
-        'images/Landscape/PJO04719.jpg',
-        'images/Landscape/PJO04734.jpg',
-        'images/Landscape/PJO05066 (1).jpg',
-        'images/Landscape/PJO05097.jpg',
-        'images/Landscape/PJO05132.jpg',
-        'images/Landscape/PJO05177.jpg',
-        'images/Landscape/PJO05282.jpg',
         'images/Landscape/PJO05300.jpg',
-        'images/Landscape/PJO05301.jpg',
         'images/Landscape/PJO05322.jpg',
-        'images/Landscape/PJO05334.jpg',
-        'images/Landscape/PJO05376.jpg',
-        'images/Landscape/PJO05378.jpg',
-        'images/Landscape/PJO05505.jpg',
-        'images/Landscape/PJO05602.jpg',
-        'images/Landscape/PJO06132.jpg',
-        'images/Landscape/PJO06311.jpg',
+        'images/Landscape/JIMENEZ_Patricio_Landschappen_Foto8_mistsunrise.jpg',
+        'images/Landscape/DSC03490-HDR.jpg',
+        'images/Landscape/faro-fb33fbb3.jpg',
+        'images/Landscape/PJO05321.jpg',
+        'images/Landscape/PJO05688.jpg',
+        'images/Landscape/DSC03310-HDR.jpg',
+        'images/Landscape/Messenger_creation_3C038F6F-0FE4-49BE-BA79-BD0F06198E6E.jpeg',
         'images/Landscape/PJO06498.jpg',
+        'images/Landscape/PJO06132.jpg',
+        'images/Landscape/PJO05409.jpg',
+        'images/Landscape/PJO05602.jpg',
+        'images/Landscape/PJO05056.jpg',
+        'images/Landscape/PJO04652.jpg',
+        'images/Landscape/PJO04719.jpg',
+        'images/Landscape/DSC02503.jpg',
+        'images/Landscape/PJO05505.jpg',
+        'images/Landscape/PJO04545.jpg',
+        'images/Landscape/PJO05251.jpg',
         'images/Landscape/PJO06643.jpg',
-        'images/Landscape/faro-fb33fbb3.jpg'
+        'images/Landscape/DSC06227.jpg',
+        'images/Landscape/PJO05301.jpg',
+        'images/Landscape/PJO05378.jpg',
+        'images/Landscape/PJO05376.jpg',
+        'images/Landscape/PJO052632.jpg',
+        'images/Landscape/PJO05282.jpg',
+        'images/Landscape/PJO05334.jpg',
+        'images/Landscape/PJO05810.jpg',
+        'images/Landscape/PJO04734.jpg',
+        'images/Landscape/PJO05097.jpg',
+        'images/Landscape/PJO05066 (1).jpg',
+        'images/Landscape/PJO062162.jpg',
+        'images/Landscape/PJO05132.jpg',
+        'images/Landscape/PJO04671.jpg',
+        'images/Landscape/PJO05319.jpg',
+        'images/Landscape/PJO05173.jpg',
+        'images/Landscape/PJO05180.jpg'
       ]
     },
     {
       key:'asia', name:'Nature', accent:'#4FA98A', bgTone:'#142522', eyebrow:'Nature',
-      hero:'images/Nature/DSC03039.jpg',
+      hero:'images/Nature/PJO00934.jpg',
       cards:[
-        {img:'images/Nature/DSC03039.jpg',       place:'Wildlife light',      stars:'★★★★★ 4.9'},
+        {img:'images/Nature/PJO00934.jpg',       place:'Wildlife light',      stars:'★★★★★ 4.9'},
         {img:'images/Nature/PJO09920.jpg',        place:'Golden meadow',       stars:'★★★★☆ 4.7'},
         {img:'images/Nature/PJO08967.jpg',        place:'Macro life',          stars:'★★★★★ 4.8'}
       ],
       all:[
-        'images/Nature/2021-06-1922-15-47(B,Radius8,Smoothing4).jpg',
-        'images/Nature/3.jpg',
-        'images/Nature/DSC00088.jpg',
-        'images/Nature/DSC00345.jpg',
-        'images/Nature/DSC01761.jpg',
-        'images/Nature/DSC01770.jpg',
-        'images/Nature/DSC01788.jpg',
-        'images/Nature/DSC03039.jpg',
-        'images/Nature/DSC03123.jpg',
-        'images/Nature/DSC03520.jpg',
-        'images/Nature/DSC03711.jpg',
-        'images/Nature/DSC04789.jpg',
         'images/Nature/DSC05597.jpg',
-        'images/Nature/DSC05612.jpg',
+        'images/Nature/PJO06305.jpg',
+        'images/Nature/PJO02719.jpg',
+        'images/Nature/PJO09863.jpg',
+        'images/Nature/DSC05535.jpg',
+        'images/Nature/PJO05101.jpg',
+        'images/Nature/PJO00825.jpg',
         'images/Nature/DSC05627.jpg',
-        'images/Nature/DSC06112-2.jpg',
-        'images/Nature/DSC06286-2-2.jpg',
-        'images/Nature/DSC06998.jpg',
+        'images/Nature/inbound4878903916891533968.jpg',
+        'images/Nature/DSC03520.jpg',
+        'images/Nature/PJO05575-3.jpg',
+        'images/Nature/caracol.jpg',
+        'images/Nature/PJO03852.jpg',
         'images/Nature/DSC07034.jpg',
-        'images/Nature/DSC08590.jpg',
+        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.jpg',
+        'images/Nature/PJO03799.jpg',
+        'images/Nature/DSC05612.jpg',
+        'images/Nature/2021-06-1922-15-47(B,Radius8,Smoothing4).jpg',
         'images/Nature/DSC08682.jpg',
-        'images/Nature/DSC09699.jpg',
-        'images/Nature/DSC09981-2.jpg',
+        'images/Nature/DSC00345.jpg',
+        'images/Nature/DSC06112-2.jpg',
+        'images/Nature/definitivosaltamonteenano.jpg',
+        'images/Nature/PJO09920.jpg',
+        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto6_Springand.jpg',
+        'images/Nature/3.jpg',
+        'images/Nature/PJO01954.jpg',
+        'images/Nature/PJO06296.jpg',
+        'images/Nature/DSC03711.jpg',
+        'images/Nature/PJO00934.jpg',
+        'images/Nature/PJO00370.jpg',
         'images/Nature/IMAG0019.jpg',
         'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.jpg',
-        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto6_Springand.jpg',
-        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.jpg',
-        'images/Nature/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.jpg',
-        'images/Nature/JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.jpg',
-        'images/Nature/JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.jpg',
-        'images/Nature/Jimenez_Patricio_DSC_03112.jpg',
-        'images/Nature/PJO00370.jpg',
-        'images/Nature/PJO00934.jpg',
-        'images/Nature/PJO01455.jpg',
-        'images/Nature/PJO01504-2.jpg',
-        'images/Nature/PJO02719.jpg',
-        'images/Nature/PJO02818-65d061d6.jpg',
-        'images/Nature/PJO02818.jpg',
-        'images/Nature/PJO03799.jpg',
-        'images/Nature/PJO03852.jpg',
-        'images/Nature/PJO04035.jpg',
-        'images/Nature/PJO05101.jpg',
         'images/Nature/PJO05149.jpg',
-        'images/Nature/PJO05965.jpg',
-        'images/Nature/PJO06296.jpg',
-        'images/Nature/PJO069652.jpg',
-        'images/Nature/PJO08967.jpg',
-        'images/Nature/PJO09062.jpg',
+        'images/Nature/Jimenez_Patricio_DSC_03112.jpg',
         'images/Nature/PJO09283.jpg',
-        'images/Nature/PJO09863.jpg',
-        'images/Nature/PJO09920.jpg',
-        'images/Nature/caracol.jpg',
-        'images/Nature/definitivosaltamonteenano.jpg',
-        'images/Nature/inbound4878903916891533968.jpg'
+        'images/Nature/DSC01761.jpg',
+        'images/Nature/PJO08967.jpg',
+        'images/Nature/PJO02818.jpg',
+        'images/Nature/DSC08590.jpg',
+        'images/Nature/DSC01770.jpg',
+        'images/Nature/DSC00088.jpg',
+        'images/Nature/DSC07853-17969db0.jpg',
+        'images/Nature/DSC03039.jpg',
+        'images/Nature/JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.jpg',
+        'images/Nature/DSC01788.jpg',
+        'images/Nature/DSC04789.jpg',
+        'images/Nature/DSC06045-1b482605.jpg',
+        'images/Nature/DSC06998.jpg',
+        'images/Nature/JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.jpg',
+        'images/Nature/PJO04035.jpg',
+        'images/Nature/PJO01504-2.jpg',
+        'images/Nature/DSC09699.jpg',
+        'images/Nature/DSC03123.jpg',
+        'images/Nature/PJO05534.jpg',
+        'images/Nature/PJO05843.jpg',
+        'images/Nature/PJO01455.jpg',
+        'images/Nature/DSC06286-2-2.jpg',
+        'images/Nature/PJO069652.jpg',
+        'images/Nature/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.jpg',
+        'images/Nature/PJO05965.jpg',
+        'images/Nature/DSC06215-ca4b56a4-2500.jpg',
+        'images/Nature/PJO08386-2.jpg'
       ]
     },
     {
       key:'australia', name:'Sport', accent:'#D9683B', bgTone:'#23140e', eyebrow:'Sport',
-      hero:'images/Sport/PJO01917.jpg',
+      hero:'images/Sport/DSC07377_-_2-f8a343cf.jpg',
       cards:[
-        {img:'images/Sport/PJO01917.jpg',            place:'Action',              stars:'★★★★★ 4.9'},
-        {img:'images/Sport/DSC07377_-_2-f8a343cf.jpg', place:'Motion',            stars:'★★★★☆ 4.7'},
+        {img:'images/Sport/DSC07377_-_2-f8a343cf.jpg', place:'Action',            stars:'★★★★★ 4.9'},
+        {img:'images/Sport/PJO01917.jpg',            place:'Motion',              stars:'★★★★☆ 4.7'},
         {img:'images/Sport/PJO04973-f6a2848a.jpg',   place:'Intensity',           stars:'★★★★☆ 4.7'}
       ],
       all:[
-        'images/Sport/DSC07377_-_2-f8a343cf.jpg',
         'images/Sport/DSC07386-f7ad26b2.jpg',
-        'images/Sport/PJO01917.jpg',
-        'images/Sport/PJO04973-f6a2848a.jpg'
+        'images/Sport/DSC07377_-_2-f8a343cf.jpg',
+        'images/Sport/PJO04973-f6a2848a.jpg',
+        'images/Sport/PJO01917.jpg'
       ]
     },
     {
       key:'street', name:'Street', accent:'#6C7A89', bgTone:'#161a20', eyebrow:'Street',
-      hero:'images/Street/PJO08972.jpg',
+      hero:'images/Street/PJO02812.jpg',
       cards:[
-        {img:'images/Street/PJO08972.jpg',           place:'Urban life',          stars:'★★★★★ 4.9'},
-        {img:'images/Street/PJO02812.jpg',            place:'Street frame',        stars:'★★★★☆ 4.7'},
-        {img:'images/Street/PJO09005.jpg',            place:'City shadows',        stars:'★★★★★ 4.8'}
+        {img:'images/Street/PJO02812.jpg',           place:'Street frame',        stars:'★★★★★ 4.9'},
+        {img:'images/Street/PJO02840.jpg',           place:'Urban life',          stars:'★★★★☆ 4.7'},
+        {img:'images/Street/PJO05819.jpg',           place:'City shadows',        stars:'★★★★★ 4.8'}
       ],
       all:[
-        'images/Street/DSC01032-250a524f.jpg',
-        'images/Street/PJO02812.jpg',
         'images/Street/PJO02840.jpg',
         'images/Street/PJO04575-d7bdd0bc.jpg',
-        'images/Street/PJO04590-176b30ca.jpg',
+        'images/Street/PJO02812.jpg',
         'images/Street/PJO04622-60cc4ccb.jpg',
-        'images/Street/PJO08972.jpg',
-        'images/Street/PJO09005.jpg'
+        'images/Street/PJO04590-176b30ca.jpg',
+        'images/Street/PJO06140-2.jpg',
+        'images/Street/DSC01032-250a524f.jpg',
+        'images/Street/PJO05819.jpg'
       ]
     }
   ];
+
+  // Dynamic Fisher-Yates shuffle to randomize images on each visit
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  continents.forEach(c => {
+    shuffleArray(c.all);
+  });
 
   let currentView = 'home'; // 'home', 'gallery', 'contact'
   let idx = 0;
@@ -1792,7 +1842,7 @@
   let currentBgSlot = 'A';
   let currentBgUrl = '';
   const TRANSITION_MS = 4800;
-  const CARD_SWAP_DELAY = 800;
+  const CARD_SWAP_DELAY = 60;
   const GALLERY_DRIFT_MS = 28000;
   let galleryDriftStartedAt = 0;
   const AUTOPLAY_MS = 12000;
@@ -2077,7 +2127,7 @@
     wheelLock = true;
     render(newIdx);
     restartAutoplay();
-    window.setTimeout(() => { wheelLock = false; }, TRANSITION_MS);
+    window.setTimeout(() => { wheelLock = false; }, 380);
   }
 
   function restartAutoplay(){
@@ -2090,7 +2140,7 @@
   /* =========================================================
      EXPLORATION MODE (FRAMELESS BOTTOM CARDS)
      ========================================================= */
-  function enterExploreMode(categoryKey) {
+  function enterExploreMode(categoryKey, targetPhotoUrl) {
     if (categoryKey) {
       const catIndex = continents.findIndex(c => c.key === categoryKey);
       if (catIndex !== -1 && catIndex !== idx) {
@@ -2107,9 +2157,12 @@
     exploreCardsTrack.innerHTML = '';
     activePhotoIndex = 0;
 
-    const heroMatchIdx = currentCat.all.indexOf(currentCat.hero);
-    if (heroMatchIdx !== -1) {
-      activePhotoIndex = heroMatchIdx;
+    const target = targetPhotoUrl || currentCat.hero;
+    if (target) {
+      const targetIdx = currentCat.all.indexOf(target);
+      if (targetIdx !== -1) {
+        activePhotoIndex = targetIdx;
+      }
     }
 
     setCinematicBackground(currentCat.all[activePhotoIndex]);
@@ -2221,10 +2274,12 @@
     });
   });
 
-  [cardA, cardB, cardC].forEach(card => {
+  [cardA, cardB, cardC].forEach((card, cardIndex) => {
     card.addEventListener('click', (e) => {
       e.stopPropagation();
-      enterExploreMode(continents[idx].key);
+      const currentCat = continents[idx];
+      const targetCard = currentCat.cards[cardIndex];
+      enterExploreMode(currentCat.key, targetCard ? targetCard.img : null);
     });
   });
 
@@ -2256,7 +2311,12 @@
       if (entered || currentView !== 'home') return;
       entered = true;
       stage.classList.remove('is-starting');
+      stage.classList.add('from-home');
       switchView('gallery');
+
+      setTimeout(() => {
+        stage.classList.remove('from-home');
+      }, 5500);
 
       // Keep video smoothly playing through the slow 4.2s crossfade before pausing
       setTimeout(() => {
@@ -2372,8 +2432,8 @@
         }
       }
     } else if (currentView === 'gallery') {
-      if(e.key === 'ArrowRight' || e.key === 'ArrowDown') go(idx + 1);
-      if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(idx - 1);
+      if(e.key === 'ArrowRight' || e.key === 'ArrowDown') go(idx + 1, { force: true });
+      if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(idx - 1, { force: true });
     }
   });
 
@@ -2381,12 +2441,12 @@
     btn.addEventListener('click', () => {
       if (inExploreMode) exitExploreMode();
       const target = continents.findIndex(c => c.key === btn.dataset.target);
-      go(target);
+      go(target, { force: true });
     });
   });
 
-  document.getElementById('nextBtn').addEventListener('click', () => go(idx + 1));
-  document.getElementById('prevBtn').addEventListener('click', () => go(idx - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => go(idx + 1, { force: true }));
+  document.getElementById('prevBtn').addEventListener('click', () => go(idx - 1, { force: true }));
 
   stage.addEventListener('wheel', (event) => {
     if (currentView !== 'gallery' || inExploreMode) return;
