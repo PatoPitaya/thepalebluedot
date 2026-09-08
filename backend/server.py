@@ -10,6 +10,6 @@ from http.server import ThreadingHTTPServer
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', '8000'))
-    httpd = ThreadingHTTPServer(('127.0.0.1', port), MeridianHandler)
-    print(f'Listening on http://127.0.0.1:{port}')
+    httpd = ThreadingHTTPServer(('0.0.0.0', port), MeridianHandler)
+    print(f'Listening on http://0.0.0.0:{port}')
     httpd.serve_forever()
