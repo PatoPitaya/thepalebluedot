@@ -213,7 +213,7 @@ class MeridianHandler(BaseHTTPRequestHandler):
             self._send_json(
                 200,
                 {
-                    "message": "Consulta enviada correctamente. Te responderé pronto.",
+                    "message": "Message sent successfully. I will get back to you soon.",
                 },
             )
             return

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The pale blue dot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,13 @@
     --panel-border: rgba(255, 255, 255, 0.14);
   }
 
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button, a, input, textarea {
+    touch-action: manipulation;
+  }
   html, body {
     height: 100%;
     margin: 0;
@@ -941,6 +947,38 @@
     height: auto;
   }
 
+  .explore-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 25;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(14, 12, 10, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.25s ease;
+    opacity: 0.85;
+  }
+  .explore-nav-arrow.prev { left: max(16px, env(safe-area-inset-left)); }
+  .explore-nav-arrow.next { right: max(16px, env(safe-area-inset-right)); }
+  .explore-nav-arrow:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: var(--accent);
+    color: var(--accent);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.05);
+  }
+  .explore-nav-arrow:active { transform: translateY(-50%) scale(0.92); }
+
 
   /* =========================================================
      SECTION 3: CONTACT & ABOUT SECTION
@@ -1370,76 +1408,461 @@
 
 
   /* =========================================================
-     RESPONSIVE DESIGN
+     RESPONSIVE DESIGN (MOBILE FIRST REFINEMENTS)
      ========================================================= */
   @media (max-width: 980px) {
     .main-nav {
       grid-template-columns: 1fr;
       justify-items: center;
-      gap: 14px;
-      padding: 20px 20px 0;
+      gap: 10px;
+      padding: max(16px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) 0 max(18px, env(safe-area-inset-left));
     }
-    .wordmark { font-size: 19px; }
+    .wordmark {
+      font-size: 19px;
+      letter-spacing: 0.02em;
+    }
     .nav-links {
-      gap: 20px;
-      background: rgba(16, 14, 12, 0.6);
+      gap: 16px;
+      background: rgba(16, 14, 12, 0.72);
       border: 1px solid var(--paper-faint);
       border-radius: 999px;
-      padding: 8px 16px;
-      backdrop-filter: blur(12px);
+      padding: 7px 18px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
-    .nav-links a { font-size: 13.5px; }
+    .nav-links a {
+      font-size: 13.5px;
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+    }
 
-    .hero-section { padding-top: 105px; padding-left: 20px; padding-right: 20px; }
-    .hero-phrase { font-size: clamp(22px, 5.5vw, 34px); }
-    .hero-start-btn { padding: 12px 34px; font-size: 12px; letter-spacing: 0.24em; }
+    .hero-section {
+      padding-top: max(115px, calc(env(safe-area-inset-top) + 95px));
+      padding-left: max(22px, env(safe-area-inset-left));
+      padding-right: max(22px, env(safe-area-inset-right));
+      padding-bottom: max(30px, env(safe-area-inset-bottom));
+      justify-content: center;
+    }
+    .hero-text-wrapper {
+      margin-bottom: 28px;
+    }
+    .hero-phrase {
+      font-size: clamp(21px, 5.2vw, 32px);
+      line-height: 1.34;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.9);
+    }
+    .hero-start-btn {
+      padding: 13px 40px;
+      min-height: 48px;
+      font-size: 12.5px;
+      letter-spacing: 0.24em;
+    }
+    .hero-start-btn:active {
+      transform: scale(0.96);
+    }
 
     .spine { display: none; }
-    .panel { padding-left: 20px; padding-right: 20px; padding-top: 110px; align-items: flex-start; }
-    .panel-body { width: min(100%, 560px); min-height: auto; }
-    h1.title { font-size: clamp(38px, 14vw, 64px); line-height: 1.06; margin-bottom: 6px; padding-bottom: 0; overflow: visible; }
-    .desc { max-width: 100%; font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
     .cardzone { display: none; }
-    .bottombar { left: 20px; right: 20px; bottom: 18px; gap: 12px; }
+
+    .gallery-content {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .panel {
+      padding-left: max(22px, env(safe-area-inset-left));
+      padding-right: max(22px, env(safe-area-inset-right));
+      padding-top: max(115px, calc(env(safe-area-inset-top) + 90px));
+      padding-bottom: max(85px, calc(env(safe-area-inset-bottom) + 70px));
+      align-items: flex-start;
+      justify-content: flex-start;
+      min-height: 100vh;
+      min-height: 100dvh;
+      box-sizing: border-box;
+    }
+    .panel-body {
+      width: min(100%, 540px);
+      min-height: auto;
+    }
+    h1.title {
+      font-size: clamp(36px, 13vw, 58px);
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    .desc {
+      max-width: 100%;
+      font-size: 15.5px;
+      line-height: 1.62;
+      margin-bottom: 24px;
+      color: rgba(250, 247, 242, 0.88);
+    }
+    .explore {
+      padding: 14px 30px;
+      min-height: 46px;
+      font-size: 14.5px;
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.55);
+    }
+    .explore:active {
+      transform: scale(0.96);
+    }
+
+    .bottombar {
+      left: max(18px, env(safe-area-inset-left));
+      right: max(18px, env(safe-area-inset-right));
+      bottom: max(16px, env(safe-area-inset-bottom));
+      gap: 12px;
+    }
     .track { margin: 0; max-width: none; }
+    .arrows { gap: 10px; }
+    .arrow-btn {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 50%;
+    }
+    .arrow-btn:active {
+      transform: scale(0.92);
+    }
 
-    .contact-section { padding: 90px 20px 40px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-    .contact-layout { grid-template-columns: 1fr; height: auto; max-height: none; min-height: 0; }
-    .contact-photo { width: min(100%, 540px); height: auto; min-height: 0; max-height: none; aspect-ratio: 5304 / 6630; margin: 0 auto; }
-    .contact-photo img { width: 100%; height: 100%; min-height: 0; max-height: none; object-position: center; }
-    .contact-info-panel { width: min(100%, 540px); margin: 0 auto; padding: 24px; height: auto; min-height: 0; }
-    .explore-top-bar { top: 16px; left: 16px; right: 16px; }
-    .explore-cards-wrap { bottom: 12px; }
-    .explore-viewer-container { padding: 56px 12px 102px; }
-    .explore-viewer-img.is-portrait { max-height: calc(100vh - 164px); max-width: 96vw; }
-    .explore-viewer-img.is-landscape { max-width: 96vw; max-height: calc(100vh - 164px); }
-    .explore-card { flex: 0 0 54px; height: 76px; border-radius: 9px; }
-    .explore-cards-track { padding: 6px 16px; gap: 8px; }
-  }
-
-  @media (max-width: 520px) {
-    .main-nav { padding-top: 14px; }
-    .nav-links { gap: 14px; padding: 6px 14px; }
-    .nav-links a { font-size: 12.5px; }
-    .panel { padding-top: 100px; }
-    .bottombar { bottom: 12px; }
-    .explore-top-bar { top: 12px; left: 12px; right: 12px; }
-    .explore-cat-badge { font-size: 16px; }
-    .explore-close-pill { padding: 6px 14px; font-size: 13px; }
-    .explore-cards-wrap { bottom: 8px; }
-    .explore-viewer-container { padding: 48px 8px 82px; }
-    .explore-viewer-img.is-portrait { max-height: calc(100vh - 136px); max-width: 98vw; }
-    .explore-viewer-img.is-landscape { max-width: 98vw; max-height: calc(100vh - 136px); }
-    .explore-card { flex: 0 0 44px; height: 62px; border-radius: 8px; }
-    .explore-cards-track { padding: 4px 12px; gap: 6px; }
-    .form-row { grid-template-columns: 1fr; gap: 8px; }
+    .contact-section {
+      padding: max(96px, calc(env(safe-area-inset-top) + 82px)) max(18px, env(safe-area-inset-right)) max(30px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      align-items: flex-start;
+    }
+    .contact-layout {
+      grid-template-columns: 1fr;
+      height: auto;
+      max-height: none;
+      min-height: 0;
+      gap: 20px;
+      max-width: 580px;
+    }
+    .contact-photo {
+      width: 100%;
+      height: clamp(220px, 32vh, 320px);
+      min-height: 0;
+      max-height: 320px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .contact-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+      border-radius: 20px;
+    }
+    .contact-info-panel {
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px;
+      height: auto;
+      min-height: 0;
+      border-radius: 20px;
+      gap: 12px;
+    }
+    .about-title {
+      font-size: clamp(1.6rem, 5.5vw, 2.1rem);
+    }
+    .about-desc {
+      font-size: 14.5px;
+      line-height: 1.58;
+    }
+    /* iOS input font-size must be at least 16px to prevent automatic viewport zoom */
+    .form-input, .form-textarea {
+      font-size: 16px !important;
+      min-height: 46px;
+      padding: 0.75rem 1rem;
+    }
+    .form-textarea {
+      min-height: 85px;
+      height: 95px;
+    }
+    .form-btn {
+      width: 100%;
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      padding: 12px 28px;
+    }
+    .form-btn:active {
+      transform: scale(0.97);
+    }
+    .contact-social-section {
+      margin-top: 4px;
+    }
     .social-links {
       flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
+      gap: 8px;
     }
-    .social-sep {
-      display: none;
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .social-link:active {
+      background: rgba(255, 255, 255, 0.14);
+      transform: scale(0.98);
+    }
+
+    .explore-top-bar {
+      top: max(14px, env(safe-area-inset-top));
+      left: max(14px, env(safe-area-inset-left));
+      right: max(14px, env(safe-area-inset-right));
+    }
+    .explore-cat-badge {
+      font-size: 17px;
+    }
+    .explore-photo-counter {
+      font-size: 13px;
+      padding: 4px 12px;
+    }
+    .explore-close-pill {
+      padding: 8px 18px;
+      min-height: 40px;
+      font-size: 13.5px;
+    }
+    .explore-close-pill:active {
+      transform: scale(0.95);
+    }
+    .explore-cards-wrap {
+      bottom: max(10px, env(safe-area-inset-bottom));
+    }
+    .explore-cards-track {
+      padding: 6px 16px;
+      gap: 8px;
+    }
+    .explore-card {
+      flex: 0 0 54px;
+      height: 74px;
+      border-radius: 9px;
+    }
+    .explore-viewer-container {
+      padding: max(60px, calc(env(safe-area-inset-top) + 48px)) 12px max(96px, calc(env(safe-area-inset-bottom) + 84px));
+    }
+    .explore-viewer-img.is-portrait {
+      max-height: calc(100vh - 165px);
+      max-height: calc(100dvh - 165px);
+      max-width: 95vw;
+    }
+    .explore-viewer-img.is-landscape {
+      max-width: 96vw;
+      max-height: calc(100vh - 165px);
+      max-height: calc(100dvh - 165px);
+    }
+    .explore-nav-arrow {
+      width: 42px;
+      height: 42px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .main-nav {
+      gap: 8px;
+      padding: max(12px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
+    }
+    .wordmark {
+      font-size: 18px;
+    }
+    .nav-links {
+      gap: 12px;
+      padding: 6px 14px;
+    }
+    .nav-links a {
+      font-size: 13px;
+    }
+
+    .hero-section {
+      padding-top: max(100px, calc(env(safe-area-inset-top) + 80px));
+    }
+    .hero-phrase {
+      font-size: clamp(19px, 5.8vw, 26px);
+      line-height: 1.36;
+    }
+    .hero-start-btn {
+      padding: 12px 36px;
+      min-height: 46px;
+      font-size: 12px;
+    }
+
+    .panel {
+      padding-top: max(100px, calc(env(safe-area-inset-top) + 82px));
+      padding-bottom: max(75px, calc(env(safe-area-inset-bottom) + 65px));
+      padding-left: max(18px, env(safe-area-inset-left));
+      padding-right: max(18px, env(safe-area-inset-right));
+    }
+    h1.title {
+      font-size: clamp(32px, 13vw, 46px);
+      margin-bottom: 6px;
+    }
+    .desc {
+      font-size: 14.5px;
+      line-height: 1.58;
+      margin-bottom: 20px;
+    }
+    .explore {
+      padding: 12px 26px;
+      min-height: 44px;
+      font-size: 14px;
+    }
+    .bottombar {
+      left: max(14px, env(safe-area-inset-left));
+      right: max(14px, env(safe-area-inset-right));
+      bottom: max(12px, env(safe-area-inset-bottom));
+    }
+    .pagecount {
+      font-size: 12.5px;
+    }
+    .arrow-btn {
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
+      min-height: 42px;
+    }
+
+    .contact-section {
+      padding: max(88px, calc(env(safe-area-inset-top) + 74px)) max(14px, env(safe-area-inset-right)) max(26px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+    }
+    .contact-photo {
+      height: clamp(190px, 28vh, 260px);
+    }
+    .contact-info-panel {
+      padding: 20px 16px;
+    }
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .explore-top-bar {
+      top: max(12px, env(safe-area-inset-top));
+      left: max(12px, env(safe-area-inset-left));
+      right: max(12px, env(safe-area-inset-right));
+    }
+    .explore-top-left {
+      gap: 8px;
+    }
+    .explore-cat-badge {
+      font-size: 15px;
+    }
+    .explore-photo-counter {
+      font-size: 12px;
+      padding: 4px 10px;
+    }
+    .explore-close-pill {
+      padding: 7px 14px;
+      min-height: 38px;
+      font-size: 12.5px;
+    }
+    .explore-cards-wrap {
+      bottom: max(8px, env(safe-area-inset-bottom));
+    }
+    .explore-cards-track {
+      padding: 4px 12px;
+      gap: 7px;
+    }
+    .explore-card {
+      flex: 0 0 48px;
+      height: 66px;
+      border-radius: 8px;
+    }
+    .explore-viewer-container {
+      padding: max(52px, calc(env(safe-area-inset-top) + 40px)) 8px max(86px, calc(env(safe-area-inset-bottom) + 76px));
+    }
+    .explore-viewer-img.is-portrait {
+      max-height: calc(100vh - 146px);
+      max-height: calc(100dvh - 146px);
+      max-width: 96vw;
+    }
+    .explore-viewer-img.is-landscape {
+      max-width: 98vw;
+      max-height: calc(100vh - 146px);
+      max-height: calc(100dvh - 146px);
+    }
+    .explore-nav-arrow {
+      width: 38px;
+      height: 38px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    h1.title { font-size: 29px; }
+    .desc { font-size: 13.5px; }
+    .bottombar { gap: 8px; }
+    .explore-card { flex: 0 0 44px; height: 60px; }
+  }
+
+  @media (max-height: 520px) and (orientation: landscape) {
+    .main-nav {
+      position: absolute;
+      padding: 8px 16px 0;
+      gap: 6px;
+    }
+    .wordmark { font-size: 16px; }
+    .nav-links { padding: 4px 12px; gap: 10px; }
+    .nav-links a { font-size: 12px; }
+
+    .hero-section {
+      padding-top: 65px;
+      padding-bottom: 16px;
+    }
+    .hero-phrase { font-size: 18px; margin-bottom: 12px; }
+    .hero-start-btn { min-height: 40px; padding: 8px 24px; font-size: 11px; }
+
+    .panel {
+      padding-top: 65px;
+      padding-bottom: 50px;
+    }
+    h1.title { font-size: 28px; margin-bottom: 4px; }
+    .desc { font-size: 13px; line-height: 1.4; margin-bottom: 10px; }
+    .explore { padding: 8px 20px; font-size: 12.5px; min-height: 38px; }
+
+    .bottombar {
+      bottom: 6px;
+    }
+    .arrow-btn {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+    }
+
+    .explore-top-bar { top: 6px; }
+    .explore-cards-wrap { bottom: 4px; }
+    .explore-card { height: 50px; flex: 0 0 38px; }
+    .explore-viewer-container {
+      padding: 40px 8px 60px;
+    }
+    .explore-viewer-img.is-portrait,
+    .explore-viewer-img.is-landscape {
+      max-height: calc(100vh - 106px);
+      max-height: calc(100dvh - 106px);
+    }
+
+    .contact-section {
+      padding-top: 65px;
+    }
+    .contact-layout {
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .contact-photo {
+      height: 100%;
+      max-height: none;
     }
   }
 </style>
@@ -1449,7 +1872,7 @@
 <div class="stage" id="stage">
 
   <div class="bg-canvas">
-    <div class="bg-layer active" id="bgLayerA" style="background-image:url('images/optimized/Landscape/PJO05334.webp')"></div>
+    <div class="bg-layer active" id="bgLayerA" style="background-image:url('images/Landscape/display/PJO05334.webp')"></div>
     <div class="bg-layer" id="bgLayerB"></div>
   </div>
 
@@ -1539,13 +1962,13 @@
 
     <!-- Destination Card Stack (Side Preview) -->
     <div class="cardzone show" id="cardzone">
-      <div class="dcard b" id="cardB" style="background-image:url('images/thumbs/Landscape/PJO05300.webp')">
+      <div class="dcard b" id="cardB" style="background-image:url('images/Landscape/thumbs/PJO05300.webp')">
         <div class="meta"><p class="place">Open landscape</p><p class="stars">★★★★☆ 4.7</p></div>
       </div>
-      <div class="dcard a" id="cardA" style="background-image:url('images/thumbs/Landscape/PJO05334.webp')">
+      <div class="dcard a" id="cardA" style="background-image:url('images/Landscape/thumbs/PJO05334.webp')">
         <div class="meta"><p class="place">Mountain light</p><p class="stars">★★★★★ 4.9</p></div>
       </div>
-      <div class="dcard c" id="cardC" style="background-image:url('images/thumbs/Landscape/faro-fb33fbb3.webp')">
+      <div class="dcard c" id="cardC" style="background-image:url('images/Landscape/thumbs/faro-fb33fbb3.webp')">
         <div class="meta"><p class="place">Lighthouse</p><p class="stars">★★★★☆ 4.6</p></div>
       </div>
     </div>
@@ -1579,8 +2002,14 @@
 
     <!-- Explore Main Photo Lightbox Viewer (Dual Buffer for 100% Fluid Zero-Flicker Transitions) -->
     <div class="explore-viewer-container" id="exploreViewerContainer">
+      <button class="explore-nav-arrow prev" id="explorePrevBtn" type="button" aria-label="Previous photo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
       <img class="explore-viewer-img active" id="exploreViewerImgA" src="" alt="" />
       <img class="explore-viewer-img" id="exploreViewerImgB" src="" alt="" />
+      <button class="explore-nav-arrow next" id="exploreNextBtn" type="button" aria-label="Next photo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
     </div>
 
     <!-- Explore Bottom Thumbnails Track -->
@@ -1596,7 +2025,7 @@
     <div class="contact-layout">
 
       <div class="contact-panel contact-photo">
-        <img src="images/optimized/contact/PJO05448.webp" alt="Patricio Jiménez — Photographer" loading="lazy">
+        <img src="images/contact/display/PJO05448.webp" alt="Patricio Jiménez — Photographer" loading="lazy">
       </div>
 
       <div class="contact-panel contact-info-panel">
@@ -1834,8 +2263,10 @@
   let timer = null;
   let cardSwapTimer = null;
   let wheelLock = false;
-  let touchStartY = null;
   let renderToken = 0;
+  let touchStartX = null;
+  let touchStartY = null;
+  let touchStartTime = 0;
   let inExploreMode = false;
   let activePhotoIndex = 0;
   let exploreCardsIntroTimer = null;
@@ -1884,14 +2315,20 @@
 
   function imageVariantUrl(imageUrl, variant) {
     if (!imageUrl) return '';
-    const clean = imageUrl
-      .replace(/^images\/(?:optimized\/|thumbs\/|display\/)?/, '')
+    let clean = imageUrl
+      .replace(/^\/?images\//, '')
+      .replace(/^(?:optimized\/|thumbs\/|display\/)/, '')
       .replace(/\.jpe?g$/i, '.webp');
 
     const parts = clean.split('/');
-    if (parts.length >= 2) {
-      const section = parts[0];
-      const filename = parts.slice(1).join('/');
+    if (parts.length >= 3 && (parts[1] === 'display' || parts[1] === 'thumbs' || parts[1] === 'optimized')) {
+      clean = parts[0] + '/' + parts.slice(2).join('/');
+    }
+
+    const cleanParts = clean.split('/');
+    if (cleanParts.length >= 2) {
+      const section = cleanParts[0];
+      const filename = cleanParts.slice(1).join('/');
       return `images/${section}/${variant}/${filename}`;
     }
     return `images/${variant}/${clean}`;
@@ -2018,6 +2455,7 @@
     if (targetView === 'home') {
       isStartingGallery = false;
       stage.classList.remove('is-starting');
+      stage.classList.remove('from-home');
       root.style.setProperty('--accent', '#E8935B');
       root.style.setProperty('--bg-tone', '#0e0c0b');
       if (timer) clearInterval(timer);
@@ -2239,33 +2677,16 @@
     stage.classList.remove('explore-mode', 'explore-cards-intro');
     if (exploreViewerImgA) {
       exploreViewerImgA.classList.remove('active', 'prev');
-      exploreViewerImgA.src = '';
+      exploreViewerImgA.removeAttribute('src');
     }
     if (exploreViewerImgB) {
       exploreViewerImgB.classList.remove('active', 'prev');
-      exploreViewerImgB.src = '';
+      exploreViewerImgB.removeAttribute('src');
     }
     render(idx);
     restartAutoplay();
   }
 
-  // Fluid keyboard navigation in explore mode
-  window.addEventListener('keydown', (e) => {
-    if (!inExploreMode) return;
-    const currentCat = continents[idx];
-    if (!currentCat || !currentCat.all || currentCat.all.length === 0) return;
-
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      e.preventDefault();
-      selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
-    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      e.preventDefault();
-      selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      exitExploreMode();
-    }
-  });
 
   document.querySelectorAll('.explore').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -2286,6 +2707,44 @@
   exploreClosePill.addEventListener('click', (e) => {
     e.stopPropagation();
     exitExploreMode();
+  });
+
+  const explorePrevBtn = document.getElementById('explorePrevBtn');
+  const exploreNextBtn = document.getElementById('exploreNextBtn');
+
+  if (explorePrevBtn) {
+    explorePrevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const currentCat = continents[idx];
+      if (currentCat && currentCat.all) {
+        selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
+      }
+    });
+  }
+
+  if (exploreNextBtn) {
+    exploreNextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const currentCat = continents[idx];
+      if (currentCat && currentCat.all) {
+        selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
+      }
+    });
+  }
+
+  exploreViewerContainer.addEventListener('click', (e) => {
+    if (e.target.closest('.explore-nav-arrow') || e.target.closest('.explore-top-bar') || e.target.closest('.explore-cards-wrap')) return;
+    const rect = exploreViewerContainer.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const currentCat = continents[idx];
+    if (!currentCat || !currentCat.all) return;
+
+    if (clickX > width * 0.68) {
+      selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
+    } else if (clickX < width * 0.32) {
+      selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
+    }
   });
 
   exploreCardsTrack.addEventListener('wheel', (e) => {
@@ -2420,16 +2879,17 @@
       e.preventDefault();
       startCinematicVideoTransition();
     } else if (inExploreMode) {
+      const currentCat = continents[idx];
+      if (!currentCat || !currentCat.all || currentCat.all.length === 0) return;
       if (e.key === 'Escape') {
+        e.preventDefault();
         exitExploreMode();
       } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        if (activePhotoIndex < continents[idx].all.length - 1) {
-          selectExplorePhoto(activePhotoIndex + 1);
-        }
+        e.preventDefault();
+        selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        if (activePhotoIndex > 0) {
-          selectExplorePhoto(activePhotoIndex - 1);
-        }
+        e.preventDefault();
+        selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
       }
     } else if (currentView === 'gallery') {
       if(e.key === 'ArrowRight' || e.key === 'ArrowDown') go(idx + 1, { force: true });
@@ -2456,18 +2916,48 @@
   }, { passive:false });
 
   stage.addEventListener('touchstart', (event) => {
-    if (currentView !== 'gallery' || inExploreMode) return;
+    if (event.touches.length !== 1) return;
+    if (event.target.closest('#contactSection') || event.target.closest('#exploreCardsTrack') || event.target.closest('.explore-nav-arrow')) return;
+    touchStartX = event.touches[0].clientX;
     touchStartY = event.touches[0].clientY;
-  }, { passive:true });
+    touchStartTime = performance.now();
+  }, { passive: true });
 
   stage.addEventListener('touchend', (event) => {
-    if (currentView !== 'gallery' || inExploreMode || touchStartY === null) return;
+    if (touchStartX === null || touchStartY === null) return;
+    const endX = event.changedTouches[0].clientX;
     const endY = event.changedTouches[0].clientY;
+    const deltaX = touchStartX - endX;
     const deltaY = touchStartY - endY;
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+    const elapsed = performance.now() - touchStartTime;
+
+    touchStartX = null;
     touchStartY = null;
-    if (Math.abs(deltaY) < 35) return;
-    go(idx + (deltaY > 0 ? 1 : -1));
-  }, { passive:true });
+
+    if (Math.max(absX, absY) < 36 || elapsed > 900) return;
+
+    if (inExploreMode) {
+      if (absX > absY && absX > 36) {
+        const currentCat = continents[idx];
+        if (!currentCat || !currentCat.all) return;
+        if (deltaX > 0) {
+          selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
+        } else {
+          selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
+        }
+      } else if (absY > absX && deltaY < -45) {
+        exitExploreMode();
+      }
+    } else if (currentView === 'gallery') {
+      if (absX > absY && absX > 36) {
+        go(idx + (deltaX > 0 ? 1 : -1), { force: true });
+      } else if (absY > absX && absY > 40) {
+        go(idx + (deltaY > 0 ? 1 : -1), { force: true });
+      }
+    }
+  }, { passive: true });
 
 
   /* =========================================================
