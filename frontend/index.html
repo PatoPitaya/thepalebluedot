@@ -89,6 +89,15 @@
     will-change: opacity, transform;
   }
 
+  #stage[data-category="asia"] .bg-layer,
+  .bg-layer[data-bg="asia"] {
+    background-position: 68% center;
+  }
+  #stage[data-category="australia"] .bg-layer,
+  .bg-layer[data-bg="australia"] {
+    background-position: 25% center;
+  }
+
   .view-gallery .bg-layer,
   .view-contact .bg-layer {
     transition: opacity 450ms cubic-bezier(0.16, 1, 0.3, 1), transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -1439,24 +1448,28 @@
     }
 
     .hero-section {
-      padding-top: max(115px, calc(env(safe-area-inset-top) + 95px));
+      padding-top: max(96px, calc(env(safe-area-inset-top) + 78px));
       padding-left: max(22px, env(safe-area-inset-left));
       padding-right: max(22px, env(safe-area-inset-right));
-      padding-bottom: max(30px, env(safe-area-inset-bottom));
-      justify-content: center;
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+      justify-content: flex-start;
+    }
+    .hero-video {
+      object-position: 58.5% center;
     }
     .hero-text-wrapper {
-      margin-bottom: 28px;
+      max-width: 640px;
+      margin-bottom: 20px;
     }
     .hero-phrase {
-      font-size: clamp(21px, 5.2vw, 32px);
+      font-size: clamp(20px, 4.8vw, 28px);
       line-height: 1.34;
       text-shadow: 0 4px 30px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.9);
     }
     .hero-start-btn {
-      padding: 13px 40px;
-      min-height: 48px;
-      font-size: 12.5px;
+      padding: 11px 36px;
+      min-height: 44px;
+      font-size: 12px;
       letter-spacing: 0.24em;
     }
     .hero-start-btn:active {
@@ -1466,6 +1479,15 @@
     .spine { display: none; }
     .cardzone { display: none; }
 
+    #stage[data-category="asia"] .bg-layer,
+    .bg-layer[data-bg="asia"] {
+      background-position: 68% center;
+    }
+    #stage[data-category="australia"] .bg-layer,
+    .bg-layer[data-bg="australia"] {
+      background-position: 24% center;
+    }
+
     .gallery-content {
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
@@ -1473,7 +1495,7 @@
     .panel {
       padding-left: max(22px, env(safe-area-inset-left));
       padding-right: max(22px, env(safe-area-inset-right));
-      padding-top: max(115px, calc(env(safe-area-inset-top) + 90px));
+      padding-top: clamp(140px, calc(env(safe-area-inset-top) + 16vh), 210px);
       padding-bottom: max(85px, calc(env(safe-area-inset-bottom) + 70px));
       align-items: flex-start;
       justify-content: flex-start;
@@ -1513,6 +1535,8 @@
       right: max(18px, env(safe-area-inset-right));
       bottom: max(16px, env(safe-area-inset-bottom));
       gap: 12px;
+      z-index: 25;
+      pointer-events: auto;
     }
     .track { margin: 0; max-width: none; }
     .arrows { gap: 10px; }
@@ -1522,13 +1546,18 @@
       min-width: 44px;
       min-height: 44px;
       border-radius: 50%;
+      touch-action: manipulation;
+      pointer-events: auto !important;
+    }
+    .arrow-btn svg {
+      pointer-events: none;
     }
     .arrow-btn:active {
       transform: scale(0.92);
     }
 
     .contact-section {
-      padding: max(96px, calc(env(safe-area-inset-top) + 82px)) max(18px, env(safe-area-inset-right)) max(30px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+      padding: max(130px, calc(env(safe-area-inset-top) + 110px)) max(18px, env(safe-area-inset-right)) max(30px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       align-items: flex-start;
@@ -1539,25 +1568,34 @@
       max-height: none;
       min-height: 0;
       gap: 20px;
-      max-width: 580px;
+      max-width: 540px;
+      width: 100%;
+      margin: 0 auto;
     }
     .contact-photo {
       width: 100%;
-      height: clamp(220px, 32vh, 320px);
-      min-height: 0;
-      max-height: 320px;
+      max-width: 100%;
+      margin: 0 auto;
+      height: auto;
+      aspect-ratio: 1638 / 2048;
       border-radius: 20px;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12);
     }
     .contact-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 25%;
+      object-position: center;
+      display: block;
       border-radius: 20px;
     }
     .contact-info-panel {
       width: 100%;
+      max-width: 100%;
       margin: 0 auto;
       padding: 24px 20px;
       height: auto;
@@ -1652,21 +1690,68 @@
       border-radius: 9px;
     }
     .explore-viewer-container {
-      padding: max(60px, calc(env(safe-area-inset-top) + 48px)) 12px max(96px, calc(env(safe-area-inset-bottom) + 84px));
+      display: none !important;
+      pointer-events: none !important;
+    }
+    .explore-mode .explore-viewer-container {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      z-index: 25 !important;
+      position: absolute !important;
+      top: max(58px, calc(env(safe-area-inset-top) + 48px)) !important;
+      bottom: max(96px, calc(env(safe-area-inset-bottom) + 84px)) !important;
+      left: 0 !important;
+      right: 0 !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 12px !important;
+      box-sizing: border-box !important;
+    }
+    .explore-viewer-img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.98);
+      max-height: 100%;
+      max-width: min(calc(100vw - 24px), 94vw);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      pointer-events: auto;
+      border-radius: 14px;
+      box-shadow: 0 20px 50px -6px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.16);
+    }
+    .explore-viewer-img.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      z-index: 2;
+    }
+    .explore-viewer-img.prev {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.98);
+      z-index: 1;
     }
     .explore-viewer-img.is-portrait {
-      max-height: calc(100vh - 165px);
-      max-height: calc(100dvh - 165px);
-      max-width: 95vw;
+      max-height: 100%;
+      max-width: min(calc(100vw - 28px), 90vw);
     }
     .explore-viewer-img.is-landscape {
-      max-width: 96vw;
-      max-height: calc(100vh - 165px);
-      max-height: calc(100dvh - 165px);
+      max-width: min(calc(100vw - 20px), 96vw);
+      max-height: 100%;
     }
     .explore-nav-arrow {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      z-index: 35;
+      pointer-events: auto !important;
+      touch-action: manipulation;
+    }
+    .explore-nav-arrow svg {
+      pointer-events: none;
     }
   }
 
@@ -1687,20 +1772,37 @@
     }
 
     .hero-section {
-      padding-top: max(100px, calc(env(safe-area-inset-top) + 80px));
+      padding-top: max(82px, calc(env(safe-area-inset-top) + 68px));
+      justify-content: flex-start;
+    }
+    .hero-video {
+      object-position: 58.5% center;
+    }
+    .hero-text-wrapper {
+      max-width: 440px;
+      margin-bottom: 14px;
     }
     .hero-phrase {
-      font-size: clamp(19px, 5.8vw, 26px);
-      line-height: 1.36;
+      font-size: clamp(16.5px, 4.7vw, 21px);
+      line-height: 1.32;
     }
     .hero-start-btn {
-      padding: 12px 36px;
-      min-height: 46px;
-      font-size: 12px;
+      padding: 9px 30px;
+      min-height: 40px;
+      font-size: 11.5px;
+    }
+
+    #stage[data-category="asia"] .bg-layer,
+    .bg-layer[data-bg="asia"] {
+      background-position: 68% center;
+    }
+    #stage[data-category="australia"] .bg-layer,
+    .bg-layer[data-bg="australia"] {
+      background-position: 22% center;
     }
 
     .panel {
-      padding-top: max(100px, calc(env(safe-area-inset-top) + 82px));
+      padding-top: clamp(140px, calc(env(safe-area-inset-top) + 17vh), 205px);
       padding-bottom: max(75px, calc(env(safe-area-inset-bottom) + 65px));
       padding-left: max(18px, env(safe-area-inset-left));
       padding-right: max(18px, env(safe-area-inset-right));
@@ -1723,25 +1825,59 @@
       left: max(14px, env(safe-area-inset-left));
       right: max(14px, env(safe-area-inset-right));
       bottom: max(12px, env(safe-area-inset-bottom));
+      z-index: 25;
+      pointer-events: auto;
     }
     .pagecount {
       font-size: 12.5px;
     }
     .arrow-btn {
-      width: 42px;
-      height: 42px;
-      min-width: 42px;
-      min-height: 42px;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 50%;
+      touch-action: manipulation;
+      pointer-events: auto !important;
+    }
+    .arrow-btn svg {
+      pointer-events: none;
     }
 
     .contact-section {
-      padding: max(88px, calc(env(safe-area-inset-top) + 74px)) max(14px, env(safe-area-inset-right)) max(26px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+      padding: max(124px, calc(env(safe-area-inset-top) + 104px)) max(14px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+    }
+    .contact-layout {
+      width: 100%;
+      max-width: 100%;
+      gap: 16px;
     }
     .contact-photo {
-      height: clamp(190px, 28vh, 260px);
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      height: auto;
+      aspect-ratio: 1638 / 2048;
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+    .contact-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      border-radius: 18px;
     }
     .contact-info-panel {
+      width: 100%;
+      max-width: 100%;
       padding: 20px 16px;
+      border-radius: 18px;
     }
     .form-row {
       grid-template-columns: 1fr;
@@ -1781,21 +1917,74 @@
       border-radius: 8px;
     }
     .explore-viewer-container {
-      padding: max(52px, calc(env(safe-area-inset-top) + 40px)) 8px max(86px, calc(env(safe-area-inset-bottom) + 76px));
+      display: none !important;
+      pointer-events: none !important;
+    }
+    .explore-mode .explore-viewer-container {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+      z-index: 25 !important;
+      position: absolute !important;
+      top: max(54px, calc(env(safe-area-inset-top) + 44px)) !important;
+      bottom: max(90px, calc(env(safe-area-inset-bottom) + 80px)) !important;
+      left: 0 !important;
+      right: 0 !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 10px !important;
+      box-sizing: border-box !important;
+    }
+    .explore-viewer-img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.98);
+      max-height: 100%;
+      max-width: min(calc(100vw - 20px), 95vw);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      pointer-events: auto;
+      border-radius: 14px;
+      box-shadow: 0 18px 48px -4px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.16);
+    }
+    .explore-viewer-img.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      z-index: 2;
+    }
+    .explore-viewer-img.prev {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.98);
+      z-index: 1;
     }
     .explore-viewer-img.is-portrait {
-      max-height: calc(100vh - 146px);
-      max-height: calc(100dvh - 146px);
-      max-width: 96vw;
+      max-height: 100%;
+      max-width: min(calc(100vw - 24px), 88vw);
     }
     .explore-viewer-img.is-landscape {
-      max-width: 98vw;
-      max-height: calc(100vh - 146px);
-      max-height: calc(100dvh - 146px);
+      max-width: min(calc(100vw - 16px), 96vw);
+      max-height: 100%;
     }
     .explore-nav-arrow {
-      width: 38px;
-      height: 38px;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      z-index: 35;
+      pointer-events: auto !important;
+      touch-action: manipulation;
+    }
+    .explore-nav-arrow svg {
+      pointer-events: none;
+    }
+    .explore-nav-arrow.prev {
+      left: max(8px, env(safe-area-inset-left));
+    }
+    .explore-nav-arrow.next {
+      right: max(8px, env(safe-area-inset-right));
     }
   }
 
@@ -1817,11 +2006,12 @@
     .nav-links a { font-size: 12px; }
 
     .hero-section {
-      padding-top: 65px;
-      padding-bottom: 16px;
+      padding-top: 56px;
+      padding-bottom: 14px;
+      justify-content: flex-start;
     }
-    .hero-phrase { font-size: 18px; margin-bottom: 12px; }
-    .hero-start-btn { min-height: 40px; padding: 8px 24px; font-size: 11px; }
+    .hero-phrase { font-size: 16px; margin-bottom: 10px; }
+    .hero-start-btn { min-height: 36px; padding: 7px 22px; font-size: 10.5px; }
 
     .panel {
       padding-top: 65px;
@@ -1844,13 +2034,18 @@
     .explore-top-bar { top: 6px; }
     .explore-cards-wrap { bottom: 4px; }
     .explore-card { height: 50px; flex: 0 0 38px; }
-    .explore-viewer-container {
-      padding: 40px 8px 60px;
+    .explore-mode .explore-viewer-container {
+      position: absolute !important;
+      top: 38px !important;
+      bottom: 56px !important;
+      left: 0 !important;
+      right: 0 !important;
+      padding: 0 8px !important;
     }
     .explore-viewer-img.is-portrait,
     .explore-viewer-img.is-landscape {
-      max-height: calc(100vh - 106px);
-      max-height: calc(100dvh - 106px);
+      max-height: 100% !important;
+      max-width: 95vw !important;
     }
 
     .contact-section {
@@ -1861,8 +2056,20 @@
       gap: 14px;
     }
     .contact-photo {
+      height: auto;
+      max-height: 75vh;
+      width: auto;
+      max-width: 40vw;
+      aspect-ratio: 1638 / 2048;
+      border-radius: 14px;
+    }
+    .contact-photo img {
+      width: 100%;
       height: 100%;
-      max-height: none;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      border-radius: 14px;
     }
   }
 </style>
@@ -1872,7 +2079,7 @@
 <div class="stage" id="stage">
 
   <div class="bg-canvas">
-    <div class="bg-layer active" id="bgLayerA" style="background-image:url('images/Landscape/display/PJO05334.webp')"></div>
+    <div class="bg-layer active" id="bgLayerA" data-bg="africa" style="background-image:url('images/Landscape/display/PJO05334.webp')"></div>
     <div class="bg-layer" id="bgLayerB"></div>
   </div>
 
@@ -2153,7 +2360,6 @@
         'images/Nature/PJO05101.jpg',
         'images/Nature/PJO00825.jpg',
         'images/Nature/DSC05627.jpg',
-        'images/Nature/inbound4878903916891533968.jpg',
         'images/Nature/DSC03520.jpg',
         'images/Nature/PJO05575-3.jpg',
         'images/Nature/caracol.jpg',
@@ -2238,7 +2444,6 @@
         'images/Street/PJO02812.jpg',
         'images/Street/PJO04622-60cc4ccb.jpg',
         'images/Street/PJO04590-176b30ca.jpg',
-        'images/Street/PJO06140-2.jpg',
         'images/Street/DSC01032-250a524f.jpg',
         'images/Street/PJO05819.jpg'
       ]
@@ -2406,7 +2611,7 @@
   /* =========================================================
      DUAL-BUFFER CINEMATIC PHOTO CROSSFADE
      ========================================================= */
-  function setCinematicBackground(imageUrl) {
+  function setCinematicBackground(imageUrl, categoryKey) {
     imageUrl = displayImageUrl(imageUrl);
     if (!imageUrl || imageUrl === currentBgUrl) return;
     currentBgUrl = imageUrl;
@@ -2418,6 +2623,21 @@
 
     incomingLayer.style.setProperty('--gallery-drift-delay', driftDelay);
     outgoingLayer.style.setProperty('--gallery-drift-delay', driftDelay);
+
+    let catKey = categoryKey;
+    if (!catKey) {
+      if (/Nature/i.test(imageUrl) || imageUrl.includes('PJO00934')) catKey = 'asia';
+      else if (/Sport/i.test(imageUrl) || imageUrl.includes('DSC07377')) catKey = 'australia';
+      else if (/Landscape/i.test(imageUrl)) catKey = 'africa';
+      else if (/Street/i.test(imageUrl)) catKey = 'street';
+      else if (/contact/i.test(imageUrl)) catKey = 'contact';
+      else if (typeof idx !== 'undefined' && continents[idx]) catKey = continents[idx].key;
+    }
+    if (catKey) {
+      incomingLayer.dataset.bg = catKey;
+    } else {
+      delete incomingLayer.dataset.bg;
+    }
 
     incomingLayer.style.backgroundImage = `url('${imageUrl}')`;
     incomingLayer.classList.remove('prev');
@@ -2480,6 +2700,8 @@
       root.style.setProperty('--accent', '#E8935B');
       root.style.setProperty('--bg-tone', '#14110f');
       setCinematicBackground('images/contact/PJO05448.jpg');
+      const contactSec = document.getElementById('contactSection');
+      if (contactSec) contactSec.scrollTop = 0;
     }
 
     if (!opts.skipHistory) {
@@ -2522,9 +2744,10 @@
 
     root.style.setProperty('--accent', c.accent);
     root.style.setProperty('--bg-tone', c.bgTone);
+    stage.dataset.category = c.key;
 
     if (!opts.keepPhoto && currentView === 'gallery') {
-      setCinematicBackground(c.hero);
+      setCinematicBackground(c.hero, c.key);
     }
 
     panels.forEach(p => p.classList.toggle('is-active', p.dataset.panel === c.key));
@@ -2712,24 +2935,36 @@
   const explorePrevBtn = document.getElementById('explorePrevBtn');
   const exploreNextBtn = document.getElementById('exploreNextBtn');
 
-  if (explorePrevBtn) {
-    explorePrevBtn.addEventListener('click', (e) => {
+  function handleExplorePrev(e) {
+    if (e) {
+      e.preventDefault();
       e.stopPropagation();
-      const currentCat = continents[idx];
-      if (currentCat && currentCat.all) {
-        selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
-      }
-    });
+    }
+    const currentCat = continents[idx];
+    if (currentCat && currentCat.all && currentCat.all.length > 0) {
+      selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
+    }
+  }
+
+  function handleExploreNext(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const currentCat = continents[idx];
+    if (currentCat && currentCat.all && currentCat.all.length > 0) {
+      selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
+    }
+  }
+
+  if (explorePrevBtn) {
+    explorePrevBtn.addEventListener('click', handleExplorePrev);
+    explorePrevBtn.addEventListener('touchend', handleExplorePrev);
   }
 
   if (exploreNextBtn) {
-    exploreNextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const currentCat = continents[idx];
-      if (currentCat && currentCat.all) {
-        selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
-      }
-    });
+    exploreNextBtn.addEventListener('click', handleExploreNext);
+    exploreNextBtn.addEventListener('touchend', handleExploreNext);
   }
 
   exploreViewerContainer.addEventListener('click', (e) => {
@@ -2905,8 +3140,33 @@
     });
   });
 
-  document.getElementById('nextBtn').addEventListener('click', () => go(idx + 1, { force: true }));
-  document.getElementById('prevBtn').addEventListener('click', () => go(idx - 1, { force: true }));
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+
+  function handleNext(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    go(idx + 1, { force: true });
+  }
+
+  function handlePrev(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    go(idx - 1, { force: true });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', handleNext);
+    nextBtn.addEventListener('touchend', handleNext);
+  }
+  if (prevBtn) {
+    prevBtn.addEventListener('click', handlePrev);
+    prevBtn.addEventListener('touchend', handlePrev);
+  }
 
   stage.addEventListener('wheel', (event) => {
     if (currentView !== 'gallery' || inExploreMode) return;
@@ -2917,7 +3177,11 @@
 
   stage.addEventListener('touchstart', (event) => {
     if (event.touches.length !== 1) return;
-    if (event.target.closest('#contactSection') || event.target.closest('#exploreCardsTrack') || event.target.closest('.explore-nav-arrow')) return;
+    if (event.target.closest('#contactSection') || 
+        event.target.closest('#exploreCardsTrack') || 
+        event.target.closest('.explore-nav-arrow') ||
+        event.target.closest('.bottombar') ||
+        event.target.closest('.arrow-btn')) return;
     touchStartX = event.touches[0].clientX;
     touchStartY = event.touches[0].clientY;
     touchStartTime = performance.now();
