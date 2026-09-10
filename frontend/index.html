@@ -1417,6 +1417,277 @@
 
 
   /* =========================================================
+     DESKTOP 1080P PROPORTIONAL CALIBRATION (1920x1080 & LAPTOPS)
+     Adapts typography, padding, cards, and panels for 1080p displays
+     while preserving 100% full asset and image quality.
+     ========================================================= */
+  @media (max-width: 1920px) and (min-width: 981px), (max-height: 1080px) and (min-width: 981px) {
+    /* 1. Header & Navigation */
+    .main-nav {
+      padding: 24px 38px 0;
+    }
+    .wordmark {
+      font-size: 15.5px;
+    }
+    .nav-links {
+      gap: 28px;
+    }
+    .nav-links a {
+      font-size: 13.5px;
+    }
+
+    /* 2. Hero Section (Home) */
+    .hero-section {
+      padding-top: clamp(85px, 12vh, 125px);
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .hero-text-wrapper {
+      max-width: 760px;
+      margin-bottom: 22px;
+    }
+    .hero-phrase {
+      font-size: clamp(20px, 2.0vw, 32px);
+      line-height: 1.34;
+    }
+    .hero-start-btn {
+      padding: 10px 32px;
+      min-height: 40px;
+      font-size: 11.5px;
+      letter-spacing: 0.24em;
+    }
+
+    /* 3. Gallery Section */
+    .spine {
+      width: 66px;
+    }
+    .spine-line {
+      left: 32px;
+    }
+    .spine-item {
+      padding: 16px 0;
+      font-size: 13.5px;
+      gap: 8px;
+    }
+    .spine-item .num {
+      font-size: 10px;
+    }
+
+    .panel {
+      padding-left: 120px;
+    }
+    .panel-body {
+      width: min(100%, 420px);
+      min-height: auto;
+    }
+    .coords {
+      font-size: 11.5px;
+      letter-spacing: .14em;
+      margin: 0 0 12px 0;
+      gap: 8px;
+    }
+    .coords::before {
+      width: 20px;
+    }
+    h1.title {
+      font-size: clamp(38px, 3.8vw, 64px);
+      line-height: 1.08;
+      margin: 0 0 4px 0;
+    }
+    .desc {
+      font-size: 14px;
+      line-height: 1.65;
+      max-width: 380px;
+      margin: 0 0 24px 0;
+    }
+    .explore {
+      padding: 11px 26px;
+      font-size: 13px;
+      gap: 8px;
+    }
+    .explore svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    /* Cards Zone on side */
+    .cardzone {
+      right: 48px;
+      gap: 12px;
+    }
+    .dcard {
+      border-radius: 14px;
+    }
+    .dcard.a {
+      width: 126px;
+      height: 192px;
+      margin: 0 2px;
+    }
+    .dcard.b {
+      width: 100px;
+      height: 150px;
+      margin-bottom: 8px;
+    }
+    .dcard.c {
+      width: 100px;
+      height: 150px;
+      margin-bottom: 8px;
+    }
+
+    /* Gallery Bottom Bar */
+    .bottombar {
+      left: 120px;
+      right: 48px;
+      bottom: 28px;
+    }
+    .track {
+      max-width: 220px;
+      margin: 0 20px;
+    }
+    .arrow-btn {
+      width: 34px;
+      height: 34px;
+    }
+    .pagecount {
+      font-size: 12px;
+    }
+
+    /* 4. Contact & About Section */
+    .contact-section {
+      padding: 36px 24px;
+    }
+    .contact-layout {
+      max-width: 960px;
+      height: min(82vh, 620px);
+      gap: 22px;
+    }
+    .contact-panel,
+    .contact-photo,
+    .contact-photo img {
+      border-radius: 20px;
+    }
+    .contact-info-panel {
+      padding: 22px 28px 24px;
+      gap: 8px;
+      border-radius: 20px;
+    }
+    .about-block {
+      padding-bottom: 8px;
+    }
+    .about-pill {
+      font-size: 10.5px;
+      padding: 3px 11px;
+      margin-bottom: 4px;
+    }
+    .about-title {
+      font-size: clamp(1.35rem, 1.8vw, 1.85rem);
+      margin: 0 0 4px;
+    }
+    .about-desc {
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .contact-block-title {
+      font-size: 13.5px;
+      margin: 2px 0 4px 0;
+    }
+    .contact-form {
+      gap: 6px;
+    }
+    .form-row {
+      gap: 8px;
+    }
+    .form-input, .form-textarea {
+      font-size: 13px;
+      padding: 0.5rem 0.85rem;
+      border-radius: 9px;
+    }
+    .form-textarea {
+      min-height: 60px;
+      height: clamp(60px, 8vh, 78px);
+      line-height: 1.45;
+    }
+    .form-btn {
+      font-size: 13px;
+      padding: 7px 22px;
+      border-radius: 20px;
+    }
+    .form-feedback {
+      font-size: 13px;
+    }
+    .contact-social-section {
+      margin-top: 4px;
+      padding-top: 2px;
+      padding-bottom: 4px;
+    }
+    .social-divider {
+      margin-bottom: 6px;
+    }
+    .social-label {
+      font-size: 11px;
+      margin: 0 0 6px 0;
+    }
+    .social-links {
+      gap: 8px;
+    }
+    .social-link {
+      font-size: 11.5px;
+      padding: 4px 12px;
+      gap: 6px;
+    }
+    .social-link svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    /* 5. Explore Mode Lightbox */
+    .explore-top-bar {
+      top: 16px;
+      left: 28px;
+      right: 28px;
+    }
+    .explore-cat-badge {
+      font-size: 15.5px;
+    }
+    .explore-photo-counter {
+      font-size: 12.5px;
+      padding: 4px 12px;
+    }
+    .explore-close-pill {
+      font-size: 13px;
+      padding: 5px 16px;
+      gap: 6px;
+    }
+    .explore-viewer-container {
+      padding: 48px 20px 96px;
+    }
+    .explore-cards-wrap {
+      bottom: 12px;
+    }
+    .explore-card {
+      flex: 0 0 54px;
+      height: 68px;
+      border-radius: 8px;
+    }
+    .explore-cards-track {
+      padding: 6px 28px;
+      gap: 8px;
+    }
+    .explore-nav-arrow {
+      width: 38px;
+      height: 38px;
+    }
+    .explore-viewer-img.is-portrait {
+      max-height: min(calc(100vh - 160px), 820px);
+    }
+    .explore-viewer-img.is-landscape {
+      max-height: min(calc(100vh - 160px), 820px);
+      max-width: min(94vw, 1500px);
+    }
+  }
+
+
+  /* =========================================================
      RESPONSIVE DESIGN (MOBILE FIRST REFINEMENTS)
      ========================================================= */
   @media (max-width: 980px) {
@@ -3064,23 +3335,31 @@
         });
       }
 
+      let transitionTriggered = false;
+      const triggerTransition = () => {
+        if (transitionTriggered) return;
+        transitionTriggered = true;
+        heroBgVideo.removeEventListener('timeupdate', onTimeUpdate);
+        heroBgVideo.removeEventListener('ended', onEnded);
+        enterGallery();
+      };
+
       const onTimeUpdate = () => {
         const dur = heroBgVideo.duration;
-        // Wait until the final moment of the video before initiating the luxury blend
+        // Trigger transition 0.5s earlier, smoothly blending into gallery
         if (dur && Number.isFinite(dur) && dur > 1.2) {
-          if (heroBgVideo.currentTime >= dur - 0.15) {
-            heroBgVideo.removeEventListener('timeupdate', onTimeUpdate);
-            // Brief graceful hold on the final frame to breathe before dissolving to gallery
-            setTimeout(enterGallery, 450);
+          if (heroBgVideo.currentTime >= dur - 0.5) {
+            triggerTransition();
           }
         }
       };
 
+      const onEnded = () => {
+        triggerTransition();
+      };
+
       heroBgVideo.addEventListener('timeupdate', onTimeUpdate);
-      heroBgVideo.addEventListener('ended', () => {
-        heroBgVideo.removeEventListener('timeupdate', onTimeUpdate);
-        setTimeout(enterGallery, 450);
-      }, { once: true });
+      heroBgVideo.addEventListener('ended', onEnded, { once: true });
 
       // Dynamic safety fallback based on actual video duration
       const safetyTimeout = (heroBgVideo.duration && Number.isFinite(heroBgVideo.duration))
