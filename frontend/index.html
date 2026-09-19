@@ -38,6 +38,20 @@
   button, a, input, textarea {
     touch-action: manipulation;
   }
+  /* Image Asset Protection & Anti-Theft (Desktop & Mobile) */
+  img,
+  .explore-viewer-img,
+  .bg-layer,
+  .dcard,
+  .explore-card,
+  .contact-photo img {
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+  }
   html, body {
     height: 100%;
     margin: 0;
@@ -743,6 +757,79 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   }
 
+  .explore-top-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .explore-zoom-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    border-radius: 50%;
+    background: rgba(14, 12, 11, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #fff;
+    cursor: pointer;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+    padding: 0;
+    touch-action: manipulation;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .explore-zoom-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px) scale(1.05);
+  }
+
+  .explore-zoom-btn:active {
+    transform: translateY(0) scale(0.92);
+  }
+
+  .explore-zoom-btn .zoom-icon-in,
+  .explore-zoom-btn .zoom-icon-out {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+  }
+
+  .explore-zoom-btn .zoom-icon-out {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.65) rotate(-90deg);
+  }
+
+  .explore-zoom-btn.is-active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(14, 12, 11, 0.82);
+    box-shadow: 0 0 16px rgba(232, 147, 91, 0.35), 0 4px 16px rgba(0, 0, 0, 0.6);
+  }
+
+  .explore-zoom-btn.is-active .zoom-icon-in {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.65) rotate(90deg);
+  }
+
+  .explore-zoom-btn.is-active .zoom-icon-out {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+
   .explore-close-pill {
     display: inline-flex;
     align-items: center;
@@ -1013,10 +1100,20 @@
   /* Zoomed state: completely clear UI elements for 100% unobstructed image appreciation */
   .explore-mode.is-zoomed .explore-nav-arrow,
   .explore-mode.is-zoomed .explore-cards-wrap,
-  .explore-mode.is-zoomed .explore-top-bar {
+  .explore-mode.is-zoomed .explore-top-left,
+  .explore-mode.is-zoomed .explore-close-pill {
     opacity: 0 !important;
     pointer-events: none !important;
     transition: opacity 0.25s ease !important;
+  }
+
+  .explore-mode.is-zoomed .explore-top-bar {
+    pointer-events: none !important;
+  }
+
+  .explore-mode.is-zoomed .explore-zoom-btn {
+    opacity: 0.92 !important;
+    pointer-events: auto !important;
   }
 
 
@@ -1781,7 +1878,91 @@
       transform: scale(0.96);
     }
 
-    .spine { display: none; }
+    /* Mobile Spine Index (01 02 03 04 on the left side of section name) */
+    .spine {
+      display: flex !important;
+      position: absolute;
+      top: 0; bottom: 0;
+      left: max(8px, env(safe-area-inset-left));
+      width: 38px;
+      z-index: 20;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateX(-15px);
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+      pointer-events: none;
+    }
+    .view-gallery .spine {
+      opacity: 1 !important;
+      transform: translateX(0) !important;
+      pointer-events: auto;
+    }
+    .explore-mode .spine {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: translateY(18px) !important;
+    }
+    .spine-line {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 20%;
+      bottom: 20%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.22) 18%, rgba(255, 255, 255, 0.22) 82%, transparent);
+    }
+    .spine-item {
+      padding: 13px 0;
+      gap: 7px;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 13px;
+      touch-action: manipulation;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.42);
+      transition: color 0.35s ease, transform 0.25s ease;
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .spine-item:active {
+      transform: rotate(180deg) scale(0.92);
+    }
+    .spine-item .num {
+      font-family: var(--font-sans);
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      opacity: .6;
+      line-height: 1;
+    }
+    .spine-item .dot {
+      width: 4.5px;
+      height: 4.5px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity .4s ease, background .4s ease, box-shadow .4s ease;
+    }
+    .spine-item.active {
+      color: #ffffff;
+    }
+    .spine-item.active .dot {
+      opacity: 1;
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent);
+    }
+    .spine-item.active .num {
+      opacity: 1;
+      font-weight: 600;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+    }
+
     .cardzone { display: none; }
 
     #stage[data-category="africa"] .bg-layer,
@@ -1824,7 +2005,7 @@
       -webkit-overflow-scrolling: touch;
     }
     .panel {
-      padding-left: max(22px, env(safe-area-inset-left));
+      padding-left: max(54px, calc(env(safe-area-inset-left) + 44px));
       padding-right: max(22px, env(safe-area-inset-right));
       padding-top: clamp(140px, calc(env(safe-area-inset-top) + 16vh), 210px);
       padding-bottom: max(85px, calc(env(safe-area-inset-bottom) + 70px));
@@ -1894,18 +2075,9 @@
       pointer-events: auto;
     }
 
-    /* The Ultra-Minimalist Rail (Only 1 on top, vertical line, 4 at bottom) */
+    /* Hide mobile-rail since spine (01-04) is now integrated on the left side on mobile */
     .mobile-rail {
-      display: flex !important;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 6px 10px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
+      display: none !important;
     }
 
     .rail-num {
@@ -2169,6 +2341,15 @@
     .explore-close-pill:active {
       transform: scale(0.95);
     }
+    .explore-top-right {
+      gap: 8px;
+    }
+    .explore-zoom-btn {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      min-height: 38px;
+    }
     .explore-cards-wrap {
       bottom: max(10px, env(safe-area-inset-bottom));
     }
@@ -2323,8 +2504,19 @@
     .panel {
       padding-top: clamp(140px, calc(env(safe-area-inset-top) + 17vh), 205px);
       padding-bottom: max(75px, calc(env(safe-area-inset-bottom) + 65px));
-      padding-left: max(18px, env(safe-area-inset-left));
+      padding-left: max(48px, calc(env(safe-area-inset-left) + 38px));
       padding-right: max(18px, env(safe-area-inset-right));
+    }
+    .spine {
+      width: 34px;
+      left: max(6px, env(safe-area-inset-left));
+    }
+    .spine-item {
+      padding: 11px 0;
+      gap: 6px;
+    }
+    .spine-item .num {
+      font-size: 10px;
     }
     h1.title {
       font-size: clamp(32px, 13vw, 46px);
@@ -2406,6 +2598,12 @@
       min-height: 38px;
       font-size: 12.5px;
     }
+    .explore-zoom-btn {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+    }
     .explore-cards-wrap {
       bottom: max(8px, env(safe-area-inset-bottom));
     }
@@ -2473,6 +2671,21 @@
   }
 
   @media (max-width: 380px) {
+    .panel {
+      padding-left: max(42px, calc(env(safe-area-inset-left) + 32px));
+      padding-right: max(12px, env(safe-area-inset-right));
+    }
+    .spine {
+      width: 30px;
+      left: max(4px, env(safe-area-inset-left));
+    }
+    .spine-item {
+      padding: 9px 0;
+      gap: 5px;
+    }
+    .spine-item .num {
+      font-size: 9.5px;
+    }
     h1.title { font-size: 29px; }
     .desc { font-size: 13.5px; }
     .bottombar {
@@ -2483,6 +2696,7 @@
       height: 42px;
     }
     .explore-card { flex: 0 0 44px; height: 60px; }
+    .explore-zoom-btn { width: 34px; height: 34px; min-width: 34px; min-height: 34px; }
   }
 
   @media (max-height: 520px) and (orientation: landscape) {
@@ -2506,6 +2720,22 @@
     .panel {
       padding-top: 65px;
       padding-bottom: 50px;
+      padding-left: max(46px, calc(env(safe-area-inset-left) + 38px));
+    }
+    .spine {
+      width: 32px;
+      left: max(6px, env(safe-area-inset-left));
+    }
+    .spine-line {
+      top: 14%;
+      bottom: 14%;
+    }
+    .spine-item {
+      padding: 6px 0;
+      gap: 5px;
+    }
+    .spine-item .num {
+      font-size: 9px;
     }
     h1.title { font-size: 28px; margin-bottom: 4px; }
     .desc { font-size: 13px; line-height: 1.4; margin-bottom: 10px; }
@@ -2521,6 +2751,7 @@
     }
 
     .explore-top-bar { top: 6px; }
+    .explore-zoom-btn { width: 32px; height: 32px; min-width: 32px; min-height: 32px; }
     .explore-cards-wrap { bottom: 4px; }
     .explore-card { height: 50px; flex: 0 0 38px; }
     .explore-mode .explore-viewer-container {
@@ -2701,16 +2932,31 @@
     </div>
 
     <!-- ================= EXPLORATION MODE INTERFACE ================= -->
-    <!-- Explore Top Toolbar (Overview button, Category badge & Counter) -->
+    <!-- Explore Top Toolbar (Overview button, Category badge, Counter & Zoom) -->
     <div class="explore-top-bar" id="exploreTopBar">
       <div class="explore-top-left">
         <span class="explore-cat-badge" id="exploreCatBadge">Landscape</span>
         <span class="explore-photo-counter" id="explorePhotoCounter">01 / 29</span>
       </div>
-      <button class="explore-close-pill" id="exploreClosePill" type="button" aria-label="Close overview">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        Overview
-      </button>
+      <div class="explore-top-right">
+        <button class="explore-zoom-btn" id="exploreZoomBtn" type="button" aria-label="Zoom image" title="Zoom photo">
+          <svg class="zoom-icon-in" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+          <svg class="zoom-icon-out" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </button>
+        <button class="explore-close-pill" id="exploreClosePill" type="button" aria-label="Close overview">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Overview
+        </button>
+      </div>
     </div>
 
     <!-- Explore Main Photo Lightbox Viewer (Dual Buffer for 100% Fluid Zero-Flicker Transitions) -->
@@ -2829,7 +3075,6 @@
         'images/Landscape/PJO05321.jpg',
         'images/Landscape/PJO05688.jpg',
         'images/Landscape/DSC03310-HDR.jpg',
-        'images/Landscape/Messenger_creation_3C038F6F-0FE4-49BE-BA79-BD0F06198E6E.webp',
         'images/Landscape/PJO06498.jpg',
         'images/Landscape/PJO06132.jpg',
         'images/Landscape/PJO05409.jpg',
@@ -2931,8 +3176,7 @@
         'images/Nature/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.jpg',
         'images/Nature/PJO05965.jpg',
         'images/Nature/DSC06215-ca4b56a4-2500.jpg',
-        'images/Nature/PJO08386-2.jpg',
-        'images/Nature/inbound4878903916891533968.jpg'
+        'images/Nature/PJO08386-2.jpg'
       ]
     },
     {
@@ -2966,7 +3210,21 @@
         'images/Street/PJO04590-176b30ca.jpg',
         'images/Street/DSC01032-250a524f.jpg',
         'images/Street/PJO05819.jpg',
-        'images/Street/PJO06140-2.jpg'
+        'images/Street/PJO00013.jpg',
+        'images/Street/PJO05828.jpg',
+        'images/Street/PJO05842.jpg',
+        'images/Street/PJO09814.jpg',
+        'images/Street/PJO09821.jpg',
+        'images/Street/PJO09838.jpg',
+        'images/Street/PJO09842.jpg',
+        'images/Street/PJO09849.jpg',
+        'images/Street/PJO09860.jpg',
+        'images/Street/PJO09884.jpg',
+        'images/Street/PJO09905.jpg',
+        'images/Street/PJO09906.jpg',
+        'images/Street/PJO09913.jpg',
+        'images/Street/PJO09924.jpg',
+        'images/Street/PJO09941.jpg'
       ]
     }
   ];
@@ -3033,17 +3291,22 @@
   const exploreCatBadge = document.getElementById('exploreCatBadge');
   const explorePhotoCounter = document.getElementById('explorePhotoCounter');
   const exploreClosePill = document.getElementById('exploreClosePill');
+  const exploreZoomBtn = document.getElementById('exploreZoomBtn');
   const exploreViewerContainer = document.getElementById('exploreViewerContainer');
   const exploreViewerImgA = document.getElementById('exploreViewerImgA');
   const exploreViewerImgB = document.getElementById('exploreViewerImgB');
   let currentViewerSlot = 'A';
   const imgMemoryCache = new Map();
 
+  const ASSET_VERSION = '20260918-v2';
+
   function preloadImage(url) {
     if (!url || imgMemoryCache.has(url)) return;
     const img = new Image();
+    img.onload = function() {
+      imgMemoryCache.set(url, this);
+    };
     img.src = url;
-    imgMemoryCache.set(url, img);
   }
 
   function imageVariantUrl(imageUrl, variant) {
@@ -3067,7 +3330,7 @@
     } else {
       targetPath = `images/${variant}/${clean}`;
     }
-    return encodeURI(targetPath).replace(/\(/g, '%28').replace(/\)/g, '%29');
+    return encodeURI(targetPath).replace(/\(/g, '%28').replace(/\)/g, '%29') + '?v=' + ASSET_VERSION;
   }
 
   const displayImageUrl = (imageUrl) => imageVariantUrl(imageUrl, 'display');
@@ -3121,17 +3384,27 @@
         applyImage(this);
       };
       tempImg.onerror = function() {
-        const fallback = fullUrl.replace('/display/', '/thumbs/');
-        incomingImg.src = fallback;
-        incomingImg.style.transition = 'none';
-        incomingImg.style.transform = '';
-        outgoingImg.style.transition = 'none';
-        outgoingImg.style.transform = '';
-        incomingImg.classList.remove('prev');
-        incomingImg.classList.add('active');
-        outgoingImg.classList.remove('active');
-        outgoingImg.classList.add('prev');
-        currentViewerSlot = nextSlot;
+        // Fallback chain: 1) Try original JPG, 2) Try thumbs
+        const cleanBase = fullUrl.replace(/\?.*$/, '').replace('/display/', '/');
+        const jpgFallback = cleanBase.replace(/\.webp$/i, '.jpg');
+        const fallbackImg = new Image();
+        fallbackImg.onload = function() {
+          imgMemoryCache.set(fullUrl, this);
+          applyImage(this);
+        };
+        fallbackImg.onerror = function() {
+          const thumbFallback = fullUrl.replace('/display/', '/thumbs/');
+          const thumbImg = new Image();
+          thumbImg.onload = function() {
+            applyImage(this);
+          };
+          thumbImg.onerror = function() {
+            incomingImg.src = thumbFallback;
+            currentViewerSlot = nextSlot;
+          };
+          thumbImg.src = thumbFallback;
+        };
+        fallbackImg.src = jpgFallback;
       };
       tempImg.src = fullUrl;
     }
@@ -3365,6 +3638,19 @@
   let isPanning = false;
   let lastTapTime = 0;
 
+  function updateZoomButtonState() {
+    if (!exploreZoomBtn) return;
+    const isZoomed = viewerZoomScale > 1.05;
+    exploreZoomBtn.classList.toggle('is-active', isZoomed);
+    if (isZoomed) {
+      exploreZoomBtn.setAttribute('aria-label', 'Reset zoom');
+      exploreZoomBtn.setAttribute('title', 'Reset zoom');
+    } else {
+      exploreZoomBtn.setAttribute('aria-label', 'Zoom image');
+      exploreZoomBtn.setAttribute('title', 'Zoom photo');
+    }
+  }
+
   function applyViewerTransform(withTransition) {
     const currentImg = currentViewerSlot === 'A' ? exploreViewerImgA : exploreViewerImgB;
     if (!currentImg) return;
@@ -3389,6 +3675,7 @@
       currentImg.style.transform = `translate(calc(-50% + ${viewerPanX}px), calc(-50% + ${viewerPanY}px)) scale(${viewerZoomScale})`;
       stage.classList.add('is-zoomed');
     }
+    updateZoomButtonState();
   }
 
   function resetViewerZoom(animated) {
@@ -3408,6 +3695,7 @@
       }
     });
     stage.classList.remove('is-zoomed');
+    updateZoomButtonState();
   }
 
   function triggerExploreIntroTimer() {
@@ -3570,6 +3858,26 @@
   exploreClosePill.addEventListener('click', onClosePillClick);
   exploreClosePill.addEventListener('touchend', onClosePillClick);
 
+  function handleZoomToggle(e) {
+    if (e) {
+      if (e.type === 'touchend') e.preventDefault();
+      e.stopPropagation();
+    }
+    if (viewerZoomScale > 1.05) {
+      resetViewerZoom(true);
+    } else {
+      viewerZoomScale = 2.2;
+      viewerPanX = 0;
+      viewerPanY = 0;
+      applyViewerTransform(true);
+    }
+  }
+
+  if (exploreZoomBtn) {
+    exploreZoomBtn.addEventListener('click', handleZoomToggle);
+    exploreZoomBtn.addEventListener('touchend', handleZoomToggle);
+  }
+
   const explorePrevBtn = document.getElementById('explorePrevBtn');
   const exploreNextBtn = document.getElementById('exploreNextBtn');
 
@@ -3715,6 +4023,41 @@
     e.preventDefault();
     exploreCardsTrack.scrollLeft += e.deltaY;
   }, { passive: false });
+
+  let isMouseDragging = false;
+  let mouseDragStartX = 0;
+  let mouseDragStartY = 0;
+  let initialMousePanX = 0;
+  let initialMousePanY = 0;
+
+  exploreViewerContainer.addEventListener('mousedown', (e) => {
+    if (viewerZoomScale <= 1.05) return;
+    if (e.target.closest('.explore-nav-arrow') || e.target.closest('.explore-top-bar') || e.target.closest('.explore-cards-wrap')) return;
+    isMouseDragging = true;
+    mouseDragStartX = e.clientX;
+    mouseDragStartY = e.clientY;
+    initialMousePanX = viewerPanX;
+    initialMousePanY = viewerPanY;
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isMouseDragging || viewerZoomScale <= 1.05) return;
+    const dx = e.clientX - mouseDragStartX;
+    const dy = e.clientY - mouseDragStartY;
+    const maxPanX = (window.innerWidth * (viewerZoomScale - 1)) / 1.8;
+    const maxPanY = (window.innerHeight * (viewerZoomScale - 1)) / 1.8;
+    viewerPanX = Math.max(-maxPanX, Math.min(maxPanX, initialMousePanX + dx));
+    viewerPanY = Math.max(-maxPanY, Math.min(maxPanY, initialMousePanY + dy));
+    applyViewerTransform(false);
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isMouseDragging) {
+      isMouseDragging = false;
+      applyViewerTransform(true);
+    }
+  });
 
 
   /* =========================================================
@@ -4078,6 +4421,33 @@
       }
     }
   }, { passive: true });
+
+
+  /* =========================================================
+     IMAGE ASSET PROTECTION & ANTI-THEFT (DESKTOP & MOBILE)
+     ========================================================= */
+  // Prevent context menu (right-click on desktop and long-press menu on mobile)
+  document.addEventListener('contextmenu', (e) => {
+    if (e.target.closest('img, .explore-viewer-img, .explore-viewer-container, .bg-layer, .bg-canvas, .dcard, .explore-card')) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Prevent dragging images to desktop or other tabs
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.tagName === 'IMG' || e.target.closest('img, .explore-viewer-img, .bg-layer, .dcard, .explore-card')) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Prevent Ctrl+S / Cmd+S (Save webpage)
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+      e.preventDefault();
+    }
+  });
 
 
   /* =========================================================
