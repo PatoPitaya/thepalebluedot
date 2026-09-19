@@ -241,8 +241,10 @@ class MeridianHandler(BaseHTTPRequestHandler):
         if content_type is None:
             content_type = "application/octet-stream"
 
-        if candidate.suffix.lower() in {".webp", ".mp4"}:
-            cache_control = "no-cache, must-revalidate"
+        if candidate.suffix.lower() == ".mp4":
+            cache_control = "public, max-age=604800, immutable"
+        elif candidate.suffix.lower() in {".webp", ".jpg", ".jpeg", ".png", ".gif"}:
+            cache_control = "public, max-age=86400"
         elif candidate.suffix.lower() in {".css", ".js"}:
             cache_control = "public, max-age=86400"
         else:

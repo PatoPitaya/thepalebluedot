@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="images/Inicio/poster.jpg" fetchpriority="high">
+<link rel="preload" as="video" href="images/Inicio/Inicio video.mp4" type="video/mp4" fetchpriority="high">
 <style>
   :root {
     --font-title: 'Cinzel Decorative', serif;
@@ -2938,7 +2940,8 @@
   <!-- ================= SECTION 1: HERO (HOME) ================= -->
   <section class="hero-section" id="heroSection">
     <div class="hero-video-layer" id="heroVideoLayer">
-      <video class="hero-video" id="heroBgVideo" playsinline muted preload="auto">
+      <video class="hero-video" id="heroBgVideo" playsinline muted preload="auto"
+             poster="images/Inicio/poster.jpg">
         <source src="images/Inicio/Inicio video.mp4" type="video/mp4">
       </video>
       <div class="hero-epic-atmosphere"></div>
@@ -3411,6 +3414,40 @@
   const imgMemoryCache = new Map();
 
   const ASSET_VERSION = '20260919-v1';
+
+  // ── Video first-frame poster ─────────────────────────────────────────────
+  // Capture the first visible frame of the hero video into a canvas blob and
+  // set it as the poster so there is NO black/empty flash when the page loads.
+  (function initVideoPoster() {
+    if (!heroBgVideo) return;
+
+    let posterSet = false;
+    const setFirstFrame = () => {
+      if (posterSet) return;
+      if (heroBgVideo.readyState < 2) return; // HAVE_CURRENT_DATA not yet
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width  = heroBgVideo.videoWidth  || 1920;
+        canvas.height = heroBgVideo.videoHeight || 1080;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(heroBgVideo, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((blob) => {
+          if (!blob || posterSet) return;
+          posterSet = true;
+          const url = URL.createObjectURL(blob);
+          heroBgVideo.poster = url;
+        }, 'image/jpeg', 0.85);
+      } catch (e) {
+        // Cross-origin or security error — silently ignore
+      }
+    };
+
+    heroBgVideo.addEventListener('loadeddata', setFirstFrame, { once: true });
+    heroBgVideo.addEventListener('seeked', setFirstFrame, { once: true });
+
+    // If the video is already ready (cached), capture immediately
+    if (heroBgVideo.readyState >= 2) setFirstFrame();
+  })();
 
   function preloadImage(url) {
     if (!url || imgMemoryCache.has(url)) return;
