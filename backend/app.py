@@ -1,9 +1,20 @@
+import html
 import json
 import mimetypes
+import os
+import smtplib
+import sys
+import threading
 from datetime import datetime, timezone
+from email.message import EmailMessage
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse, unquote
+
+if sys.stdout and hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if sys.stderr and hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 mimetypes.add_type("image/webp", ".webp")
 mimetypes.add_type("video/mp4", ".mp4")
@@ -15,7 +26,166 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
 IMAGES_DIR = BASE_DIR / "frontend/images"
 CONTACT_LOG = BASE_DIR / "backend" / "contact_messages.jsonl"
+ENV_FILE = BASE_DIR / ".env"
 MAX_CONTACT_RESULTS = 5
+
+
+def load_env(env_path: Path) -> None:
+    """Carga variables desde .env sin dependencias externas."""
+    if not env_path.exists():
+        return
+    try:
+        with env_path.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, val = line.split("=", 1)
+                key = key.strip()
+                val = val.strip().strip('"').strip("'")
+                if key:
+                    os.environ[key] = val
+    except Exception as e:
+        print(f"[ENV] Error al leer {env_path}: {e}")
+
+
+# Carga inicial de variables de entorno
+load_env(ENV_FILE)
+
+
+def send_contact_email(name: str, sender_email: str, message_body: str) -> bool:
+    """Envía notificación por correo electrónico del mensaje recibido en contacto."""
+    try:
+        # Recargar .env para reflejar cambios en caliente sin reiniciar el servidor
+        load_env(ENV_FILE)
+
+        recipient = os.environ.get("RECIPIENT_EMAIL", "pato.geojimenez@gmail.com").strip()
+        smtp_host = os.environ.get("SMTP_HOST", "smtp.gmail.com").strip()
+        smtp_port_raw = os.environ.get("SMTP_PORT", "587").strip()
+        smtp_user = os.environ.get("SMTP_USER", "").strip() or recipient
+        smtp_password = os.environ.get("SMTP_PASSWORD", "").strip()
+        use_tls = os.environ.get("SMTP_USE_TLS", "true").lower() in {"true", "1", "yes"}
+
+        now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+
+        if not smtp_password:
+            print(f"\n[CONTACT] Nuevo mensaje recibido de '{name}' <{sender_email}>.", flush=True)
+            print(f"[CONTACT AVISO] Para que los mensajes se reenvíen automáticamente a {recipient}, genera una 'Contraseña de aplicación' en tu cuenta de Google (https://myaccount.google.com/apppasswords) y colócala en el archivo .env en la variable SMTP_PASSWORD.", flush=True)
+            print(f"[CONTACT INFO] El mensaje se guardó correctamente en backend/contact_messages.jsonl\n", flush=True)
+            return False
+
+        try:
+            smtp_port = int(smtp_port_raw)
+        except ValueError:
+            smtp_port = 587
+
+        msg = EmailMessage()
+        msg["Subject"] = f"Mensaje de contacto de {name} — The Pale Blue Dot"
+        msg["From"] = f"The Pale Blue Dot <{smtp_user}>"
+        msg["To"] = recipient
+        msg["Reply-To"] = f"{name} <{sender_email}>"
+
+        plain_text = (
+            f"Has recibido un nuevo mensaje desde el sitio web The Pale Blue Dot:\n\n"
+            f"Nombre: {name}\n"
+            f"Correo: {sender_email}\n"
+            f"Fecha:  {now_str}\n\n"
+            f"Mensaje:\n"
+            f"--------------------------------------------------\n"
+            f"{message_body}\n"
+            f"--------------------------------------------------\n\n"
+            f"(Puedes responder directamente a este correo para escribirle a {name})"
+        )
+        msg.set_content(plain_text)
+
+        safe_name = html.escape(name)
+        safe_email = html.escape(sender_email)
+        safe_body = html.escape(message_body)
+
+        html_content = f"""<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {{
+      margin: 0; padding: 28px 16px; background-color: #0b0c10;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #e5e5e7;
+    }}
+    .card {{
+      max-width: 580px; margin: 0 auto; background: #13151b;
+      border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px;
+      padding: 32px; box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+    }}
+    .eyebrow {{
+      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: #8e909a; margin-bottom: 8px;
+    }}
+    .title {{
+      font-size: 20px; font-weight: 500; color: #ffffff; margin: 0 0 24px 0;
+      letter-spacing: -0.01em;
+    }}
+    .meta-box {{
+      background: rgba(255, 255, 255, 0.03); border-radius: 6px;
+      padding: 16px; margin-bottom: 24px; font-size: 14px; line-height: 1.6;
+    }}
+    .meta-row {{ margin-bottom: 8px; }}
+    .meta-row:last-child {{ margin-bottom: 0; }}
+    .label {{ color: #8e909a; font-weight: 500; }}
+    .value {{ color: #ffffff; }}
+    .value a {{ color: #7cb3ff; text-decoration: none; }}
+    .msg-label {{
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #8e909a; margin-bottom: 8px;
+    }}
+    .message-box {{
+      background: rgba(0, 0, 0, 0.3); border-left: 2px solid #7cb3ff;
+      border-radius: 4px; padding: 18px; font-size: 15px; line-height: 1.65;
+      color: #f0f0f3; white-space: pre-wrap; margin-bottom: 28px;
+    }}
+    .actions {{ text-align: center; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); }}
+    .btn {{
+      display: inline-block; background: #ffffff; color: #000000;
+      text-decoration: none; padding: 11px 26px; font-size: 13px;
+      font-weight: 600; letter-spacing: 0.04em; border-radius: 4px;
+    }}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="eyebrow">The Pale Blue Dot · Contacto</div>
+    <h1 class="title">Nuevo mensaje recibido</h1>
+    <div class="meta-box">
+      <div class="meta-row"><span class="label">Remitente:</span> <span class="value">{safe_name}</span></div>
+      <div class="meta-row"><span class="label">Email:</span> <span class="value"><a href="mailto:{safe_email}">{safe_email}</a></span></div>
+      <div class="meta-row"><span class="label">Fecha:</span> <span class="value">{now_str}</span></div>
+    </div>
+    <div class="msg-label">Mensaje</div>
+    <div class="message-box">{safe_body}</div>
+    <div class="actions">
+      <a class="btn" href="mailto:{safe_email}">Responder directamente a {safe_name}</a>
+    </div>
+  </div>
+</body>
+</html>
+"""
+        msg.add_alternative(html_content, subtype="html")
+
+        if smtp_port == 465:
+            with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=15) as s:
+                s.login(smtp_user, smtp_password)
+                s.send_message(msg)
+        else:
+            with smtplib.SMTP(smtp_host, smtp_port, timeout=15) as s:
+                if use_tls:
+                    s.starttls()
+                s.login(smtp_user, smtp_password)
+                s.send_message(msg)
+        print(f"[CONTACT] Correo enviado exitosamente a {recipient} (remitente: {sender_email}).", flush=True)
+        return True
+    except Exception as e:
+        print(f"[CONTACT ERROR] Falló el procesamiento/envío del correo: {e}", flush=True)
+        return False
 
 
 class MeridianHandler(BaseHTTPRequestHandler):
@@ -209,6 +379,13 @@ class MeridianHandler(BaseHTTPRequestHandler):
             }
             with CONTACT_LOG.open("a", encoding="utf-8") as handle:
                 handle.write(json.dumps(submission, ensure_ascii=False) + "\n")
+
+            # Envío de correo en segundo plano para no bloquear la respuesta HTTP
+            threading.Thread(
+                target=send_contact_email,
+                args=(name, email, message),
+                daemon=True,
+            ).start()
 
             self._send_json(
                 200,

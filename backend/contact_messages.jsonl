@@ -44,3 +44,6 @@
 {"submitted_at": "2026-09-17T10:00:31.528861+00:00", "name": "Test User", "email": "test@example.com", "message": "Hello test"}
 {"submitted_at": "2026-09-17T10:01:46.421160+00:00", "name": "Test User", "email": "test@example.com", "message": "Hello test"}
 {"submitted_at": "2026-09-17T10:05:44.450209+00:00", "name": "Test User", "email": "test@example.com", "message": "Hello test"}
+{"submitted_at": "2026-09-19T12:08:52.684739+00:00", "name": "Patricio Test", "email": "pato.geojimenez@gmail.com", "message": "Probando el env�o de mensajes de contacto hacia mi correo."}
+{"submitted_at": "2026-09-19T12:09:21.193741+00:00", "name": "Patricio Jim�nez", "email": "pato.geojimenez@gmail.com", "message": "Hola! Este es un mensaje de prueba para verificar la integraci�n de correo."}
+{"submitted_at": "2026-09-19T12:09:56.360288+00:00", "name": "Patricio Jiménez", "email": "pato.geojimenez@gmail.com", "message": "Hola! Este es un mensaje de prueba para verificar la integración de correo."}

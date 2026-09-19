@@ -93,6 +93,7 @@
     inset: 0;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     opacity: 0;
     transform: scale(1.025);
     filter: none;
@@ -169,9 +170,14 @@
     to { transform: scale(1.065) translate3d(0.35%, 0.25%, 0); }
   }
 
+  @keyframes gallery-drift-mobile {
+    0% { transform: scale(1.02) translate3d(-1.0%, -0.6%, 0); }
+    100% { transform: scale(1.08) translate3d(1.0%, 0.6%, 0); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .view-gallery .bg-layer.active,
-    .view-gallery .bg-layer.prev { animation: none; }
+    .view-gallery .bg-layer.prev { animation: none !important; }
   }
 
 
@@ -659,10 +665,13 @@
     transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .track {
-    flex: 1; max-width: 280px; height: 1px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 1px;
     background: var(--paper-faint);
-    position: relative;
-    margin: 0 26px;
+    margin: 0;
   }
   .track-fill {
     position: absolute;
@@ -670,24 +679,88 @@
     background: var(--accent);
     transition: background .6s ease, width .6s ease;
   }
-  .arrows { display: flex; gap: 10px; }
-  .arrow-btn {
-    width: 38px; height: 38px;
+  /* =========================================================
+     PERSISTENT MINIMALIST VIEW NAVIGATION (HOME, GALLERY, CONTACT)
+     ========================================================= */
+  .view-nav-arrows {
+    position: absolute;
+    right: 48px;
+    bottom: 34px;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .view-nav-btn {
+    position: relative;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    border: 1px solid var(--paper-faint);
-    background: transparent;
+    border: 1px solid rgba(247, 243, 234, 0.18);
+    background: rgba(14, 14, 18, 0.42);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     color: var(--paper);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: border-color .35s ease, background .35s ease, transform 0.3s ease;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-tap-highlight-color: transparent;
   }
-  .arrow-btn:hover { border-color: var(--paper); background: rgba(247,243,234,.08); transform: scale(1.06); }
-  .arrow-btn:active { transform: scale(0.95); }
-  .arrow-icon-horiz { display: block; }
-  .arrow-icon-vert { display: none; }
+
+  .view-nav-btn svg {
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .view-nav-btn:hover {
+    border-color: rgba(247, 243, 234, 0.5);
+    background: rgba(247, 243, 234, 0.16);
+    color: #FFFFFF;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+
+  .view-nav-btn.prev:hover svg {
+    transform: translateX(-2px);
+  }
+
+  .view-nav-btn.next:hover svg {
+    transform: translateX(2px);
+  }
+
+  .view-nav-btn:active {
+    transform: translateY(0) scale(0.94);
+    background: rgba(247, 243, 234, 0.24);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
+  }
+
+  .view-nav-btn:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(217, 104, 59, 0.45);
+  }
+
+  /* When explore mode is open, hide view nav arrows so photos have full focus */
+  .explore-mode .view-nav-arrows {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(16px) !important;
+    visibility: hidden !important;
+  }
   .pagecount {
+    display: none !important;
     font-family: var(--font-sans);
     font-size: 13px;
     font-weight: 500;
@@ -868,7 +941,7 @@
     left: 0;
     right: 0;
     bottom: 16px;
-    z-index: 30;
+    z-index: 40;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -971,7 +1044,10 @@
   .explore-mode .main-nav,
   .explore-mode .spine,
   .explore-mode .gallery-content,
-  .explore-mode .bottombar {
+  .explore-mode .bottombar,
+  .explore-mode .panel,
+  .explore-mode .panel.is-active,
+  .explore-mode .panel-stack {
     opacity: 0 !important;
     pointer-events: none !important;
     transform: translateY(18px) !important;
@@ -983,6 +1059,12 @@
     transform: translateY(80px) scale(0.9) !important;
   }
 
+  .explore-mode .bg-layer {
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+
   /* Explore Fullscreen/Lightbox Main Photo (Maximized & Bottom-aligned right above thumbnails) */
   .explore-viewer-container {
     position: absolute;
@@ -990,7 +1072,7 @@
     bottom: 120px;
     left: 0;
     right: 0;
-    z-index: 10;
+    z-index: 35;
     display: none;
     align-items: center;
     justify-content: center;
@@ -1008,6 +1090,7 @@
     visibility: visible;
     transform: scale(1);
     pointer-events: auto;
+    z-index: 35 !important;
   }
   .explore-mode.is-zoomed .explore-viewer-container {
     overflow: hidden;
@@ -1064,7 +1147,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 25;
+    z-index: 45;
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -1080,6 +1163,10 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     transition: opacity 0.65s cubic-bezier(0.19, 1, 0.22, 1), transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
     opacity: 0.22;
+    pointer-events: auto !important;
+  }
+  .explore-nav-arrow svg {
+    pointer-events: none;
   }
   .explore-nav-arrow.prev { left: max(16px, env(safe-area-inset-left)); }
   .explore-nav-arrow.next { right: max(16px, env(safe-area-inset-right)); }
@@ -1669,12 +1756,17 @@
       bottom: 28px;
     }
     .track {
+      width: 220px;
       max-width: 220px;
-      margin: 0 20px;
+      margin: 0;
     }
-    .arrow-btn {
-      width: 34px;
-      height: 34px;
+    .view-nav-arrows {
+      right: 48px;
+      bottom: 28px;
+    }
+    .view-nav-btn {
+      width: 40px;
+      height: 40px;
     }
     .pagecount {
       font-size: 12px;
@@ -1965,11 +2057,12 @@
 
     .cardzone { display: none; }
 
-    #stage[data-category="africa"] .bg-layer,
-    .bg-layer[data-bg="africa"] {
+    #stage:not(.explore-mode)[data-category="africa"] .bg-layer,
+    #stage:not(.explore-mode) .bg-layer[data-bg="africa"] {
       background-size: auto 118.52%;
       background-size: auto calc(100% * 32 / 27);
       background-position: 58.5% center;
+      background-repeat: no-repeat;
     }
     #stage[data-category="asia"] .bg-layer,
     .bg-layer[data-bg="asia"] {
@@ -1994,10 +2087,12 @@
     #stage.from-home .hero-video {
       transform: none !important;
     }
-    #stage.from-home .bg-layer.active,
-    .view-gallery .bg-layer.active {
-      animation: none !important;
-      transform: scale(1) !important;
+    /* Continuous cinematic background drift on mobile matching desktop */
+    .view-gallery .bg-layer.active,
+    .view-gallery .bg-layer.prev {
+      animation: gallery-drift-mobile 28s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate !important;
+      animation-delay: var(--gallery-drift-delay, 0ms) !important;
+      will-change: transform, opacity;
     }
 
     .gallery-content {
@@ -2135,89 +2230,55 @@
       pointer-events: none;
     }
 
-    /* Ultra-Minimalist Edge Arrows for Mobile Horizontal Swipe (ONLY on Home) */
-    .mobile-edge-arrow {
-      display: flex !important;
-      align-items: center;
-      justify-content: center;
+    /* Persistent Ultra-Minimalist & Transparent View Navigation for Mobile/Tablet */
+    .view-nav-arrows {
+      right: max(14px, env(safe-area-inset-right));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      gap: 6px;
+    }
+    .view-nav-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(14, 14, 18, 0.18);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+      color: rgba(255, 255, 255, 0.82);
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
+    }
+    .view-nav-btn svg {
+      width: 12px;
+      height: 12px;
+      stroke-width: 1.85;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.7));
+    }
+    /* Invisible touch-target expansion for comfortable thumbs without visual obstruction */
+    .view-nav-btn::after {
+      content: "";
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 22px;
-      height: 48px;
-      padding: 0;
-      margin: 0;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: rgba(255, 255, 255, 0.28);
-      z-index: 22;
-      cursor: pointer;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      pointer-events: none !important;
-      transition: color 0.3s ease, opacity 0.45s ease, visibility 0.45s ease, transform 0.3s ease;
+      inset: -7px;
+      border-radius: 50%;
+      pointer-events: auto;
     }
-    .view-home:not(.is-starting) .mobile-edge-arrow {
-      opacity: 1 !important;
-      visibility: visible !important;
-      pointer-events: auto !important;
-    }
-    .mobile-edge-arrow.prev {
-      left: max(5px, env(safe-area-inset-left));
-      animation: ambientPulseLeft 4.5s ease-in-out infinite;
-    }
-    .mobile-edge-arrow.next {
-      right: max(5px, env(safe-area-inset-right));
-      animation: ambientPulseRight 4.5s ease-in-out infinite;
-    }
-
-    /* Invisible expanded hit area (44x64px) for comfortable thumb tapping */
-    .mobile-edge-arrow::before {
-      content: '';
-      position: absolute;
-      inset: -8px -11px;
-    }
-
-    .mobile-edge-arrow:active {
+    .view-nav-btn:hover {
+      border-color: rgba(255, 255, 255, 0.26);
+      background: rgba(255, 255, 255, 0.10);
       color: #ffffff;
-      transform: translateY(-50%) scale(1.2);
+      transform: scale(1.04);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
     }
-
-    /* Hide when outside home, when starting transition, or in explore mode */
-    .is-starting .mobile-edge-arrow,
-    .view-gallery .mobile-edge-arrow,
-    .view-contact .mobile-edge-arrow,
-    .explore-mode .mobile-edge-arrow {
-      opacity: 0 !important;
-      visibility: hidden !important;
-      pointer-events: none !important;
+    .view-nav-btn:active {
+      transform: scale(0.92);
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.45);
+      color: #ffffff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     }
-
-    @keyframes ambientPulseLeft {
-      0%, 100% {
-        transform: translateY(-50%) translateX(0);
-        opacity: 0.26;
-      }
-      50% {
-        transform: translateY(-50%) translateX(-2.5px);
-        opacity: 0.65;
-        color: var(--accent, #ffffff);
-      }
-    }
-
-    @keyframes ambientPulseRight {
-      0%, 100% {
-        transform: translateY(-50%) translateX(0);
-        opacity: 0.26;
-      }
-      50% {
-        transform: translateY(-50%) translateX(2.5px);
-        opacity: 0.65;
-        color: var(--accent, #ffffff);
-      }
+    .view-nav-btn.prev:hover svg,
+    .view-nav-btn.next:hover svg,
+    .view-nav-btn:active svg {
+      transform: none;
     }
 
     .contact-section {
@@ -2486,11 +2547,12 @@
       letter-spacing: 0.20em;
     }
 
-    #stage[data-category="africa"] .bg-layer,
-    .bg-layer[data-bg="africa"] {
+    #stage:not(.explore-mode)[data-category="africa"] .bg-layer,
+    #stage:not(.explore-mode) .bg-layer[data-bg="africa"] {
       background-size: auto 118.52%;
       background-size: auto calc(100% * 32 / 27);
       background-position: 58.5% center;
+      background-repeat: no-repeat;
     }
     #stage[data-category="asia"] .bg-layer,
     .bg-layer[data-bg="asia"] {
@@ -2536,6 +2598,29 @@
       left: auto !important;
       right: max(14px, env(safe-area-inset-right));
       bottom: max(16px, env(safe-area-inset-bottom));
+    }
+    .view-nav-arrows {
+      right: max(12px, env(safe-area-inset-right));
+      bottom: max(14px, env(safe-area-inset-bottom));
+      gap: 5px;
+    }
+    .view-nav-btn {
+      width: 29px;
+      height: 29px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(10, 10, 14, 0.14);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+      color: rgba(255, 255, 255, 0.85);
+    }
+    .view-nav-btn svg {
+      width: 11px;
+      height: 11px;
+      stroke-width: 1.85;
+    }
+    .view-nav-btn::after {
+      inset: -7.5px;
     }
 
     .contact-section {
@@ -2697,6 +2782,24 @@
     }
     .explore-card { flex: 0 0 44px; height: 60px; }
     .explore-zoom-btn { width: 34px; height: 34px; min-width: 34px; min-height: 34px; }
+    .view-nav-arrows {
+      right: max(10px, env(safe-area-inset-right));
+      bottom: max(12px, env(safe-area-inset-bottom));
+      gap: 4px;
+    }
+    .view-nav-btn {
+      width: 27px;
+      height: 27px;
+      background: rgba(10, 10, 14, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+    .view-nav-btn svg {
+      width: 10px;
+      height: 10px;
+    }
+    .view-nav-btn::after {
+      inset: -8.5px;
+    }
   }
 
   @media (max-height: 520px) and (orientation: landscape) {
@@ -2791,6 +2894,21 @@
       display: block;
       border-radius: 14px;
     }
+    .view-nav-arrows {
+      right: max(12px, env(safe-area-inset-right));
+      bottom: 8px;
+      gap: 5px;
+    }
+    .view-nav-btn {
+      width: 27px;
+      height: 27px;
+      background: rgba(10, 10, 14, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+    .view-nav-btn svg {
+      width: 10.5px;
+      height: 10.5px;
+    }
   }
 </style>
 </head>
@@ -2868,8 +2986,8 @@
         </div>
         <div class="panel" data-panel="australia">
           <div class="panel-body">
-            <h1 class="title"><span class="title-word">Sport</span></h1>
-            <p class="desc">The instant right before the body decides: pure energy, movement that never repeats itself. Scenes that live and vanish in a fraction of a second.</p>
+            <h1 class="title"><span class="title-word">Adventure</span></h1>
+            <p class="desc">Every mile earned, every summit chosen, the weight of the climb, the rhythm of the ride. Stories written in motion, where effort and landscape move as one.</p>
             <button class="explore" type="button" data-explore="australia">Explore
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
@@ -2919,16 +3037,6 @@
 
       <!-- Desktop Track -->
       <div class="track"><div class="track-fill" id="trackFill"></div></div>
-
-      <!-- Desktop Arrows -->
-      <div class="arrows">
-        <button class="arrow-btn prev" id="prevBtn" type="button" aria-label="Previous category">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
-        </button>
-        <button class="arrow-btn next" id="nextBtn" type="button" aria-label="Next category">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
-        </button>
-      </div>
     </div>
 
     <!-- ================= EXPLORATION MODE INTERFACE ================= -->
@@ -3041,17 +3149,19 @@
     </div>
   </section>
 
-  <!-- ================= MOBILE HORIZONTAL SWIPE EDGE ARROWS ================= -->
-  <button class="mobile-edge-arrow prev" id="mobileEdgePrev" type="button" aria-label="Previous section (Swipe right)">
-    <svg width="7" height="16" viewBox="0 0 7 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M5.5 2.5L1.5 8L5.5 13.5"/>
-    </svg>
-  </button>
-  <button class="mobile-edge-arrow next" id="mobileEdgeNext" type="button" aria-label="Next section (Swipe left)">
-    <svg width="7" height="16" viewBox="0 0 7 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M1.5 2.5L5.5 8L1.5 13.5"/>
-    </svg>
-  </button>
+  <!-- ================= PERSISTENT MINIMALIST VIEW NAVIGATION (HOME, GALLERY, CONTACT) ================= -->
+  <nav class="view-nav-arrows" id="viewNavArrows" aria-label="Main section navigation">
+    <button class="view-nav-btn prev" id="prevBtn" type="button" aria-label="Previous page" title="Previous page">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </button>
+    <button class="view-nav-btn next" id="nextBtn" type="button" aria-label="Next page" title="Next page">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </button>
+  </nav>
 
 </div>
 
@@ -3176,11 +3286,12 @@
         'images/Nature/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.jpg',
         'images/Nature/PJO05965.jpg',
         'images/Nature/DSC06215-ca4b56a4-2500.jpg',
-        'images/Nature/PJO08386-2.jpg'
+        'images/Nature/PJO08386-2.jpg',
+        'images/Nature/PJO09701.jpg'
       ]
     },
     {
-      key:'australia', name:'Sport', accent:'#D9683B', bgTone:'#23140e', eyebrow:'Sport',
+      key:'australia', name:'Adventure', accent:'#D9683B', bgTone:'#23140e', eyebrow:'Adventure',
       hero:'images/Sport/DSC07377_-_2-f8a343cf.jpg',
       cards:[
         {img:'images/Sport/DSC07377_-_2-f8a343cf.jpg', place:'Action',            stars:'★★★★★ 4.9'},
@@ -3190,6 +3301,7 @@
       all:[
         'images/Sport/DSC07386-f7ad26b2.jpg',
         'images/Sport/DSC07377_-_2-f8a343cf.jpg',
+        'images/Sport/PJO06205-2.jpg',
         'images/Sport/PJO04973-f6a2848a.jpg',
         'images/Sport/PJO01917.jpg'
       ]
@@ -3298,7 +3410,7 @@
   let currentViewerSlot = 'A';
   const imgMemoryCache = new Map();
 
-  const ASSET_VERSION = '20260918-v2';
+  const ASSET_VERSION = '20260919-v1';
 
   function preloadImage(url) {
     if (!url || imgMemoryCache.has(url)) return;
@@ -3440,7 +3552,7 @@
     let catKey = categoryKey;
     if (!catKey) {
       if (/Nature/i.test(imageUrl) || imageUrl.includes('PJO00934')) catKey = 'asia';
-      else if (/Sport/i.test(imageUrl) || imageUrl.includes('DSC07377')) catKey = 'australia';
+      else if (/Sport/i.test(imageUrl) || /Adventure/i.test(imageUrl) || imageUrl.includes('DSC07377')) catKey = 'australia';
       else if (/Landscape/i.test(imageUrl)) catKey = 'africa';
       else if (/Street/i.test(imageUrl)) catKey = 'street';
       else if (/contact/i.test(imageUrl)) catKey = 'contact';
@@ -3523,6 +3635,8 @@
         history.pushState(null, '', hash || window.location.pathname);
       }
     }
+
+    updateViewNavButtons();
   }
 
   // Handle Top Nav Clicks
@@ -3589,7 +3703,7 @@
       }, CARD_SWAP_DELAY);
     }
 
-    pageNow.textContent = String(idx + 1).padStart(2, '0');
+    if (pageNow) pageNow.textContent = String(idx + 1).padStart(2, '0');
     const fillPercent = ((idx + 1) / continents.length * 100) + '%';
     trackFill.style.width = fillPercent;
     trackFill.style.height = fillPercent;
@@ -4211,8 +4325,27 @@
         selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
       }
     } else if (currentView === 'gallery') {
-      if(e.key === 'ArrowRight' || e.key === 'ArrowDown') go(idx + 1, { force: true });
-      if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(idx - 1, { force: true });
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        go(idx + 1, { force: true });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        go(idx - 1, { force: true });
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        navigateViewSequence(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        navigateViewSequence(-1);
+      }
+    } else if (currentView === 'home' || currentView === 'contact') {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        navigateViewSequence(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        navigateViewSequence(-1);
+      }
     }
   });
 
@@ -4227,20 +4360,52 @@
   const nextBtn = document.getElementById('nextBtn');
   const prevBtn = document.getElementById('prevBtn');
 
+  function navigateViewSequence(direction) {
+    if (inExploreMode) return;
+    const viewSequence = ['home', 'gallery', 'contact'];
+    const curViewIdx = viewSequence.indexOf(currentView);
+    if (curViewIdx === -1) return;
+    const targetIdx = (curViewIdx + direction + viewSequence.length) % viewSequence.length;
+    switchView(viewSequence[targetIdx]);
+  }
+
+  function updateViewNavButtons() {
+    const viewSequence = ['home', 'gallery', 'contact'];
+    const curViewIdx = viewSequence.indexOf(currentView);
+    if (curViewIdx === -1) return;
+    const prevView = viewSequence[(curViewIdx - 1 + viewSequence.length) % viewSequence.length];
+    const nextView = viewSequence[(curViewIdx + 1) % viewSequence.length];
+
+    const labels = {
+      home: 'Home',
+      gallery: 'Gallery',
+      contact: 'Contact'
+    };
+
+    if (prevBtn) {
+      prevBtn.setAttribute('aria-label', `Go to ${labels[prevView] || prevView}`);
+      prevBtn.setAttribute('title', `${labels[prevView] || prevView}`);
+    }
+    if (nextBtn) {
+      nextBtn.setAttribute('aria-label', `Go to ${labels[nextView] || nextView}`);
+      nextBtn.setAttribute('title', `${labels[nextView] || nextView}`);
+    }
+  }
+
   function handleNext(e) {
     if (e) {
-      e.preventDefault();
+      if (e.type === 'touchend') e.preventDefault();
       e.stopPropagation();
     }
-    go(idx + 1, { force: true });
+    navigateViewSequence(1);
   }
 
   function handlePrev(e) {
     if (e) {
-      e.preventDefault();
+      if (e.type === 'touchend') e.preventDefault();
       e.stopPropagation();
     }
-    go(idx - 1, { force: true });
+    navigateViewSequence(-1);
   }
 
   if (nextBtn) {
@@ -4268,41 +4433,6 @@
     }
     mobileRail.addEventListener('click', handleRailInteraction);
     mobileRail.addEventListener('touchend', handleRailInteraction);
-  }
-
-  function navigateViewSequence(direction) {
-    if (inExploreMode) return;
-    const viewSequence = ['home', 'gallery', 'contact'];
-    const curViewIdx = viewSequence.indexOf(currentView);
-    if (curViewIdx === -1) return;
-    const targetIdx = (curViewIdx + direction + viewSequence.length) % viewSequence.length;
-    switchView(viewSequence[targetIdx]);
-  }
-
-  if (mobileEdgePrev) {
-    function handleEdgePrev(e) {
-      if (currentView !== 'home') return;
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      navigateViewSequence(-1);
-    }
-    mobileEdgePrev.addEventListener('click', handleEdgePrev);
-    mobileEdgePrev.addEventListener('touchend', handleEdgePrev);
-  }
-
-  if (mobileEdgeNext) {
-    function handleEdgeNext(e) {
-      if (currentView !== 'home') return;
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-      navigateViewSequence(1);
-    }
-    mobileEdgeNext.addEventListener('click', handleEdgeNext);
-    mobileEdgeNext.addEventListener('touchend', handleEdgeNext);
   }
 
   stage.addEventListener('wheel', (event) => {
