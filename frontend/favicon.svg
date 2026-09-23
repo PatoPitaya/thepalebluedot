@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="spaceBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#181512"/>
+      <stop offset="100%" stop-color="#0a0807"/>
+    </radialGradient>
+    <linearGradient id="sunbeam" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(245, 225, 185, 0.28)"/>
+      <stop offset="45%" stop-color="rgba(245, 225, 185, 0.12)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </linearGradient>
+    <radialGradient id="dotGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#B8D5E5"/>
+      <stop offset="40%" stop-color="#8BB8CE"/>
+      <stop offset="100%" stop-color="rgba(139, 184, 206, 0)"/>
+    </radialGradient>
+  </defs>
+  <!-- Background circular disc -->
+  <circle cx="32" cy="32" r="30" fill="url(#spaceBg)" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"/>
+  <!-- The iconic sunbeam band across space -->
+  <polygon points="18,2 34,2 46,62 30,62" fill="url(#sunbeam)"/>
+  <!-- The Pale Blue Dot aura and core -->
+  <circle cx="34" cy="31" r="10" fill="url(#dotGlow)"/>
+  <circle cx="34" cy="31" r="3.2" fill="#E8F4F8"/>
+</svg>
+

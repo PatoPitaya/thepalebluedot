@@ -4,27 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>THE PALE BLUE DOT</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="images/Inicio/poster.jpg" fetchpriority="high">
 <link rel="preload" as="video" href="images/Inicio/Inicio video.mp4" type="video/mp4" fetchpriority="high">
 <style>
   :root {
-    --font-title: 'Cinzel Decorative', serif;
+    --font-title: 'Cinzel', serif;
+    --font-display: 'Cormorant Garamond', Garamond, 'Times New Roman', serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-body: 'Lora', Georgia, serif;
     --font-serif: var(--font-title);
-    --font-sans: var(--font-body);
     --font-main: var(--font-body);
     --ink: #14110F;
     --paper: #FAF7F2;
     --paper-soft: rgba(250, 247, 242, 0.88);
     --paper-dim: rgba(247, 243, 234, 0.65);
     --paper-faint: rgba(247, 243, 234, 0.28);
-    --africa: #E8935B;
-    --asia: #4FA98A;
-    --australia: #D9683B;
-    --street: #6C7A89;
+    --africa: #D4884A;
+    --asia: #7BA05B;
+    --australia: #6E9AB0;
+    --street: #A0785A;
     --accent: var(--africa);
     --bg-tone: #0e0c0b;
     --gold-glow: rgba(235, 185, 145, 0.07);
@@ -67,6 +70,65 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* â”€â”€ Custom Cursor (desktop only) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  @media (hover: hover) and (pointer: fine) {
+    html, body, a, button, [role="button"],
+    .dcard, .explore-card, .spine-item, .explore-nav-arrow,
+    .view-nav-btn, .explore, .explore-close-pill, .explore-zoom-btn { cursor: none !important; }
+
+    .cursor-dot {
+      position: fixed;
+      top: 0; left: 0;
+      width: 5px; height: 5px;
+      background: #fff;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s, opacity .3s, background .3s;
+      will-change: left, top;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed;
+      top: 0; left: 0;
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99998;
+      transform: translate(-50%, -50%);
+      transition: width .35s cubic-bezier(0.16,1,.3,1),
+                  height .35s cubic-bezier(0.16,1,.3,1),
+                  border-color .35s, background .35s, opacity .3s;
+      will-change: left, top;
+    }
+    /* Expand ring on interactive elements */
+    body.csr-hover .cursor-ring {
+      width: 58px; height: 58px;
+      border-color: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.04);
+    }
+    /* Dot hides slightly on interactive */
+    body.csr-hover .cursor-dot {
+      width: 3px; height: 3px;
+      opacity: 0.6;
+    }
+    /* Accent color ring on photos */
+    body.csr-photo .cursor-ring {
+      width: 64px; height: 64px;
+      border-color: rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.03);
+    }
+    /* Hide when outside window */
+    body.csr-hidden .cursor-dot,
+    body.csr-hidden .cursor-ring { opacity: 0; }
+  }
+  /* On touch devices, ensure no custom cursor artifacts */
+  @media (hover: none) {
+    .cursor-dot, .cursor-ring { display: none !important; }
   }
 
   .stage {
@@ -204,9 +266,9 @@
     gap: 8px;
     font-family: var(--font-title);
     font-style: normal;
-    font-weight: 400;
-    font-size: 17px;
-    letter-spacing: 0.08em;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #fff;
     text-decoration: none;
@@ -284,7 +346,7 @@
     opacity: 1;
     transform: scale(1);
     filter: blur(0px);
-    transition: opacity 4.8s cubic-bezier(0.22, 1, 0.36, 1), transform 4.8s cubic-bezier(0.22, 1, 0.36, 1), filter 4.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 2.2s cubic-bezier(0.22, 1, 0.36, 1), transform 2.6s cubic-bezier(0.22, 1, 0.36, 1), filter 2.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .hero-video-layer {
@@ -295,7 +357,7 @@
     z-index: -1;
     background: transparent;
     overflow: hidden;
-    transition: opacity 4.8s cubic-bezier(0.22, 1, 0.36, 1), filter 4.8s cubic-bezier(0.22, 1, 0.36, 1), transform 4.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 2.2s cubic-bezier(0.22, 1, 0.36, 1), filter 2.2s cubic-bezier(0.22, 1, 0.36, 1), transform 2.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* Epic Alpine Cinematic Color Grade & Mountain Atmosphere matching PJO05334 */
@@ -307,7 +369,7 @@
     object-fit: cover;
     object-position: center;
     display: block;
-    filter: contrast(1.05) brightness(0.98) saturate(1.04);
+    filter: contrast(1.05) brightness(0.97) saturate(1.04);
     transform: scale(1.0);
     will-change: opacity, transform;
     transition: opacity 2.8s cubic-bezier(0.16, 1, 0.3, 1), transform 8s cubic-bezier(0.25, 1, 0.5, 1);
@@ -317,75 +379,253 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at 50% 12%, rgba(144, 176, 202, 0.08) 0%, transparent 65%),
-      radial-gradient(circle at 50% 50%, transparent 40%, rgba(5, 4, 3, 0.42) 100%),
-      linear-gradient(to bottom, rgba(5, 4, 3, 0.28) 0%, transparent 35%, transparent 65%, rgba(5, 4, 3, 0.45) 100%);
+      linear-gradient(to bottom,
+        rgba(5, 4, 3, 0.70) 0%,
+        rgba(5, 4, 3, 0.46) 24%,
+        rgba(5, 4, 3, 0.16) 44%,
+        transparent 65%
+      ),
+      linear-gradient(to top,
+        rgba(5, 4, 3, 0.42) 0%,
+        transparent 25%
+      );
     pointer-events: none;
     z-index: 1;
     transition: opacity 2s ease;
   }
 
+  /* Starting Phase: Keep video at native 1:1 scale so it aligns pixel-for-pixel with PJO05334 (eliminating double image) */
   .is-starting .hero-video {
-    filter: contrast(1.06) brightness(0.98) saturate(1.05);
-    transform: scale(1.045);
-    transition: transform 10s cubic-bezier(0.25, 1, 0.5, 1), filter 3s ease;
+    transform: none !important;
+  }
+
+  /* Atmosphere lifts gently so pristine 4K mountain lighting matches PJO05334 */
+  .is-starting .hero-epic-atmosphere {
+    opacity: 0.15;
+    transition: opacity 2.2s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  /* Pre-warmed Cinematic Anamorphic Tunnel Blur (GPU surface pre-allocated at 0.001, zero hitch/cut) */
+  .hero-warp-tunnel {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.001;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    mask-image: radial-gradient(ellipse 52% 44% at 50% 50%, transparent 24%, rgba(0, 0, 0, 0.35) 54%, black 84%);
+    -webkit-mask-image: radial-gradient(ellipse 52% 44% at 50% 50%, transparent 24%, rgba(0, 0, 0, 0.35) 54%, black 84%);
+    transform: translateZ(0);
+    will-change: opacity;
+    transition: opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .is-warping .hero-warp-tunnel {
+    opacity: 1;
+    transition: opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
   .hero-text-wrapper {
-    max-width: 920px;
-    margin-bottom: 34px;
+    max-width: 880px;
+    margin-bottom: 28px;
     z-index: 6;
     transition: opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1), transform 1200ms cubic-bezier(0.16, 1, 0.3, 1), filter 1200ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hero-phrase {
-    font-family: var(--font-title);
+    font-family: var(--font-display);
     font-weight: 400;
     font-style: normal;
-    font-size: clamp(23px, 3.6vw, 46px);
-    line-height: 1.38;
-    color: #FAF7F2;
+    font-size: clamp(28px, 4.4vw, 54px);
+    line-height: 1.22;
+    color: #FFFFFF;
     margin: 0;
-    letter-spacing: 0.04em;
-    text-shadow: 0 4px 40px rgba(0, 0, 0, 0.95), 0 2px 14px rgba(0, 0, 0, 0.85);
+    letter-spacing: 0.025em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    text-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.72),
+      0 3px 10px rgba(0, 0, 0, 0.55),
+      0 8px 24px rgba(0, 0, 0, 0.35);
+    animation: heroTextReveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.45s backwards;
+  }
+  .hero-phrase-sub {
+    display: block;
+    margin: 14px auto 0;
+    max-width: 720px;
+    font-family: var(--font-display);
+    font-size: clamp(16px, 1.6vw, 21.5px);
+    font-style: normal;
+    font-weight: 300;
+    letter-spacing: 0.025em;
+    color: rgba(255, 255, 255, 0.80);
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    text-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.68),
+      0 2px 8px rgba(0, 0, 0, 0.50),
+      0 6px 20px rgba(0, 0, 0, 0.35);
+    animation: heroSubReveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.85s backwards;
+  }
+  .hero-phrase-sub .sub-line {
+    display: inline;
+  }
+  @media (min-width: 680px) {
+    .hero-phrase-sub .sub-line {
+      display: block;
+    }
   }
 
+  /* Hairline Scroll Indicator (Explore) */
   .hero-start-btn {
+    position: absolute;
+    bottom: max(32px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
     display: inline-flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 13px 40px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    background: rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    color: #FFFFFF;
-    font-family: var(--font-title);
-    font-style: normal;
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
+    gap: 9px;
+    padding: 8px 18px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.65);
     cursor: pointer;
     z-index: 6;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
-    box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.6), inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), inset 0 0 20px rgba(255, 255, 255, 0.03);
-    transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    animation: heroBtnReveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) 1.25s backwards;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
   }
 
-  .hero-start-btn:hover {
-    transform: translateY(-2px) scale(1.02);
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(255, 255, 255, 0.65);
-    box-shadow: 0 18px 46px -8px rgba(0, 0, 0, 0.75), 0 0 28px rgba(232, 147, 91, 0.22), inset 0 1px 1px 0 rgba(255, 255, 255, 0.7);
-    letter-spacing: 0.32em;
+  .hero-start-btn .scroll-indicator-text {
+    font-family: var(--font-title);
+    font-size: 9.5px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    user-select: none;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+    transition: color 0.35s ease, letter-spacing 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-start-btn .scroll-indicator-line {
+    width: 1px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.20);
+    position: relative;
+    overflow: hidden;
+    display: block;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    transition: background 0.35s ease;
+  }
+
+  .hero-start-btn .scroll-indicator-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.95) 50%, transparent 100%);
+    animation: hairline-scroll 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
+  @keyframes hairline-scroll {
+    0% {
+      transform: translateY(-100%);
+    }
+    60%, 100% {
+      transform: translateY(100%);
+    }
+  }
+
+  .hero-start-btn:hover .scroll-indicator-text {
     color: #FFFFFF;
+    letter-spacing: 0.34em;
+  }
+
+  .hero-start-btn:hover .scroll-indicator-line {
+    background: rgba(255, 255, 255, 0.45);
   }
 
   .hero-start-btn:active {
-    transform: translateY(0) scale(0.98);
-    transition-duration: 0.15s;
+    transform: translateX(-50%) translateY(2px) scale(0.97);
+    transition-duration: 0.12s;
+  }
+
+  /* Discreet Photographer Credit */
+  .hero-author-credit {
+    position: absolute;
+    left: max(38px, env(safe-area-inset-left));
+    bottom: max(32px, env(safe-area-inset-bottom));
+    z-index: 6;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-title);
+    font-size: 9.5px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(250, 247, 242, 0.45);
+    pointer-events: none;
+    user-select: none;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
+    animation: heroCreditReveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) 1.55s backwards;
+    transition: opacity 0.5s ease;
+  }
+  .hero-author-credit .hero-credit-sep {
+    opacity: 0.45;
+    font-size: 9px;
+  }
+
+  /* Cinematic Entry Keyframes */
+  @keyframes heroTextReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(22px);
+      filter: blur(5px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+  @keyframes heroSubReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(3px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+  @keyframes heroBtnReveal {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, 14px);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+  @keyframes heroCreditReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
 
@@ -400,7 +640,7 @@
     pointer-events: none;
     transform: scale(1.015);
     filter: blur(5px);
-    transition: opacity 3.5s cubic-bezier(0.22, 1, 0.36, 1), transform 3.5s cubic-bezier(0.22, 1, 0.36, 1), filter 3.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 2.0s cubic-bezier(0.22, 1, 0.36, 1), transform 2.4s cubic-bezier(0.22, 1, 0.36, 1), filter 2.0s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* Spine Index (01 02 03 04) */
@@ -1290,14 +1530,15 @@
     display: inline-flex;
     padding: 4px 13px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(196, 168, 122, 0.1);
+    border: 1px solid rgba(196, 168, 122, 0.22);
     font-family: var(--font-body);
     font-style: normal;
     font-size: 11.5px;
     font-weight: 500;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--contact-water);
     margin-bottom: 6px;
   }
 
@@ -1324,14 +1565,14 @@
   }
 
   .contact-block-title {
-    font-family: var(--font-title);
-    font-style: normal;
-    font-size: 15px;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 15.5px;
     font-weight: 400;
-    line-height: 1.45;
-    color: #fff;
-    margin: 2px 0 6px 0;
-    letter-spacing: 0.03em;
+    line-height: 1.5;
+    color: rgba(250, 247, 242, 0.9);
+    margin: 4px 0 8px 0;
+    letter-spacing: 0.01em;
   }
 
   .contact-form {
@@ -1376,8 +1617,8 @@
 
   .form-input:focus, .form-textarea:focus {
     outline: none;
-    border-color: var(--accent);
-    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--contact-water);
+    background: rgba(196, 168, 122, 0.07);
   }
 
   .form-textarea {
@@ -1398,25 +1639,29 @@
     border: none;
     border-radius: 24px;
     padding: 9px 28px;
-    background: var(--accent);
-    color: #14110f;
+    background: var(--contact-water);
+    color: #1a1410;
     font-family: var(--font-body);
     font-style: normal;
     font-size: 14.5px;
     font-weight: 600;
     letter-spacing: .02em;
     cursor: pointer;
-    box-shadow: 0 6px 18px -4px rgba(0,0,0,.4);
-    transition: transform .3s cubic-bezier(0.2, 0.8, 0.2, 1), background .35s ease, opacity .2s ease;
+    box-shadow: 0 6px 18px -4px rgba(196,168,122,0.3);
+    transition: transform .3s cubic-bezier(0.2, 0.8, 0.2, 1), background .35s ease, opacity .2s ease, box-shadow .3s ease;
   }
 
   .form-btn:hover {
     transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 28px -4px rgba(196,168,122,0.45);
   }
 
   .form-btn:active {
     transform: translateY(0) scale(0.97);
   }
+
+  /* Ã¢â€â‚¬Ã¢â€â‚¬ Contact accent: warm dawn gold Ã¢â‚¬â€ Torres del Paine sunrise Ã¢â€â‚¬Ã¢â€â‚¬ */
+  :root { --contact-water: #C4A87A; }
 
   .form-feedback {
     font-family: var(--font-body);
@@ -1424,6 +1669,81 @@
     font-size: 14.5px;
     color: var(--paper-dim);
     margin: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Premium success state */
+  .form-feedback.is-success {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(196, 168, 122, 0.09);
+    border: 1px solid rgba(196, 168, 122, 0.28);
+    border-radius: 10px;
+    padding: 9px 14px;
+    color: var(--contact-water);
+    font-size: 13.5px;
+    letter-spacing: 0.01em;
+    animation: feedback-appear 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .form-feedback.is-error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(220, 100, 70, 0.09);
+    border: 1px solid rgba(220, 100, 70, 0.25);
+    border-radius: 10px;
+    padding: 9px 14px;
+    color: #D9806A;
+    font-size: 13.5px;
+    animation: feedback-appear 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .form-feedback.is-sending {
+    color: rgba(250, 247, 242, 0.5);
+    font-size: 13.5px;
+    letter-spacing: 0.04em;
+  }
+
+  .feedback-icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+  }
+
+  .feedback-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .feedback-main {
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .feedback-sub {
+    font-size: 12px;
+    opacity: 0.7;
+    font-style: italic;
+    line-height: 1.3;
+  }
+
+  @keyframes feedback-appear {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Check animation */
+  .feedback-check-path {
+    stroke-dasharray: 22;
+    stroke-dashoffset: 22;
+    animation: check-draw 0.5s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes check-draw {
+    to { stroke-dashoffset: 0; }
   }
 
   /* Contact Social & Direct Links Section */
@@ -1446,7 +1766,7 @@
     font-size: 12px;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--contact-water);
     font-weight: 600;
   }
 
@@ -1479,11 +1799,11 @@
   }
 
   .social-link:hover {
-    background: rgba(255, 255, 255, 0.18);
-    border-color: var(--accent);
-    color: var(--accent);
+    background: rgba(196, 168, 122, 0.12);
+    border-color: var(--contact-water);
+    color: var(--contact-water);
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 10px 24px -4px rgba(196, 168, 122, 0.25);
   }
 
   .social-link:active {
@@ -1531,8 +1851,15 @@
   .is-starting .hero-start-btn {
     opacity: 0 !important;
     pointer-events: none !important;
-    transform: translateY(14px) scale(0.95) !important;
+    transform: translate(-50%, 14px) scale(0.95) !important;
     filter: blur(6px) !important;
+    transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease !important;
+  }
+  .is-starting .hero-author-credit {
+    opacity: 0 !important;
+    transform: translateY(8px) !important;
+    filter: blur(4px) !important;
+    pointer-events: none !important;
     transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease !important;
   }
 
@@ -1540,19 +1867,21 @@
   .view-gallery .hero-section {
     opacity: 0;
     pointer-events: none;
-    transform: scale(1.05);
-    filter: blur(2px);
-    transition: opacity 4.2s cubic-bezier(0.22, 1, 0.36, 1), transform 5.0s cubic-bezier(0.22, 1, 0.36, 1), filter 4.2s ease;
+    transform: none;
+    filter: none;
+    transition: opacity 1.3s cubic-bezier(0.25, 1, 0.5, 1);
   }
   .view-gallery .hero-video-layer {
     opacity: 0;
-    transform: scale(1.06);
-    transition: opacity 4.2s cubic-bezier(0.22, 1, 0.36, 1), transform 5.0s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: none;
+    transition: opacity 1.3s cubic-bezier(0.25, 1, 0.5, 1);
   }
   .view-gallery .hero-text-wrapper,
   .view-gallery .hero-start-btn,
+  .view-gallery .hero-author-credit,
   .view-contact .hero-text-wrapper,
-  .view-contact .hero-start-btn {
+  .view-contact .hero-start-btn,
+  .view-contact .hero-author-credit {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -1592,19 +1921,23 @@
 
   /* Cinematic entrance into Gallery from Home ONLY */
   #stage.from-home .gallery-section {
-    transition: opacity 3.8s cubic-bezier(0.22, 1, 0.36, 1), transform 4.5s cubic-bezier(0.22, 1, 0.36, 1), filter 3.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1), transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
   #stage.from-home .spine {
-    transition: opacity 2.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s, transform 2.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
   }
   #stage.from-home .cardzone {
-    transition: opacity 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, transform 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s;
+    transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, transform 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
   }
   #stage.from-home .bottombar {
-    transition: opacity 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s, transform 3.0s cubic-bezier(0.16, 1, 0.3, 1) 1.2s;
+    transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, transform 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
   }
   #stage.from-home .nav-links {
-    transition: opacity 2.4s cubic-bezier(0.16, 1, 0.3, 1) 1.4s, transform 2.4s cubic-bezier(0.16, 1, 0.3, 1) 1.4s;
+    transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  }
+  #stage.from-home .bg-layer.active {
+    animation: none !important;
+    transform: scale(1.0) !important;
   }
 
   /* 3. CONTACT VIEW */
@@ -1664,14 +1997,11 @@
       margin-bottom: 22px;
     }
     .hero-phrase {
-      font-size: clamp(20px, 2.0vw, 32px);
-      line-height: 1.34;
+      font-size: clamp(24px, 3.2vw, 42px);
+      line-height: 1.25;
     }
     .hero-start-btn {
-      padding: 10px 32px;
-      min-height: 40px;
-      font-size: 11.5px;
-      letter-spacing: 0.24em;
+      bottom: max(26px, env(safe-area-inset-bottom));
     }
 
     /* 3. Gallery Section */
@@ -1958,18 +2288,30 @@
       margin-bottom: 16px;
     }
     .hero-phrase {
-      font-size: clamp(20px, 4.8vw, 28px);
-      line-height: 1.34;
+      font-size: clamp(23px, 5.2vw, 34px);
+      line-height: 1.25;
       text-shadow: 0 4px 30px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.9);
     }
     .hero-start-btn {
-      padding: 9px 28px;
-      min-height: 38px;
-      font-size: 11px;
-      letter-spacing: 0.20em;
+      bottom: max(24px, env(safe-area-inset-bottom));
     }
     .hero-start-btn:active {
-      transform: scale(0.96);
+      transform: translateX(-50%) translateY(2px) scale(0.96);
+    }
+    .hero-author-credit {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2.5px;
+      left: max(22px, env(safe-area-inset-left));
+      bottom: max(22px, env(safe-area-inset-bottom));
+      font-size: 8.5px;
+      letter-spacing: 0.20em;
+      line-height: 1.25;
+      text-align: left;
+    }
+    .hero-author-credit .hero-credit-sep {
+      display: none;
     }
 
     /* Mobile Spine Index (01 02 03 04 on the left side of section name) */
@@ -2076,6 +2418,14 @@
     }
 
     /* Seamless Home to Gallery transition on mobile */
+    .hero-warp-tunnel,
+    .is-warping .hero-warp-tunnel {
+      display: none !important;
+      opacity: 0 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      pointer-events: none !important;
+    }
     .is-starting .hero-video {
       transform: none !important;
     }
@@ -2088,6 +2438,10 @@
     }
     #stage.from-home .hero-video {
       transform: none !important;
+    }
+    #stage.from-home .bg-layer.active {
+      animation: none !important;
+      transform: scale(1.0) !important;
     }
     /* Continuous cinematic background drift on mobile matching desktop */
     .view-gallery .bg-layer.active,
@@ -2535,18 +2889,40 @@
       object-position: 58.5% center;
     }
     .hero-text-wrapper {
-      max-width: 440px;
-      margin-bottom: 12px;
+      max-width: 460px;
+      margin-bottom: 14px;
     }
     .hero-phrase {
-      font-size: clamp(16.5px, 4.7vw, 21px);
-      line-height: 1.32;
+      font-size: clamp(20px, 5.4vw, 26px);
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+    }
+    .hero-phrase-sub {
+      margin-top: 10px;
+      font-size: clamp(14px, 3.8vw, 17px);
+      line-height: 1.55;
     }
     .hero-start-btn {
-      padding: 7px 24px;
-      min-height: 34px;
-      font-size: 10.5px;
-      letter-spacing: 0.20em;
+      bottom: max(20px, env(safe-area-inset-bottom));
+    }
+    .hero-start-btn .scroll-indicator-line {
+      height: 28px;
+    }
+    .hero-author-credit {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      left: max(18px, env(safe-area-inset-left));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      font-size: 7.5px;
+      letter-spacing: 0.18em;
+      line-height: 1.25;
+      max-width: 105px;
+      text-align: left;
+    }
+    .hero-author-credit .hero-credit-sep {
+      display: none;
     }
 
     #stage:not(.explore-mode)[data-category="africa"] .bg-layer,
@@ -2819,8 +3195,10 @@
       padding-bottom: 14px;
       justify-content: flex-start;
     }
-    .hero-phrase { font-size: 16px; margin-bottom: 10px; }
-    .hero-start-btn { min-height: 36px; padding: 7px 22px; font-size: 10.5px; }
+    .hero-phrase { font-size: 19px; margin-bottom: 8px; }
+    .hero-start-btn { bottom: 12px; }
+    .hero-start-btn .scroll-indicator-line { height: 18px; }
+    .hero-author-credit { display: none !important; }
 
     .panel {
       padding-top: 65px;
@@ -2916,10 +3294,14 @@
 </head>
 <body class="view-home">
 
+<!-- Custom cursor (desktop only, hidden via CSS on touch) -->
+<div class="cursor-dot"  id="cursorDot"  aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
 <div class="stage" id="stage">
 
   <div class="bg-canvas">
-    <div class="bg-layer active" id="bgLayerA" data-bg="africa" style="background-image:url('images/Landscape/display/PJO05334.webp')"></div>
+    <div class="bg-layer active" id="bgLayerA" data-bg="africa" style="background-image:url('images/Landscape/display/PJO05334.webp?v=20260923-4k')"></div>
     <div class="bg-layer" id="bgLayerB"></div>
   </div>
 
@@ -2945,12 +3327,25 @@
         <source src="images/Inicio/Inicio video.mp4" type="video/mp4">
       </video>
       <div class="hero-epic-atmosphere"></div>
+      <div class="hero-warp-tunnel" id="heroWarpTunnel"></div>
     </div>
 
     <div class="hero-text-wrapper">
-      <h1 class="hero-phrase">Welcome to my creative world, where every image is not just seen, but deeply felt.</h1>
+      <h1 class="hero-phrase">Nothing here asks to be seen.</h1>
+      <p class="hero-phrase-sub">
+        <span class="sub-line">The earth simply waits, and the light, when it comes,</span>
+        <span class="sub-line">becomes something worth remembering.</span>
+      </p>
     </div>
-    <button class="hero-start-btn" id="startBtn" type="button" aria-label="Start">Start</button>
+    <button class="hero-start-btn hero-scroll-indicator" id="startBtn" type="button" aria-label="Explore gallery">
+      <span class="scroll-indicator-text">EXPLORE</span>
+      <span class="scroll-indicator-line"></span>
+    </button>
+    <div class="hero-author-credit" id="heroAuthorCredit" aria-label="Author credit">
+      <span>Patricio Jiménez</span>
+      <span class="hero-credit-sep">—</span>
+      <span>Photography</span>
+    </div>
   </section>
 
 
@@ -3011,13 +3406,13 @@
     <!-- Destination Card Stack (Side Preview) -->
     <div class="cardzone show" id="cardzone">
       <div class="dcard b" id="cardB" style="background-image:url('images/Landscape/thumbs/PJO05300.webp')">
-        <div class="meta"><p class="place">Open landscape</p><p class="stars">★★★★☆ 4.7</p></div>
+        <div class="meta"><p class="place">Open landscape</p></div>
       </div>
       <div class="dcard a" id="cardA" style="background-image:url('images/Landscape/thumbs/PJO05334.webp')">
-        <div class="meta"><p class="place">Mountain light</p><p class="stars">★★★★★ 4.9</p></div>
+        <div class="meta"><p class="place">Mountain light</p></div>
       </div>
       <div class="dcard c" id="cardC" style="background-image:url('images/Landscape/thumbs/faro-fb33fbb3.webp')">
-        <div class="meta"><p class="place">Lighthouse</p><p class="stars">★★★★☆ 4.6</p></div>
+        <div class="meta"><p class="place">Lighthouse</p></div>
       </div>
     </div>
 
@@ -3095,13 +3490,13 @@
     <div class="contact-layout">
 
       <div class="contact-panel contact-photo">
-        <img src="images/contact/display/PJO05448.webp" alt="Patricio Jiménez — Photographer" loading="lazy">
+        <img src="images/contact/display/PJO05448.webp?v=20260923-4k" alt="Patricio Jiménez — Photographer" loading="lazy">
       </div>
 
       <div class="contact-panel contact-info-panel">
         <div class="about-block">
           <span class="about-pill">ABOUT ME</span>
-          <h2 class="about-title">Patricio Jiménez</h2>
+          <h2 class="about-title">Patricio JimÃ©nez</h2>
           <p class="about-desc">
             My relationship with nature began long before the camera entered my life: it was a desire to understand it, to observe it closely, to recognize in every creature the same right to exist. Over time, that way of seeing grew deeper, and photography became the natural way to continue that silent dialogue. Today, I try to capture landscapes, natural scenes, and urban details that often go unnoticed, translating into images what my imagination sees in them. When I'm not behind the camera, you'll probably find me with my two little cats.
           </p>
@@ -3172,12 +3567,12 @@
 (function(){
   const continents = [
     {
-      key:'africa', name:'Landscape', accent:'#E8935B', bgTone:'#1a140f', eyebrow:'Landscape',
+      key:'africa', name:'Landscape', accent:'#D4884A', bgTone:'#181208', eyebrow:'Landscape',
       hero:'images/Landscape/PJO05334.jpg',
       cards:[
-        {img:'images/Landscape/PJO05334.jpg',    place:'Mountain light',      stars:'★★★★★ 4.9'},
-        {img:'images/Landscape/PJO05300.jpg',    place:'Open landscape',      stars:'★★★★☆ 4.7'},
-        {img:'images/Landscape/faro-fb33fbb3.jpg', place:'Lighthouse',        stars:'★★★★☆ 4.6'}
+        {img:'images/Landscape/PJO05334.jpg',    place:'Mountain light'},
+        {img:'images/Landscape/PJO05300.jpg',    place:'Open landscape'},
+        {img:'images/Landscape/faro-fb33fbb3.jpg', place:'Lighthouse'}
       ],
       all:[
         'images/Landscape/PJO05300.jpg',
@@ -3221,12 +3616,12 @@
       ]
     },
     {
-      key:'asia', name:'Nature', accent:'#4FA98A', bgTone:'#142522', eyebrow:'Nature',
+      key:'asia', name:'Nature', accent:'#7BA05B', bgTone:'#111a10', eyebrow:'Nature',
       hero:'images/Nature/PJO00934.jpg',
       cards:[
-        {img:'images/Nature/PJO00934.jpg',       place:'Wildlife light',      stars:'★★★★★ 4.9'},
-        {img:'images/Nature/PJO09920.jpg',        place:'Golden meadow',       stars:'★★★★☆ 4.7'},
-        {img:'images/Nature/PJO08967.jpg',        place:'Macro life',          stars:'★★★★★ 4.8'}
+        {img:'images/Nature/PJO00934.jpg',       place:'Wildlife light'},
+        {img:'images/Nature/PJO09920.jpg',        place:'Golden meadow'},
+        {img:'images/Nature/PJO08967.jpg',        place:'Macro life'}
       ],
       all:[
         'images/Nature/DSC05597.jpg',
@@ -3294,12 +3689,12 @@
       ]
     },
     {
-      key:'australia', name:'Adventure', accent:'#D9683B', bgTone:'#23140e', eyebrow:'Adventure',
+      key:'australia', name:'Adventure', accent:'#6E9AB0', bgTone:'#0e161e', eyebrow:'Adventure',
       hero:'images/Sport/DSC07377_-_2-f8a343cf.jpg',
       cards:[
-        {img:'images/Sport/DSC07377_-_2-f8a343cf.jpg', place:'Action',            stars:'★★★★★ 4.9'},
-        {img:'images/Sport/PJO01917.jpg',            place:'Motion',              stars:'★★★★☆ 4.7'},
-        {img:'images/Sport/PJO04973-f6a2848a.jpg',   place:'Intensity',           stars:'★★★★☆ 4.7'}
+        {img:'images/Sport/DSC07377_-_2-f8a343cf.jpg', place:'Action'},
+        {img:'images/Sport/PJO01917.jpg',            place:'Motion'},
+        {img:'images/Sport/PJO04973-f6a2848a.jpg',   place:'Intensity'}
       ],
       all:[
         'images/Sport/DSC07386-f7ad26b2.jpg',
@@ -3310,12 +3705,12 @@
       ]
     },
     {
-      key:'street', name:'Street', accent:'#6C7A89', bgTone:'#161a20', eyebrow:'Street',
+      key:'street', name:'Street', accent:'#A0785A', bgTone:'#17120e', eyebrow:'Street',
       hero:'images/Street/PJO02812.jpg',
       cards:[
-        {img:'images/Street/PJO02812.jpg',           place:'Street frame',        stars:'★★★★★ 4.9'},
-        {img:'images/Street/PJO02840.jpg',           place:'Urban life',          stars:'★★★★☆ 4.7'},
-        {img:'images/Street/PJO05819.jpg',           place:'City shadows',        stars:'★★★★★ 4.8'}
+        {img:'images/Street/PJO02812.jpg',           place:'Street frame'},
+        {img:'images/Street/PJO02840.jpg',           place:'Urban life'},
+        {img:'images/Street/PJO05819.jpg',           place:'City shadows'}
       ],
       all:[
         'images/Street/PJO02840.jpg',
@@ -3413,9 +3808,9 @@
   let currentViewerSlot = 'A';
   const imgMemoryCache = new Map();
 
-  const ASSET_VERSION = '20260919-v1';
+  const ASSET_VERSION = '20260923-4k';
 
-  // ── Video first-frame poster ─────────────────────────────────────────────
+  // Ã¢â€â‚¬Ã¢â€â‚¬ Video first-frame poster Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
   // Capture the first visible frame of the hero video into a canvas blob and
   // set it as the poster so there is NO black/empty flash when the page loads.
   (function initVideoPoster() {
@@ -3438,7 +3833,7 @@
           heroBgVideo.poster = url;
         }, 'image/jpeg', 0.85);
       } catch (e) {
-        // Cross-origin or security error — silently ignore
+        // Cross-origin or security error Ã¢â‚¬â€ silently ignore
       }
     };
 
@@ -3485,6 +3880,7 @@
   const displayImageUrl = (imageUrl) => imageVariantUrl(imageUrl, 'display');
   const optimizedImageUrl = displayImageUrl; // Backward-compatible alias
   const thumbnailImageUrl = (imageUrl) => imageVariantUrl(imageUrl, 'thumbs');
+  currentBgUrl = displayImageUrl('images/Landscape/display/PJO05334.webp');
 
   function preloadGalleryAssets() {
     const assets = continents.flatMap(category => [
@@ -3637,14 +4033,19 @@
     if (targetView === 'home') {
       isStartingGallery = false;
       stage.classList.remove('is-starting');
+      stage.classList.remove('is-warping');
       stage.classList.remove('from-home');
+      if (typeof clearRampTimers === 'function') clearRampTimers();
+      if (typeof warpTimer !== 'undefined' && warpTimer) clearTimeout(warpTimer);
+      if (typeof warpEndTimer !== 'undefined' && warpEndTimer) clearTimeout(warpEndTimer);
       root.style.setProperty('--accent', '#E8935B');
       root.style.setProperty('--bg-tone', '#0e0c0b');
       if (timer) clearInterval(timer);
       try {
         if (heroBgVideo) {
-          heroBgVideo.currentTime = 0;
           heroBgVideo.pause();
+          heroBgVideo.currentTime = 0;
+          heroBgVideo.playbackRate = 1.0;
         }
       } catch(e){}
     }
@@ -3658,6 +4059,9 @@
       restartAutoplay();
     }
     else if (targetView === 'contact') {
+      if (typeof clearRampTimers === 'function') clearRampTimers();
+      if (typeof warpTimer !== 'undefined' && warpTimer) clearTimeout(warpTimer);
+      if (typeof warpEndTimer !== 'undefined' && warpEndTimer) clearTimeout(warpEndTimer);
       if (timer) clearInterval(timer);
       root.style.setProperty('--accent', '#E8935B');
       root.style.setProperty('--bg-tone', '#14110f');
@@ -3729,13 +4133,10 @@
         if(thisRender !== renderToken) return;
         cardA.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[0].img)}')`;
         cardA.querySelector('.place').textContent = c.cards[0].place;
-        cardA.querySelector('.stars').textContent = c.cards[0].stars;
         cardB.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[1].img)}')`;
         cardB.querySelector('.place').textContent = c.cards[1].place;
-        cardB.querySelector('.stars').textContent = c.cards[1].stars;
         cardC.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[2] ? c.cards[2].img : c.cards[0].img)}')`;
         cardC.querySelector('.place').textContent = c.cards[2] ? c.cards[2].place : c.cards[0].place;
-        cardC.querySelector('.stars').textContent = c.cards[2] ? c.cards[2].stars : c.cards[0].stars;
         cardzone.classList.add('show');
       }, CARD_SWAP_DELAY);
     }
@@ -4215,86 +4616,202 @@
      CINEMATIC VIDEO ZOOM TRANSITION INTO GALLERY
      ========================================================= */
   let isStartingGallery = false;
+  let activeEnterGallery = null;
+  let transitionStartTime = 0;
+  let warpTimer = null;
+  let warpEndTimer = null;
+  let rampTimeoutIds = [];
+
+  function clearRampTimers() {
+    rampTimeoutIds.forEach(id => clearTimeout(id));
+    rampTimeoutIds = [];
+  }
 
   function startCinematicVideoTransition(e) {
     if (e && e.type === 'touchend') {
       try { e.preventDefault(); } catch(err){}
     }
+    // Fast-forward if user clicks/taps again after 600ms
+    if (stage.classList.contains('is-starting')) {
+      if (activeEnterGallery && (performance.now() - transitionStartTime > 600)) {
+        activeEnterGallery();
+      }
+      return;
+    }
     if (currentView !== 'home' || isStartingGallery) return;
     isStartingGallery = true;
+    transitionStartTime = performance.now();
+    clearRampTimers();
+
+    // FASE 1: Texto e interfaz se desvanecen; el video arranca a velocidad normal
     stage.classList.add('is-starting');
     preloadGalleryAssets();
-    setCinematicBackground(continents[0].hero);
 
     let entered = false;
     const enterGallery = () => {
       if (entered || currentView !== 'home') return;
       entered = true;
-      stage.classList.remove('is-starting');
+      if (warpTimer) { clearTimeout(warpTimer); warpTimer = null; }
+      if (warpEndTimer) { clearTimeout(warpEndTimer); warpEndTimer = null; }
+      clearRampTimers();
+      activeEnterGallery = null;
+
+      // Clase from-home para orquestar la suave entrada de controles de galería
       stage.classList.add('from-home');
+
+      // Transición fluida a galería manteniendo is-warping activo durante la disolvencia
       switchView('gallery');
 
+      // Al finalizar la disolvencia (1500ms), limpiar video y clases fuera de pantalla
       setTimeout(() => {
         stage.classList.remove('from-home');
-      }, 5500);
-
-      // Keep video smoothly playing through the slow 4.2s crossfade before pausing
-      setTimeout(() => {
+        stage.classList.remove('is-starting');
+        stage.classList.remove('is-warping');
+        isStartingGallery = false;
         try {
-          if (currentView === 'gallery' && heroBgVideo) {
+          if (heroBgVideo) {
             heroBgVideo.pause();
+            heroBgVideo.currentTime = 0;
+            heroBgVideo.playbackRate = 1.0;
           }
         } catch(e){}
-      }, 5500);
+      }, 1500);
     };
 
+    activeEnterGallery = enterGallery;
+
     if (heroBgVideo) {
+      heroBgVideo.muted = true;
+      heroBgVideo.defaultMuted = true;
+
+      // FASE 1: Primeros 2.0s a velocidad 100% normal (1.0x) - serenidad, contemplación y cine
       heroBgVideo.currentTime = 0;
+      heroBgVideo.playbackRate = 1.0;
       const playPromise = heroBgVideo.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
-          setTimeout(enterGallery, 800);
+          setTimeout(enterGallery, 400);
         });
       }
 
-      let transitionTriggered = false;
-      const triggerTransition = () => {
-        if (transitionTriggered) return;
-        transitionTriggered = true;
-        heroBgVideo.removeEventListener('timeupdate', onTimeUpdate);
-        heroBgVideo.removeEventListener('ended', onEnded);
-        enterGallery();
-      };
+      // FASE 2: Aceleración aún más pausada y majestuosa (+1 segundo más lento, de 2.0s a 4.70s)
+      warpTimer = setTimeout(() => {
+        if (entered || currentView !== 'home') return;
+        stage.classList.add('is-warping');
 
-      const onTimeUpdate = () => {
-        const dur = heroBgVideo.duration;
-        // Trigger transition 0.5s earlier, smoothly blending into gallery
-        if (dur && Number.isFinite(dur) && dur > 1.2) {
-          if (heroBgVideo.currentTime >= dur - 0.5) {
-            triggerTransition();
+        // Rampa ultra-suave desacoplada del classList para eliminar cualquier tirón o corte
+        // Aumenta progresivamente hasta 1.66x (sin saltos bruscos para el decodificador de video)
+        const rampUpSteps = [
+          { delay: 80,  rate: 1.08 },
+          { delay: 160, rate: 1.20 },
+          { delay: 240, rate: 1.34 },
+          { delay: 320, rate: 1.50 },
+          { delay: 400, rate: 1.66 }
+        ];
+
+        rampUpSteps.forEach(step => {
+          const tid = setTimeout(() => {
+            if (!entered && currentView === 'home' && heroBgVideo) {
+              heroBgVideo.playbackRate = step.rate;
+            }
+          }, step.delay);
+          rampTimeoutIds.push(tid);
+        });
+
+        // FASE 3: Desaceleración y retorno a velocidad 100% normal antes de la transición (de 4.70s a 5.20s)
+        // El túnel óptico se disuelve gradualmente para devolver nitidez completa a toda la pantalla
+        const tidDeaccelClass = setTimeout(() => {
+          if (!entered && currentView === 'home') {
+            stage.classList.remove('is-warping');
           }
-        }
-      };
+        }, 2700);
+        rampTimeoutIds.push(tidDeaccelClass);
 
-      const onEnded = () => {
-        triggerTransition();
-      };
+        // Rampa de desaceleración progresiva hacia 1.00x exacto:
+        // 1.66x -> 1.50x -> 1.36x -> 1.22x -> 1.10x -> 1.00x
+        const rampDownSteps = [
+          { delay: 2700, rate: 1.50 },
+          { delay: 2820, rate: 1.36 },
+          { delay: 2940, rate: 1.22 },
+          { delay: 3060, rate: 1.10 },
+          { delay: 3180, rate: 1.00 }
+        ];
 
-      heroBgVideo.addEventListener('timeupdate', onTimeUpdate);
-      heroBgVideo.addEventListener('ended', onEnded, { once: true });
+        rampDownSteps.forEach(step => {
+          const tid = setTimeout(() => {
+            if (!entered && currentView === 'home' && heroBgVideo) {
+              heroBgVideo.playbackRate = step.rate;
+            }
+          }, step.delay);
+          rampTimeoutIds.push(tid);
+        });
 
-      // Dynamic safety fallback based on actual video duration
-      const safetyTimeout = (heroBgVideo.duration && Number.isFinite(heroBgVideo.duration))
-        ? Math.max(2500, (heroBgVideo.duration * 1000) + 2200)
-        : 10500;
-      window.setTimeout(enterGallery, safetyTimeout);
+        // FASE 4: A los 5.90s (con video a velocidad 1.0x normal, nítido y la pantalla LCD al 100% en frame 191),
+        // se inicia la transición match-cut combinada hacia la galería (cero doble imagen, alineación 1:1)
+        warpEndTimer = setTimeout(() => {
+          enterGallery();
+        }, 3900); // 2000ms + 3900ms = 5900ms total (+1.0s más pausado)
+      }, 2000);
+
+      // Fallback de seguridad
+      window.setTimeout(enterGallery, 7500);
     } else {
-      setTimeout(enterGallery, 800);
+      setTimeout(enterGallery, 400);
     }
   }
 
   startBtn.addEventListener('click', startCinematicVideoTransition);
   startBtn.addEventListener('touchend', startCinematicVideoTransition);
+
+  /* ── Subtle Mouse Depth Parallax on Hero (Desktop only) ────── */
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const heroTextWrapper = document.querySelector('.hero-text-wrapper');
+    const heroAtmosphere = document.querySelector('.hero-epic-atmosphere');
+    let heroTargetX = 0, heroTargetY = 0;
+    let heroCurrentX = 0, heroCurrentY = 0;
+    let isParallaxActive = false;
+
+    window.addEventListener('mousemove', (e) => {
+      if (currentView !== 'home' || stage.classList.contains('is-starting')) {
+        heroTargetX = 0;
+        heroTargetY = 0;
+        return;
+      }
+      const normX = (e.clientX / window.innerWidth) - 0.5;
+      const normY = (e.clientY / window.innerHeight) - 0.5;
+      heroTargetX = normX * 14;
+      heroTargetY = normY * 10;
+    }, { passive: true });
+
+    window.addEventListener('mouseleave', () => {
+      heroTargetX = 0;
+      heroTargetY = 0;
+    });
+
+    function updateHeroParallax() {
+      if (currentView === 'home' && !stage.classList.contains('is-starting')) {
+        heroCurrentX += (heroTargetX - heroCurrentX) * 0.055;
+        heroCurrentY += (heroTargetY - heroCurrentY) * 0.055;
+        if (heroTextWrapper) {
+          heroTextWrapper.style.transform = `translate3d(${heroCurrentX.toFixed(2)}px, ${heroCurrentY.toFixed(2)}px, 0)`;
+        }
+        if (heroAtmosphere) {
+          heroAtmosphere.style.transform = `translate3d(${(-heroCurrentX * 0.5).toFixed(2)}px, ${(-heroCurrentY * 0.5).toFixed(2)}px, 0) scale(1.02)`;
+        }
+        isParallaxActive = true;
+      } else if (isParallaxActive) {
+        if (heroTextWrapper) heroTextWrapper.style.transform = '';
+        if (heroAtmosphere) heroAtmosphere.style.transform = '';
+        heroCurrentX = 0;
+        heroCurrentY = 0;
+        heroTargetX = 0;
+        heroTargetY = 0;
+        isParallaxActive = false;
+      }
+      requestAnimationFrame(updateHeroParallax);
+    }
+    requestAnimationFrame(updateHeroParallax);
+  }
 
 
   /* =========================================================
@@ -4307,7 +4824,10 @@
   if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      contactFeedback.textContent = 'Sending message...';
+
+      // Reset classes
+      contactFeedback.className = 'form-feedback is-sending';
+      contactFeedback.innerHTML = 'Ã¢â‚¬â€ SendingÃ¢â‚¬Â¦';
       contactSubmitBtn.disabled = true;
 
       const payload = {
@@ -4324,16 +4844,38 @@
         });
         const data = await res.json();
         if (res.ok) {
-          contactFeedback.style.color = '#4FA98A';
-          contactFeedback.textContent = 'Message sent successfully! I will be in touch soon.';
+          contactFeedback.className = 'form-feedback is-success';
+          contactFeedback.innerHTML = `
+            <svg class="feedback-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="10" cy="10" r="9" opacity="0.35"/>
+              <path class="feedback-check-path" d="M6 10.5l3 3 5-5.5"/>
+            </svg>
+            <span class="feedback-text-block">
+              <span class="feedback-main">Message received.</span>
+              <span class="feedback-sub">I will be in touch soon.</span>
+            </span>`;
           contactForm.reset();
         } else {
-          contactFeedback.style.color = '#E8935B';
-          contactFeedback.textContent = data.message || 'An error occurred while sending.';
+          contactFeedback.className = 'form-feedback is-error';
+          contactFeedback.innerHTML = `
+            <svg class="feedback-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="10" cy="10" r="9" opacity="0.35"/>
+              <line x1="10" y1="6" x2="10" y2="11"/><circle cx="10" cy="13.5" r="0.5" fill="currentColor"/>
+            </svg>
+            <span class="feedback-text-block">
+              <span class="feedback-main">${data.message || 'Could not send message.'}</span>
+            </span>`;
         }
       } catch(err) {
-        contactFeedback.style.color = '#E8935B';
-        contactFeedback.textContent = 'Connection error. Please try again.';
+        contactFeedback.className = 'form-feedback is-error';
+        contactFeedback.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" opacity="0.35"/>
+            <line x1="10" y1="6" x2="10" y2="11"/><circle cx="10" cy="13.5" r="0.5" fill="currentColor"/>
+          </svg>
+          <span class="feedback-text-block">
+            <span class="feedback-main">Connection error. Please try again.</span>
+          </span>`;
       } finally {
         contactSubmitBtn.disabled = false;
       }
@@ -4473,6 +5015,13 @@
   }
 
   stage.addEventListener('wheel', (event) => {
+    if (currentView === 'home') {
+      if (event.deltaY > 20) {
+        event.preventDefault();
+        startCinematicVideoTransition();
+      }
+      return;
+    }
     if (currentView !== 'gallery' || inExploreMode) return;
     event.preventDefault();
     const direction = event.deltaY > 0 ? 1 : -1;
@@ -4572,14 +5121,18 @@
           }
         }
       } else if (absY > absX && absY > 40) {
-        // Vertical swipe on mobile gallery changes continents
+        // Vertical swipe on mobile gallery changes continents, or on home enters gallery
         if (currentView === 'gallery') {
           go(idx + (deltaY > 0 ? 1 : -1), { force: true });
+        } else if (currentView === 'home' && deltaY > 30) {
+          startCinematicVideoTransition();
         }
       }
     } else {
       // Desktop touch fallback
-      if (currentView === 'gallery') {
+      if (currentView === 'home' && absY > absX && deltaY > 30) {
+        startCinematicVideoTransition();
+      } else if (currentView === 'gallery') {
         if (absX > absY && absX > 36) {
           go(idx + (deltaX > 0 ? 1 : -1), { force: true });
         } else if (absY > absX && absY > 40) {
@@ -4632,6 +5185,60 @@
     switchView('home', { skipHistory: true });
   }
 
+})();
+
+/* ── Custom Cursor ─────────────────────────────────────────────── */
+(function initCursor() {
+  // Only on devices with a real pointer (not touch)
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  let rx = mx, ry = my;
+  let hidden = true;
+
+  // Move dot instantly, ring lerps behind
+  document.addEventListener('mousemove', (e) => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+    if (hidden) { hidden = false; document.body.classList.remove('csr-hidden'); }
+  });
+
+  document.addEventListener('mouseleave', () => document.body.classList.add('csr-hidden'));
+  document.addEventListener('mouseenter', () => document.body.classList.remove('csr-hidden'));
+
+  // Lerp ring towards mouse
+  (function animateRing() {
+    rx += (mx - rx) * 0.10;
+    ry += (my - ry) * 0.10;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animateRing);
+  })();
+
+  // Hover state: buttons / links
+  const hoverEls = document.querySelectorAll(
+    'a, button, [role="button"], .explore, .spine-item, .view-nav-btn, ' +
+    '.explore-nav-arrow, .explore-close-pill, .explore-zoom-btn'
+  );
+  hoverEls.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('csr-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('csr-hover'));
+  });
+
+  // Photo state: images / gallery cards expand ring softly
+  const photoEls = document.querySelectorAll('.dcard, .explore-viewer-img, .contact-photo img, .bg-layer');
+  photoEls.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('csr-photo'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('csr-photo'));
+  });
+
+  // Start hidden until first move
+  document.body.classList.add('csr-hidden');
 })();
 </script>
 

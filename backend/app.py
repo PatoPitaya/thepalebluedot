@@ -306,6 +306,12 @@ class MeridianHandler(BaseHTTPRequestHandler):
             self._send_static(FRONTEND_DIR / "index.html")
             return
 
+        if parsed_path.path in {"/favicon.ico", "/favicon.svg"}:
+            fav = FRONTEND_DIR / "favicon.svg"
+            if fav.exists():
+                self._send_static(fav)
+                return
+
         if parsed_path.path in {"/gallery", "/gallery.html", "/about", "/about.html", "/contact", "/contact.html"}:
             self._send_static(FRONTEND_DIR / "index.html")
             return
