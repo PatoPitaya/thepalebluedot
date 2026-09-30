@@ -1,0 +1,17 @@
+{
+  "name": "THE PALE BLUE DOT — Photography by Patricio Jiménez",
+  "short_name": "Pale Blue Dot",
+  "description": "Fine art photography portfolio: landscapes, nature, adventure and street photography from Chile and Patagonia.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e0c0b",
+  "theme_color": "#0e0c0b",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

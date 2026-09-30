@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://thepalebluedot.cl/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://thepalebluedot.cl/images/Landscape/display/PJO05334.webp</image:loc>
+      <image:title>Torres del Paine — Patagonia</image:title>
+      <image:caption>Fine art photography by Patricio Jiménez</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://thepalebluedot.cl/#gallery/landscape</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://thepalebluedot.cl/images/Landscape/display/PJO05334.webp</image:loc>
+      <image:title>Landscape Gallery — Torres del Paine, Patagonia</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://thepalebluedot.cl/#gallery/nature</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://thepalebluedot.cl/images/Nature/display/PJO00934.webp</image:loc>
+      <image:title>Nature Gallery — Silvestre al Alba, Araucanía</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://thepalebluedot.cl/#gallery/adventure</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://thepalebluedot.cl/images/Sport/display/DSC07377_-_2-f8a343cf.webp</image:loc>
+      <image:title>Adventure Gallery — Descenso Rápido, Río Trancura</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://thepalebluedot.cl/#gallery/street</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://thepalebluedot.cl/images/Street/display/PJO02812.webp</image:loc>
+      <image:title>Street Gallery — Contraluz Urbano, Santiago</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://thepalebluedot.cl/#contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>

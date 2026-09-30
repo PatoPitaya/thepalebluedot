@@ -2,9 +2,11 @@ import html
 import json
 import mimetypes
 import os
+import re
 import smtplib
 import sys
 import threading
+import time
 from datetime import datetime, timezone
 from email.message import EmailMessage
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -21,6 +23,8 @@ mimetypes.add_type("video/mp4", ".mp4")
 mimetypes.add_type("image/svg+xml", ".svg")
 mimetypes.add_type("application/javascript", ".js")
 mimetypes.add_type("text/css", ".css")
+mimetypes.add_type("application/manifest+json", ".webmanifest")
+mimetypes.add_type("application/json", ".json")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
@@ -28,6 +32,12 @@ IMAGES_DIR = BASE_DIR / "frontend/images"
 CONTACT_LOG = BASE_DIR / "backend" / "contact_messages.jsonl"
 ENV_FILE = BASE_DIR / ".env"
 MAX_CONTACT_RESULTS = 5
+MAX_CONTACT_NAME_LENGTH = 120
+MAX_CONTACT_EMAIL_LENGTH = 254
+MAX_CONTACT_MESSAGE_LENGTH = 4000
+CONTACT_RATE_LIMIT_SECONDS = 60
+EMAIL_PATTERN = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
+CONTACT_ATTEMPTS = {}
 
 
 def load_env(env_path: Path) -> None:
@@ -227,6 +237,10 @@ class MeridianHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "SAMEORIGIN")
+        self.send_header("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+        self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
@@ -286,6 +300,10 @@ class MeridianHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", content_type)
         self.send_header("Accept-Ranges", "bytes")
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "SAMEORIGIN")
+        self.send_header("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+        self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
         self.send_header("Cache-Control", cache_control)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-Length", str(len(body)))
@@ -299,7 +317,7 @@ class MeridianHandler(BaseHTTPRequestHandler):
             return
 
         if parsed_path.path == "/api/contact":
-            self._send_json(200, {"submissions": self._read_contact_submissions()})
+            self._send_json(405, {"message": "Contact submissions are private."})
             return
 
         if parsed_path.path in {"/", "/index.html"}:
@@ -358,43 +376,23 @@ class MeridianHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         parsed_path = urlparse(self.path)
-        if parsed_path.path not in {"/api/compose", "/api/contact"}:
+        if parsed_path.path != "/api/contact":
             self._send_json(404, {"error": "not_found"})
             return
 
-        payload = self._read_json_body()
+        try:
+            payload = self._read_json_body()
+        except (TypeError, ValueError, json.JSONDecodeError):
+            self._send_json(400, {"message": "Please send valid JSON."})
+            return
 
-        if parsed_path.path == "/api/contact":
-            name = (payload.get("name") or "").strip()
-            email = (payload.get("email") or "").strip()
-            message = (payload.get("message") or "").strip()
+        name = (payload.get("name") or "").strip()
+        email = (payload.get("email") or "").strip()
+        message = (payload.get("message") or "").strip()
+        honeypot = (payload.get("company_website") or payload.get("website") or "").strip()
 
-            if not name or not email or not message:
-                self._send_json(
-                    400,
-                    {
-                        "message": "Please fill in your name, email, and message before sending.",
-                    },
-                )
-                return
-
-            CONTACT_LOG.parent.mkdir(parents=True, exist_ok=True)
-            submission = {
-                "submitted_at": datetime.now(timezone.utc).isoformat(),
-                "name": name,
-                "email": email,
-                "message": message,
-            }
-            with CONTACT_LOG.open("a", encoding="utf-8") as handle:
-                handle.write(json.dumps(submission, ensure_ascii=False) + "\n")
-
-            # Envío de correo en segundo plano para no bloquear la respuesta HTTP
-            threading.Thread(
-                target=send_contact_email,
-                args=(name, email, message),
-                daemon=True,
-            ).start()
-
+        # Silent honeypot trap for automated bots
+        if honeypot:
             self._send_json(
                 200,
                 {
@@ -403,35 +401,62 @@ class MeridianHandler(BaseHTTPRequestHandler):
             )
             return
 
-        prompt_text = (payload.get("prompt") or "").strip()
-
-        if not prompt_text:
+        if not name or not email or not message:
             self._send_json(
-                200,
+                400,
                 {
-                    "message": "El prompt está vacío. Añade una intención de viaje.",
-                    "vake": {
-                        "title": "Vake · Ruta de silencio",
-                        "summary": "Prueba con una idea más concreta para obtener un resultado más útil.",
-                        "highlights": ["Define el lugar", "Indica la duración", "Añade un tono"],
-                    },
+                    "message": "Please fill in your name, email, and message before sending.",
                 },
             )
             return
 
+        if (
+            len(name) > MAX_CONTACT_NAME_LENGTH
+            or len(email) > MAX_CONTACT_EMAIL_LENGTH
+            or len(message) > MAX_CONTACT_MESSAGE_LENGTH
+        ):
+            self._send_json(
+                400,
+                {"message": "Please keep your message within the allowed length."},
+            )
+            return
+
+        if not EMAIL_PATTERN.fullmatch(email):
+            self._send_json(400, {"message": "Please provide a valid email address."})
+            return
+
+        client_ip = self.client_address[0]
+        now = time.monotonic()
+        previous_attempt = CONTACT_ATTEMPTS.get(client_ip)
+        if previous_attempt and now - previous_attempt < CONTACT_RATE_LIMIT_SECONDS:
+            self._send_json(
+                429,
+                {"message": "Please wait a moment before sending another message."},
+            )
+            return
+        CONTACT_ATTEMPTS[client_ip] = now
+
+        CONTACT_LOG.parent.mkdir(parents=True, exist_ok=True)
+        submission = {
+            "submitted_at": datetime.now(timezone.utc).isoformat(),
+            "name": name,
+            "email": email,
+            "message": message,
+        }
+        with CONTACT_LOG.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(submission, ensure_ascii=False) + "\n")
+
+        # Envío de correo en segundo plano para no bloquear la respuesta HTTP
+        threading.Thread(
+            target=send_contact_email,
+            args=(name, email, message),
+            daemon=True,
+        ).start()
+
         self._send_json(
             200,
             {
-                "message": "Vake preparado con éxito.",
-                "vake": {
-                    "title": "Vake · Ruta de inspiración",
-                    "summary": f"Tu idea de viaje se ha convertido en un esquema envolvente: {prompt_text}",
-                    "highlights": [
-                        "Ritmo pausado y contemplativo",
-                        "Puntos de descanso y observación",
-                        "Una narrativa visual para la siguiente etapa",
-                    ],
-                },
+                "message": "Message sent successfully. I will get back to you soon.",
             },
         )
 

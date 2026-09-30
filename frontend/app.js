@@ -1,394 +1,1930 @@
-const slides = [
-  {
-    key: 'africa',
-    accent: '#E8935B',
-    title: 'África',
-    coords: '02°S · Serengeti, Tanzania',
-    description: 'Sabanas que se pierden en el horizonte, luz dorada al amanecer y un silencio que solo interrumpe el viento entre las acacias.',
-    image: 'https://images.unsplash.com/photo-1754662104555-ba06003183f2?auto=format&fit=crop&w=2400&q=80'
-  },
-  {
-    key: 'asia',
-    accent: '#4FA98A',
-    title: 'Asia',
-    coords: '08°S · Bali, Indonesia',
-    description: 'Terrazas de arroz talladas en la ladera, templos entre la niebla y calas turquesa escondidas al final de cada sendero.',
-    image: 'https://images.unsplash.com/photo-1513415756790-2ac1db1297d0?auto=format&fit=crop&w=2400&q=80'
-  },
-  {
-    key: 'australia',
-    accent: '#D9683B',
-    title: 'Oceanía',
-    coords: '25°S · Territorio del Norte',
-    description: 'Desiertos rojos que cambian de color con el sol, arrecifes infinitos bajo el agua y un cielo que de noche no tiene fin.',
-    image: 'https://images.unsplash.com/photo-1760504008367-bca2f23a6541?auto=format&fit=crop&w=2400&q=80'
+﻿(function(){
+  const continents = [
+    {
+      key:'africa', name:'Landscape', accent:'#D4884A', bgTone:'#181208', eyebrow:'Landscape',
+      hero:'images/Landscape/PJO05334.jpg',
+      cards:[
+        {img:'images/Landscape/PJO05334.jpg',    place:'Torres del Paine — Patagonia'},
+        {img:'images/Landscape/PJO05300.jpg',    place:'Valle de la Luna — Atacama'},
+        {img:'images/Landscape/faro-fb33fbb3.jpg', place:'Faro Austral — Tierra del Fuego'}
+      ],
+      all:[
+        'images/Landscape/PJO05300.jpg',
+        'images/Landscape/PJO05322.jpg',
+        'images/Landscape/JIMENEZ_Patricio_Landschappen_Foto8_mistsunrise.jpg',
+        'images/Landscape/DSC03490-HDR.jpg',
+        'images/Landscape/faro-fb33fbb3.jpg',
+        'images/Landscape/PJO05321.jpg',
+        'images/Landscape/PJO05688.jpg',
+        'images/Landscape/DSC03310-HDR.jpg',
+        'images/Landscape/PJO06498.jpg',
+        'images/Landscape/PJO06132.jpg',
+        'images/Landscape/PJO05409.jpg',
+        'images/Landscape/PJO05602.jpg',
+        'images/Landscape/PJO05056.jpg',
+        'images/Landscape/PJO04652.jpg',
+        'images/Landscape/PJO04719.jpg',
+        'images/Landscape/DSC02503.jpg',
+        'images/Landscape/PJO05505.jpg',
+        'images/Landscape/PJO04545.jpg',
+        'images/Landscape/PJO05251.jpg',
+        'images/Landscape/PJO06643.jpg',
+        'images/Landscape/DSC06227.jpg',
+        'images/Landscape/PJO05301.jpg',
+        'images/Landscape/PJO05378.jpg',
+        'images/Landscape/PJO05376.jpg',
+        'images/Landscape/PJO052632.jpg',
+        'images/Landscape/PJO05282.jpg',
+        'images/Landscape/PJO05334.jpg',
+        'images/Landscape/PJO05810.jpg',
+        'images/Landscape/PJO04734.jpg',
+        'images/Landscape/PJO05097.jpg',
+        'images/Landscape/PJO05066 (1).jpg',
+        'images/Landscape/PJO062162.jpg',
+        'images/Landscape/PJO05132.jpg',
+        'images/Landscape/PJO04671.jpg',
+        'images/Landscape/PJO05319.jpg',
+        'images/Landscape/PJO05173.jpg',
+        'images/Landscape/PJO05180.jpg',
+        'images/Landscape/Villarica.jpg'
+      ]
+    },
+    {
+      key:'asia', name:'Nature', accent:'#7BA05B', bgTone:'#111a10', eyebrow:'Nature',
+      hero:'images/Nature/PJO00934.jpg',
+      cards:[
+        {img:'images/Nature/PJO00934.jpg',       place:'Silvestre al Alba — Araucanía'},
+        {img:'images/Nature/PJO09920.jpg',        place:'Pradera Dorada — Los Lagos'},
+        {img:'images/Nature/PJO08967.jpg',        place:'Microcosmos — Selva Valdiviana'}
+      ],
+      all:[
+        'images/Nature/DSC05597.jpg',
+        'images/Nature/PJO06305.jpg',
+        'images/Nature/PJO02719.jpg',
+        'images/Nature/PJO09863.jpg',
+        'images/Nature/DSC05535.jpg',
+        'images/Nature/PJO05101.jpg',
+        'images/Nature/PJO00825.jpg',
+        'images/Nature/DSC05627.jpg',
+        'images/Nature/DSC03520.jpg',
+        'images/Nature/PJO05575-3.jpg',
+        'images/Nature/caracol.jpg',
+        'images/Nature/PJO03852.jpg',
+        'images/Nature/DSC07034.jpg',
+        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.jpg',
+        'images/Nature/PJO03799.jpg',
+        'images/Nature/DSC05612.jpg',
+        'images/Nature/2021-06-1922-15-47(B,Radius8,Smoothing4).jpg',
+        'images/Nature/DSC08682.jpg',
+        'images/Nature/DSC00345.jpg',
+        'images/Nature/DSC06112-2.jpg',
+        'images/Nature/definitivosaltamonteenano.jpg',
+        'images/Nature/PJO09920.jpg',
+        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto6_Springand.jpg',
+        'images/Nature/3.jpg',
+        'images/Nature/PJO01954.jpg',
+        'images/Nature/PJO06296.jpg',
+        'images/Nature/DSC03711.jpg',
+        'images/Nature/PJO00934.jpg',
+        'images/Nature/PJO00370.jpg',
+        'images/Nature/IMAG0019.jpg',
+        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.jpg',
+        'images/Nature/PJO05149.jpg',
+        'images/Nature/Jimenez_Patricio_DSC_03112.jpg',
+        'images/Nature/PJO09283.jpg',
+        'images/Nature/DSC01761.jpg',
+        'images/Nature/PJO08967.jpg',
+        'images/Nature/PJO02818.jpg',
+        'images/Nature/DSC08590.jpg',
+        'images/Nature/DSC01770.jpg',
+        'images/Nature/DSC00088.jpg',
+        'images/Nature/DSC07853-17969db0.jpg',
+        'images/Nature/DSC03039.jpg',
+        'images/Nature/JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.jpg',
+        'images/Nature/DSC01788.jpg',
+        'images/Nature/DSC04789.jpg',
+        'images/Nature/DSC06045-1b482605.jpg',
+        'images/Nature/DSC06998.jpg',
+        'images/Nature/JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.jpg',
+        'images/Nature/PJO04035.jpg',
+        'images/Nature/PJO01504-2.jpg',
+        'images/Nature/DSC09699.jpg',
+        'images/Nature/DSC03123.jpg',
+        'images/Nature/PJO05534.jpg',
+        'images/Nature/PJO05843.jpg',
+        'images/Nature/PJO01455.jpg',
+        'images/Nature/DSC06286-2-2.jpg',
+        'images/Nature/PJO069652.jpg',
+        'images/Nature/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.jpg',
+        'images/Nature/PJO05965.jpg',
+        'images/Nature/DSC06215-ca4b56a4-2500.jpg',
+        'images/Nature/PJO08386-2.jpg',
+        'images/Nature/PJO09701.jpg'
+      ]
+    },
+    {
+      key:'australia', name:'Adventure', accent:'#6E9AB0', bgTone:'#0e161e', eyebrow:'Adventure',
+      hero:'images/Sport/DSC07377_-_2-f8a343cf.jpg',
+      cards:[
+        {img:'images/Sport/DSC07377_-_2-f8a343cf.jpg', place:'Descenso Rápido — Río Trancura'},
+        {img:'images/Sport/PJO01917.jpg',            place:'Travesía en Cresta — Cordillera de los Andes'},
+        {img:'images/Sport/PJO04973-f6a2848a.jpg',   place:'Línea Salvaje — Pucón'}
+      ],
+      all:[
+        'images/Sport/DSC07386-f7ad26b2.jpg',
+        'images/Sport/DSC07377_-_2-f8a343cf.jpg',
+        'images/Sport/PJO06205-2.jpg',
+        'images/Sport/PJO04973-f6a2848a.jpg',
+        'images/Sport/PJO01917.jpg'
+      ]
+    },
+    {
+      key:'street', name:'Street', accent:'#A0785A', bgTone:'#17120e', eyebrow:'Street',
+      hero:'images/Street/PJO02812.jpg',
+      cards:[
+        {img:'images/Street/PJO02812.jpg',           place:'Contraluz Urbano — Santiago'},
+        {img:'images/Street/PJO02840.jpg',           place:'Transeúntes — Valparaíso'},
+        {img:'images/Street/PJO05819.jpg',           place:'Geometría Callejera — Barrio Lastarria'}
+      ],
+      all:[
+        'images/Street/PJO02840.jpg',
+        'images/Street/PJO04575-d7bdd0bc.jpg',
+        'images/Street/PJO02812.jpg',
+        'images/Street/PJO04622-60cc4ccb.jpg',
+        'images/Street/PJO04590-176b30ca.jpg',
+        'images/Street/DSC01032-250a524f.jpg',
+        'images/Street/PJO05819.jpg',
+        'images/Street/PJO00013.jpg',
+        'images/Street/PJO05828.jpg',
+        'images/Street/PJO05842.jpg',
+        'images/Street/PJO09814.jpg',
+        'images/Street/PJO09821.jpg',
+        'images/Street/PJO09838.jpg',
+        'images/Street/PJO09842.jpg',
+        'images/Street/PJO09849.jpg',
+        'images/Street/PJO09860.jpg',
+        'images/Street/PJO09884.jpg',
+        'images/Street/PJO09905.jpg',
+        'images/Street/PJO09906.jpg',
+        'images/Street/PJO09913.jpg',
+        'images/Street/PJO09924.jpg',
+        'images/Street/PJO09941.jpg'
+      ]
+    }
+  ];
+
+  // Dynamic Fisher-Yates shuffle to randomize images on each visit
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
   }
-];
 
-const contactQuestions = [
-  {
-    question: '¿Cómo reservo una sesión?',
-    answer: 'Envíame tu idea, la ciudad y una fecha aproximada. Con eso preparo la disponibilidad y el formato de sesión.'
-  },
-  {
-    question: '¿Qué tipo de proyectos aceptas?',
-    answer: 'Trabajo retratos, viajes, contenido editorial y sesiones visuales para marcas o proyectos personales.'
-  },
-  {
-    question: '¿Cuándo respondes?',
-    answer: 'Las consultas suelen recibir respuesta dentro de 24 a 48 horas.'
-  }
-];
-
-const emptyContactForm = {
-  name: '',
-  email: '',
-  message: ''
-};
-
-function getRoute() {
-  return window.location.pathname === '/contact' ? 'contact' : 'home';
-}
-
-function validateContactForm(values) {
-  const errors = {};
-
-  if (!values.name.trim()) {
-    errors.name = 'Escribe un nombre o el nombre del proyecto.';
-  }
-
-  if (!values.email.trim()) {
-    errors.email = 'Añade un correo para responderte.';
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-    errors.email = 'Introduce un correo válido.';
-  }
-
-  if (!values.message.trim()) {
-    errors.message = 'Describe tu consulta antes de enviarla.';
-  } else if (values.message.trim().length < 12) {
-    errors.message = 'Añade un poco más de contexto para poder ayudarte mejor.';
-  }
-
-  return errors;
-}
-
-function formatSubmissionDate(value) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    return 'Sin fecha';
-  }
-
-  return new Intl.DateTimeFormat('es-ES', {
-    day: '2-digit',
-    month: 'short',
-    hour: '2-digit',
-    minute: '2-digit'
-  }).format(date);
-}
-
-function App() {
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  const [route, setRoute] = React.useState(getRoute());
-  const [transitionState, setTransitionState] = React.useState('entering');
-  const [prompt, setPrompt] = React.useState('Crea un itinerario de 4 días con amaneceres, cafés y miradores al atardecer.');
-  const [vake, setVake] = React.useState({
-    title: 'Vake · Ruta de silencio',
-    summary: 'Una idea breve de viaje lista para transformar en una experiencia cargada de detalle y atmósfera.',
-    highlights: ['Atmósfera contemplativa', 'Ritmo pausado', 'Puntos de descanso y luz']
+  continents.forEach(c => {
+    shuffleArray(c.all);
   });
-  const [feedback, setFeedback] = React.useState('Listo para crear tu próximo prompt.');
-  const [contactForm, setContactForm] = React.useState(emptyContactForm);
-  const [contactErrors, setContactErrors] = React.useState({});
-  const [contactLoading, setContactLoading] = React.useState(false);
-  const [contactFeedback, setContactFeedback] = React.useState('Describe tu idea y recibirás una respuesta por correo.');
-  const [recentContacts, setRecentContacts] = React.useState([]);
-  const [recentContactsLoading, setRecentContactsLoading] = React.useState(false);
-  const transitionTimerRef = React.useRef(null);
 
-  React.useEffect(() => {
-    const initialTimer = window.setTimeout(() => setTransitionState('idle'), 220);
-    return () => window.clearTimeout(initialTimer);
-  }, []);
+  let currentView = 'home'; // 'home', 'gallery', 'contact'
+  let idx = 0;
+  let timer = null;
+  let cardSwapTimer = null;
+  let wheelLock = false;
+  let renderToken = 0;
+  let touchStartX = null;
+  let touchStartY = null;
+  let touchStartTime = 0;
+  let inExploreMode = false;
+  let activePhotoIndex = 0;
+  let exploreCardsIntroTimer = null;
+  let currentBgSlot = 'A';
+  let currentBgUrl = '';
+  const TRANSITION_MS = 4800;
+  const CARD_SWAP_DELAY = 60;
+  const GALLERY_DRIFT_MS = 28000;
+  let galleryDriftStartedAt = 0;
+  const AUTOPLAY_MS = 12000;
 
-  React.useEffect(() => {
-    return () => {
-      if (transitionTimerRef.current) {
-        window.clearTimeout(transitionTimerRef.current);
-      }
-    };
-  }, []);
+  const root = document.documentElement;
+  const stage = document.getElementById('stage');
+  const startBtn = document.getElementById('startBtn');
+  const heroBgVideo = document.getElementById('heroBgVideo');
+  const bgLayerA = document.getElementById('bgLayerA');
+  const bgLayerB = document.getElementById('bgLayerB');
+  const panels = document.querySelectorAll('.panel');
+  const panelStack = document.getElementById('panelStack');
+  const spineItems = document.querySelectorAll('.spine-item');
+  const cardA = document.getElementById('cardA');
+  const cardB = document.getElementById('cardB');
+  const cardC = document.getElementById('cardC');
+  const cardzone = document.getElementById('cardzone');
+  const pageNow = document.getElementById('pageNow');
+  const trackFill = document.getElementById('trackFill');
+  const mobileRail = document.getElementById('mobileRail');
+  const railNumTop = document.getElementById('railNumTop');
+  const railNumBtm = document.getElementById('railNumBtm');
+  const railFill = document.getElementById('railFill');
+  const railPip = document.getElementById('railPip');
+  const mobileEdgePrev = document.getElementById('mobileEdgePrev');
+  const mobileEdgeNext = document.getElementById('mobileEdgeNext');
+  const navItems = document.querySelectorAll('.nav-item');
 
-  React.useEffect(() => {
-    function handlePopState() {
-      setRoute(getRoute());
-    }
+  // Explore Elements (Dual Buffer)
+  const exploreCardsTrack = document.getElementById('exploreCardsTrack');
+  const exploreCatBadge = document.getElementById('exploreCatBadge');
+  const explorePhotoCounter = document.getElementById('explorePhotoCounter');
+  const explorePhotoTitle = document.getElementById('explorePhotoTitle');
+  const explorePhotoMeta = document.getElementById('explorePhotoMeta');
+  const exploreClosePill = document.getElementById('exploreClosePill');
+  const exploreZoomBtn = document.getElementById('exploreZoomBtn');
+  const exploreViewerContainer = document.getElementById('exploreViewerContainer');
+  const exploreViewerImgA = document.getElementById('exploreViewerImgA');
+  const exploreViewerImgB = document.getElementById('exploreViewerImgB');
+  let currentViewerSlot = 'A';
+  const imgMemoryCache = new Map();
 
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  const ASSET_VERSION = '20260923-4k';
 
-  React.useEffect(() => {
-    document.body.style.overflow = route === 'contact' ? 'auto' : 'hidden';
+  // Ã¢â€â‚¬Ã¢â€â‚¬ Video first-frame poster Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
+  // Capture the first visible frame of the hero video into a canvas blob and
+  // set it as the poster so there is NO black/empty flash when the page loads.
+  (function initVideoPoster() {
+    if (!heroBgVideo) return;
 
-    return () => {
-      document.body.style.overflow = 'hidden';
-    };
-  }, [route]);
-
-  React.useEffect(() => {
-    if (route !== 'contact') return;
-
-    let cancelled = false;
-
-    async function loadRecentContacts() {
-      setRecentContactsLoading(true);
-
+    let posterSet = false;
+    const setFirstFrame = () => {
+      if (posterSet) return;
+      if (heroBgVideo.readyState < 2) return; // HAVE_CURRENT_DATA not yet
       try {
-        const response = await fetch('/api/contact');
-        if (!response.ok) {
-          throw new Error('No se pudieron cargar las consultas recientes.');
-        }
-
-        const payload = await response.json();
-        if (!cancelled) {
-          setRecentContacts(payload.submissions || []);
-        }
-      } catch (error) {
-        if (!cancelled) {
-          setRecentContacts([]);
-        }
-      } finally {
-        if (!cancelled) {
-          setRecentContactsLoading(false);
-        }
+        const canvas = document.createElement('canvas');
+        canvas.width  = heroBgVideo.videoWidth  || 1920;
+        canvas.height = heroBgVideo.videoHeight || 1080;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(heroBgVideo, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((blob) => {
+          if (!blob || posterSet) return;
+          posterSet = true;
+          const url = URL.createObjectURL(blob);
+          heroBgVideo.poster = url;
+        }, 'image/jpeg', 0.85);
+      } catch (e) {
+        // Cross-origin or security error fallback
       }
-    }
-
-    loadRecentContacts();
-
-    return () => {
-      cancelled = true;
     };
-  }, [route]);
 
-  const changeSlide = React.useCallback((nextIndex) => {
-    if (nextIndex === activeIndex) return;
-    if (transitionTimerRef.current) {
-      window.clearTimeout(transitionTimerRef.current);
-    }
+    heroBgVideo.addEventListener('loadeddata', setFirstFrame, { once: true });
+    heroBgVideo.addEventListener('seeked', setFirstFrame, { once: true });
 
-    setTransitionState('exiting');
-    transitionTimerRef.current = window.setTimeout(() => {
-      setActiveIndex(nextIndex);
-      setTransitionState('entering');
-      transitionTimerRef.current = window.setTimeout(() => {
-        setTransitionState('idle');
-        transitionTimerRef.current = null;
-      }, 1200);
-    }, 420);
-  }, [activeIndex]);
+    // If the video is already ready (cached), capture immediately
+    if (heroBgVideo.readyState >= 2) setFirstFrame();
+  })();
 
-  React.useEffect(() => {
-    if (route !== 'home') return;
-
-    const timer = window.setInterval(() => {
-      changeSlide((activeIndex + 1) % slides.length);
-    }, 6500);
-    return () => window.clearInterval(timer);
-  }, [activeIndex, changeSlide, route]);
-
-  const slide = slides[activeIndex];
-  const contentPhaseClass = transitionState === 'exiting' ? 'content-exiting' : transitionState === 'entering' ? 'content-entering' : 'content-idle';
-
-  function navigateTo(nextRoute) {
-    const nextPath = nextRoute === 'contact' ? '/contact' : '/';
-    if (window.location.pathname !== nextPath) {
-      window.history.pushState({}, '', nextPath);
-    }
-    setRoute(nextRoute);
+  function preloadImage(url) {
+    if (!url || imgMemoryCache.has(url)) return;
+    const img = new Image();
+    img.onload = function() {
+      imgMemoryCache.set(url, this);
+    };
+    img.src = url;
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setFeedback('Generando el Vake desde el backend...');
+  function imageVariantUrl(imageUrl, variant) {
+    if (!imageUrl) return '';
+    let clean = imageUrl
+      .replace(/^\/?images\//, '')
+      .replace(/^(?:optimized\/|thumbs\/|display\/)/, '')
+      .replace(/\.jpe?g$/i, '.webp');
 
-    try {
-      const response = await fetch('/api/compose', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt })
-      });
+    const parts = clean.split('/');
+    if (parts.length >= 3 && (parts[1] === 'display' || parts[1] === 'thumbs' || parts[1] === 'optimized')) {
+      clean = parts[0] + '/' + parts.slice(2).join('/');
+    }
 
-      if (!response.ok) {
-        throw new Error('La respuesta del servidor no fue válida');
+    const cleanParts = clean.split('/');
+  let targetPath = '';
+    if (cleanParts.length >= 2) {
+      const section = cleanParts[0];
+      const filename = cleanParts.slice(1).join('/');
+      targetPath = `images/${section}/${variant}/${filename}`;
+    } else {
+      targetPath = `images/${variant}/${clean}`;
+    }
+    return encodeURI(targetPath).replace(/\(/g, '%28').replace(/\)/g, '%29') + '?v=' + ASSET_VERSION;
+  }
+
+  const displayImageUrl = (imageUrl) => imageVariantUrl(imageUrl, 'display');
+  const optimizedImageUrl = displayImageUrl; // Backward-compatible alias
+  const thumbnailImageUrl = (imageUrl) => imageVariantUrl(imageUrl, 'thumbs');
+  currentBgUrl = displayImageUrl('images/Landscape/display/PJO05334.webp');
+
+  function preloadGalleryAssets() {
+    const assets = continents.flatMap(category => [
+      displayImageUrl(category.hero),
+      ...category.cards.map(card => thumbnailImageUrl(card.img))
+    ]);
+    assets.forEach((src) => preloadImage(src));
+  }
+
+  function updateExploreViewerPhoto(imgUrl) {
+    const fullUrl = displayImageUrl(imgUrl);
+    if (!fullUrl) return;
+
+    const nextSlot = currentViewerSlot === 'A' ? 'B' : 'A';
+    const incomingImg = nextSlot === 'A' ? exploreViewerImgA : exploreViewerImgB;
+    const outgoingImg = currentViewerSlot === 'A' ? exploreViewerImgA : exploreViewerImgB;
+
+    if (!incomingImg || !outgoingImg) return;
+
+    const applyImage = (loadedImg) => {
+      incomingImg.src = loadedImg.src;
+      const isLandscape = (loadedImg.naturalWidth || 1) >= (loadedImg.naturalHeight || 1);
+      incomingImg.classList.toggle('is-landscape', isLandscape);
+      incomingImg.classList.toggle('is-portrait', !isLandscape);
+
+      incomingImg.style.transition = 'none';
+      incomingImg.style.transform = '';
+      outgoingImg.style.transition = 'none';
+      outgoingImg.style.transform = '';
+
+      incomingImg.classList.remove('prev');
+      incomingImg.classList.add('active');
+
+      outgoingImg.classList.remove('active');
+      outgoingImg.classList.add('prev');
+
+      currentViewerSlot = nextSlot;
+    };
+
+    if (imgMemoryCache.has(fullUrl) && imgMemoryCache.get(fullUrl).complete && imgMemoryCache.get(fullUrl).naturalWidth > 0) {
+      applyImage(imgMemoryCache.get(fullUrl));
+    } else {
+      const tempImg = new Image();
+      tempImg.onload = function() {
+        imgMemoryCache.set(fullUrl, this);
+        applyImage(this);
+      };
+      tempImg.onerror = function() {
+        // Fallback chain: 1) Try original JPG, 2) Try thumbs
+        const cleanBase = fullUrl.replace(/\?.*$/, '').replace('/display/', '/');
+        const jpgFallback = cleanBase.replace(/\.webp$/i, '.jpg');
+        const fallbackImg = new Image();
+        fallbackImg.onload = function() {
+          imgMemoryCache.set(fullUrl, this);
+          applyImage(this);
+        };
+        fallbackImg.onerror = function() {
+          const thumbFallback = fullUrl.replace('/display/', '/thumbs/');
+          const thumbImg = new Image();
+          thumbImg.onload = function() {
+            applyImage(this);
+          };
+          thumbImg.onerror = function() {
+            incomingImg.src = thumbFallback;
+            currentViewerSlot = nextSlot;
+          };
+          thumbImg.src = thumbFallback;
+        };
+        fallbackImg.src = jpgFallback;
+      };
+      tempImg.src = fullUrl;
+    }
+
+    // Preload next and previous 2 images for instantaneous 0ms transitions!
+    const currentCat = continents[idx];
+    if (currentCat && currentCat.all) {
+      const total = currentCat.all.length;
+      for (let offset = -2; offset <= 2; offset++) {
+        if (offset === 0) continue;
+        const targetIdx = (activePhotoIndex + offset + total) % total;
+        preloadImage(displayImageUrl(currentCat.all[targetIdx]));
       }
-
-      const payload = await response.json();
-      setVake(payload.vake);
-      setFeedback(payload.message);
-    } catch (error) {
-      setFeedback('No se pudo conectar con la API. Revisa el backend.');
     }
   }
 
-  function handleContactChange(event) {
-    const { name, value } = event.target;
-    const nextForm = Object.assign({}, contactForm, { [name]: value });
-    setContactForm(nextForm);
+  /* =========================================================
+     DUAL-BUFFER CINEMATIC PHOTO CROSSFADE
+     ========================================================= */
+  function setCinematicBackground(imageUrl, categoryKey) {
+    imageUrl = displayImageUrl(imageUrl);
+    if (!imageUrl || imageUrl === currentBgUrl) return;
+    currentBgUrl = imageUrl;
 
-    if (contactErrors[name]) {
-      const nextErrors = validateContactForm(nextForm);
-      setContactErrors((current) => Object.assign({}, current, { [name]: nextErrors[name] }));
+    const nextSlot = currentBgSlot === 'A' ? 'B' : 'A';
+    const incomingLayer = nextSlot === 'A' ? bgLayerA : bgLayerB;
+    const outgoingLayer = currentBgSlot === 'A' ? bgLayerA : bgLayerB;
+    const driftDelay = `-${Math.max(0, performance.now() - galleryDriftStartedAt) % GALLERY_DRIFT_MS}ms`;
+
+    incomingLayer.style.setProperty('--gallery-drift-delay', driftDelay);
+    outgoingLayer.style.setProperty('--gallery-drift-delay', driftDelay);
+
+    let catKey = categoryKey;
+    if (!catKey) {
+      if (/Nature/i.test(imageUrl) || imageUrl.includes('PJO00934')) catKey = 'asia';
+      else if (/Sport/i.test(imageUrl) || /Adventure/i.test(imageUrl) || imageUrl.includes('DSC07377')) catKey = 'australia';
+      else if (/Landscape/i.test(imageUrl)) catKey = 'africa';
+      else if (/Street/i.test(imageUrl)) catKey = 'street';
+      else if (/contact/i.test(imageUrl)) catKey = 'contact';
+      else if (typeof idx !== 'undefined' && continents[idx]) catKey = continents[idx].key;
     }
+    if (catKey) {
+      incomingLayer.dataset.bg = catKey;
+    } else {
+      delete incomingLayer.dataset.bg;
+    }
+
+    incomingLayer.style.backgroundImage = `url('${imageUrl}')`;
+    incomingLayer.classList.remove('prev');
+    incomingLayer.classList.add('active');
+
+    outgoingLayer.classList.remove('active');
+    outgoingLayer.classList.add('prev');
+
+    currentBgSlot = nextSlot;
   }
 
-  async function handleContactSubmit(event) {
-    event.preventDefault();
-    const nextErrors = validateContactForm(contactForm);
-    setContactErrors(nextErrors);
+  /* =========================================================
+     SEAMLESS VIEW SWITCHER (HOME, GALLERY, CONTACT)
+     ========================================================= */
+  function switchView(targetView, opts) {
+    opts = opts || {};
+    if (targetView === currentView && !opts.force) return;
 
-    if (Object.keys(nextErrors).length > 0) {
-      setContactFeedback('Revisa los campos marcados antes de enviar.');
+    const previousView = currentView;
+
+    if (inExploreMode && targetView !== 'gallery') {
+      exitExploreMode();
+    }
+
+    currentView = targetView;
+
+    // Update navigation active item
+    navItems.forEach(item => {
+      item.classList.toggle('active', item.dataset.nav === targetView);
+    });
+
+    // Update body classes with smooth morphing
+    document.body.className = `view-${targetView}`;
+
+    if (targetView === 'home') {
+      isStartingGallery = false;
+      stage.classList.remove('is-starting');
+      stage.classList.remove('is-warping');
+      stage.classList.remove('from-home');
+      if (typeof clearRampTimers === 'function') clearRampTimers();
+      if (typeof warpTimer !== 'undefined' && warpTimer) clearTimeout(warpTimer);
+      if (typeof warpEndTimer !== 'undefined' && warpEndTimer) clearTimeout(warpEndTimer);
+      root.style.setProperty('--accent', '#E8935B');
+      root.style.setProperty('--bg-tone', '#0e0c0b');
+      if (timer) clearInterval(timer);
+      try {
+        if (heroBgVideo) {
+          heroBgVideo.pause();
+          heroBgVideo.currentTime = 0;
+          heroBgVideo.playbackRate = 1.0;
+        }
+      } catch(e){}
+    }
+    else if (targetView === 'gallery') {
+      if (previousView !== 'gallery') {
+        galleryDriftStartedAt = performance.now();
+        bgLayerA.style.setProperty('--gallery-drift-delay', '0ms');
+        bgLayerB.style.setProperty('--gallery-drift-delay', '0ms');
+      }
+      render(idx, { keepPhoto: opts.keepPhoto });
+      restartAutoplay();
+    }
+    else if (targetView === 'contact') {
+      if (typeof clearRampTimers === 'function') clearRampTimers();
+      if (typeof warpTimer !== 'undefined' && warpTimer) clearTimeout(warpTimer);
+      if (typeof warpEndTimer !== 'undefined' && warpEndTimer) clearTimeout(warpEndTimer);
+      if (timer) clearInterval(timer);
+      root.style.setProperty('--accent', '#E8935B');
+      root.style.setProperty('--bg-tone', '#14110f');
+      setCinematicBackground('images/contact/PJO05448.jpg');
+      const contactSec = document.getElementById('contactSection');
+      if (contactSec) contactSec.scrollTop = 0;
+    }
+
+    if (!opts.skipHistory) {
+      const currentCatKey = continents[idx] ? continents[idx].key : 'africa';
+      updateRouteHash(targetView, currentCatKey, { replace: false });
+    }
+
+    updateViewNavButtons();
+  }
+
+  // Handle Top Nav Clicks
+  document.querySelectorAll('[data-nav]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView(el.dataset.nav);
+    });
+  });
+
+
+  /* =========================================================
+     DEEP LINKING & SHAREABLE URL HASH ROUTER
+     ========================================================= */
+  const SLUG_TO_KEY = {
+    'landscape': 'africa',
+    'nature': 'asia',
+    'adventure': 'australia',
+    'street': 'street',
+    'africa': 'africa',
+    'asia': 'asia',
+    'australia': 'australia'
+  };
+
+  const KEY_TO_SLUG = {
+    'africa': 'landscape',
+    'asia': 'nature',
+    'australia': 'adventure',
+    'street': 'street'
+  };
+
+  let isHandlingHashChange = false;
+
+  function updateRouteHash(view, catKey, opts) {
+    if (isHandlingHashChange) return;
+    opts = opts || {};
+    let targetHash = '';
+    const slug = KEY_TO_SLUG[catKey] || 'landscape';
+
+    if (view === 'gallery') {
+      targetHash = `#gallery/${slug}`;
+    } else if (view === 'explore') {
+      targetHash = `#explore/${slug}`;
+    } else if (view === 'contact') {
+      targetHash = '#contact';
+    } else {
+      targetHash = '#home';
+    }
+
+    const currentHash = window.location.hash || '';
+    if (currentHash === targetHash || (currentHash === '' && targetHash === '#home')) {
       return;
     }
 
-    setContactLoading(true);
-    setContactFeedback('Enviando tu consulta...');
-
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(contactForm)
-      });
-
-      const payload = await response.json();
-      if (!response.ok) {
-        throw new Error(payload.message || 'No se pudo enviar la consulta');
+      const url = targetHash === '#home' ? window.location.pathname + window.location.search : targetHash;
+      if (opts.replace) {
+        history.replaceState(null, '', url);
+      } else {
+        history.pushState(null, '', url);
       }
-
-      setRecentContacts([
-        {
-          submitted_at: new Date().toISOString(),
-          name: contactForm.name,
-          email: contactForm.email,
-          message: contactForm.message
-        }
-      ].concat(recentContacts).slice(0, 5));
-      setContactForm(emptyContactForm);
-      setContactErrors({});
-      setContactFeedback(payload.message);
-    } catch (error) {
-      setContactFeedback(error.message || 'No se pudo conectar con el backend de contacto.');
-    } finally {
-      setContactLoading(false);
+    } catch (e) {
+      window.location.hash = targetHash;
     }
   }
 
-  if (route === 'contact') {
-    return React.createElement(
-      'div',
-      { className: 'stage contact-view', style: { '--accent': '#E8935B' } },
-      React.createElement('div', { className: 'bg-layer bg-idle', style: { backgroundImage: "url('/images/optimized/contact/PJO05448.webp')" } }),
-      React.createElement('div', { className: 'overlay overlay-idle' }),
-      React.createElement(
-        'nav',
-        { className: 'nav' },
-        React.createElement('div', { className: 'wordmark' }, 'Meridian', React.createElement('small', null, '· cuadernos de viaje')),
-        React.createElement(
-          'ul',
-          { className: 'nav-links' },
-          React.createElement('li', null, React.createElement('a', { href: '/', onClick: (event) => { event.preventDefault(); navigateTo('home'); } }, 'Diario')),
-          React.createElement('li', null, React.createElement('a', { href: '/', onClick: (event) => { event.preventDefault(); navigateTo('home'); } }, 'Rutas')),
-          React.createElement('li', null, React.createElement('a', { href: '/contact', className: 'nav-link-active', onClick: (event) => { event.preventDefault(); navigateTo('contact'); } }, 'Contacto'))
-        ),
-        React.createElement('div', { className: 'nav-cta' }, React.createElement('button', { className: 'icon-btn', type: 'button', 'aria-label': 'Buscar' }, '⌕'), React.createElement('button', { className: 'signup', type: 'button' }, 'Escribir ahora'))
-      ),
-      React.createElement(
-        'main',
-        { className: 'contact-shell' },
-        React.createElement(
-          'section',
-          { className: 'contact-hero' },
-          React.createElement('div', { className: 'contact-copy' }, React.createElement('p', { className: 'coords' }, 'Contacto directo'), React.createElement('h1', { className: 'contact-title' }, 'Un espacio para preguntas, ideas y nuevas sesiones.'), React.createElement('p', { className: 'contact-desc' }, 'Si quieres reservar una sesión, pedir información o compartir una idea visual, este espacio reúne las preguntas más comunes y un punto claro de contacto.')),
-          React.createElement('div', { className: 'contact-image-frame' }, React.createElement('img', { src: '/images/optimized/contact/PJO05448.webp', alt: 'Sesión fotográfica de contacto', className: 'contact-image' }))
-        ),
-        React.createElement(
-          'section',
-          { className: 'question-area' },
-          React.createElement('div', { className: 'question-intro' }, React.createElement('span', { className: 'pill' }, 'Preguntas'), React.createElement('h2', null, 'Preguntas frecuentes'), React.createElement('p', null, 'Respuestas rápidas para que sepas qué enviar y cómo empezar la conversación.')),
-          React.createElement('div', { className: 'question-grid' }, contactQuestions.map((item) => React.createElement('article', { key: item.question, className: 'question-card' }, React.createElement('h3', null, item.question), React.createElement('p', null, item.answer))))
-        ),
-        React.createElement(
-          'section',
-          { className: 'question-panel' },
-          React.createElement('div', null, React.createElement('span', { className: 'pill pill-soft' }, 'Consulta'), React.createElement('h2', null, 'Haz tu pregunta'), React.createElement('p', null, 'Escríbeme con tu idea, ciudad y fecha tentativa para responderte con una propuesta adecuada.')),
-          React.createElement(
-            'form',
-            { className: 'contact-form', onSubmit: handleContactSubmit },
-            React.createElement('div', { className: 'form-field' }, React.createElement('input', { type: 'text', name: 'name', value: contactForm.name, onChange: handleContactChange, placeholder: 'Nombre o proyecto', 'aria-label': 'Nombre o proyecto', 'aria-invalid': Boolean(contactErrors.name), className: contactErrors.name ? 'field-error' : '' }), contactErrors.name ? React.createElement('span', { className: 'field-help' }, contactErrors.name) : null),
-            React.createElement('div', { className: 'form-field' }, React.createElement('input', { type: 'email', name: 'email', value: contactForm.email, onChange: handleContactChange, placeholder: 'Correo electrónico', 'aria-label': 'Correo electrónico', 'aria-invalid': Boolean(contactErrors.email), className: contactErrors.email ? 'field-error' : '' }), contactErrors.email ? React.createElement('span', { className: 'field-help' }, contactErrors.email) : null),
-            React.createElement('div', { className: 'form-field form-field-wide' }, React.createElement('textarea', { rows: '5', name: 'message', value: contactForm.message, onChange: handleContactChange, placeholder: 'Cuéntame tu pregunta o el tipo de sesión que buscas', 'aria-label': 'Pregunta o mensaje', 'aria-invalid': Boolean(contactErrors.message), className: contactErrors.message ? 'field-error' : '' }), contactErrors.message ? React.createElement('span', { className: 'field-help' }, contactErrors.message) : null),
-            React.createElement('button', { className: 'submit-btn', type: 'submit', disabled: contactLoading }, contactLoading ? 'Enviando...' : 'Enviar consulta')
-          ),
-          React.createElement('p', { className: 'feedback' }, contactFeedback)
-        ),
-        React.createElement(
-          'section',
-          { className: 'question-panel recent-panel' },
-          React.createElement('div', null, React.createElement('span', { className: 'pill' }, 'Público'), React.createElement('h2', null, 'Consultas recientes'), React.createElement('p', null, 'Últimos mensajes recibidos desde el formulario de contacto.')),
-          recentContactsLoading ? React.createElement('p', { className: 'feedback' }, 'Cargando consultas recientes...') : null,
-          !recentContactsLoading && recentContacts.length === 0 ? React.createElement('p', { className: 'feedback' }, 'Todavía no hay consultas guardadas.') : null,
-          !recentContactsLoading && recentContacts.length > 0 ? React.createElement('div', { className: 'recent-list' }, recentContacts.map((item, index) => React.createElement('article', { key: `${item.email}-${item.submitted_at}-${index}`, className: 'recent-card' }, React.createElement('div', { className: 'recent-card-top' }, React.createElement('h3', null, item.name), React.createElement('span', null, formatSubmissionDate(item.submitted_at))), React.createElement('p', { className: 'recent-email' }, item.email), React.createElement('p', null, item.message)))) : null
-        )
-      )
-    );
+  function handleHashNavigation() {
+    const rawHash = (window.location.hash || '').replace(/^#\/?/, '').toLowerCase().trim();
+    if (!rawHash || rawHash === 'home') {
+      if (inExploreMode) {
+        exitExploreMode({ skipHistory: true });
+      }
+      if (currentView !== 'home') {
+        switchView('home', { skipHistory: true });
+      }
+      return;
+    }
+
+    const parts = rawHash.split('/');
+    const primary = parts[0];
+    const secondary = parts[1] || '';
+
+    if (primary === 'gallery') {
+      if (inExploreMode) {
+        exitExploreMode({ skipHistory: true });
+      }
+      const targetKey = SLUG_TO_KEY[secondary] || 'africa';
+      const targetIndex = continents.findIndex(c => c.key === targetKey);
+      if (targetIndex !== -1) {
+        idx = targetIndex;
+      }
+      if (currentView !== 'gallery') {
+        switchView('gallery', { skipHistory: true });
+      } else {
+        render(idx, { skipHistory: true });
+      }
+      return;
+    }
+
+    if (primary === 'explore') {
+      const targetKey = SLUG_TO_KEY[secondary] || 'africa';
+      const targetIndex = continents.findIndex(c => c.key === targetKey);
+      if (targetIndex !== -1) {
+        idx = targetIndex;
+      }
+      if (currentView !== 'gallery') {
+        switchView('gallery', { skipHistory: true });
+      }
+      if (!inExploreMode || stage.dataset.category !== targetKey) {
+        enterExploreMode(targetKey, null, { skipHistory: true });
+      }
+      return;
+    }
+
+    if (primary === 'contact') {
+      if (inExploreMode) {
+        exitExploreMode({ skipHistory: true });
+      }
+      if (currentView !== 'contact') {
+        switchView('contact', { skipHistory: true });
+      }
+      return;
+    }
   }
 
-  return React.createElement(
-    'div',
-    { className: 'stage', style: { '--accent': slide.accent } },
-    React.createElement('div', { className: `bg-layer ${transitionState === 'exiting' ? 'bg-exiting' : transitionState === 'entering' ? 'bg-entering' : 'bg-idle'}`, style: { backgroundImage: `url('${slide.image}')` } }),
-    React.createElement('div', { className: `overlay ${transitionState === 'exiting' ? 'overlay-exiting' : transitionState === 'entering' ? 'overlay-entering' : 'overlay-idle'}` }),
-    React.createElement(
-      'nav',
-      { className: 'nav' },
-      React.createElement('div', { className: 'wordmark' }, 'Meridian', React.createElement('small', null, '· cuadernos de viaje')),
-      React.createElement('ul', { className: 'nav-links' },
-        React.createElement('li', null, React.createElement('a', { href: '/', className: 'nav-link-active', onClick: (event) => event.preventDefault() }, 'Diario')),
-        React.createElement('li', null, React.createElement('a', { href: '/', onClick: (event) => event.preventDefault() }, 'Rutas')),
-        React.createElement('li', null, React.createElement('a', { href: '/contact', onClick: (event) => { event.preventDefault(); navigateTo('contact'); } }, 'Contacto'))
-      ),
-      React.createElement('div', { className: 'nav-cta' }, React.createElement('button', { className: 'icon-btn', type: 'button', 'aria-label': 'Buscar' }, '⌕'), React.createElement('button', { className: 'signup', type: 'button', onClick: () => navigateTo('contact') }, 'Empezar viaje'))
-    ),
-    React.createElement(
-      'div',
-      { className: 'spine' },
-      React.createElement('div', { className: 'spine-line' }),
-      slides.map((entry, index) => React.createElement('button', { key: entry.key, type: 'button', className: `spine-item${activeIndex === index ? ' active' : ''}`, onClick: () => changeSlide(index) }, React.createElement('span', { className: 'num' }, String(index + 1).padStart(2, '0')), entry.title === 'Oceanía' ? 'Oceanía' : entry.title, React.createElement('span', { className: 'dot' })))
-    ),
-    React.createElement(
-      'div',
-      { className: 'content' },
-      React.createElement('div', { className: `hero-copy ${contentPhaseClass}` }, React.createElement('p', { className: 'coords' }, slide.coords), React.createElement('h1', { className: 'title' }, slide.title), React.createElement('p', { className: 'desc' }, slide.description), React.createElement('button', { className: 'explore', type: 'button' }, 'Explore')),
-      React.createElement(
-        'div',
-        { className: `composer-card ${contentPhaseClass}` },
-        React.createElement('div', { className: 'composer-head' }, React.createElement('span', { className: 'pill' }, 'Prompt'), React.createElement('span', { className: 'pill pill-soft' }, 'Vake')),
-        React.createElement('form', { className: 'composer-form', onSubmit: handleSubmit }, React.createElement('label', { className: 'composer-label', htmlFor: 'prompt' }, 'Describe tu idea'), React.createElement('textarea', { id: 'prompt', rows: '5', value: prompt, onChange: (event) => setPrompt(event.target.value) }), React.createElement('button', { className: 'submit-btn', type: 'submit' }, 'Crear Vake')),
-        React.createElement('div', { className: 'vake-card' }, React.createElement('p', { className: 'vake-label' }, 'Resultado'), React.createElement('h2', null, vake.title), React.createElement('p', null, vake.summary), React.createElement('ul', null, vake.highlights.map((item) => React.createElement('li', { key: item }, item)))),
-        React.createElement('p', { className: 'feedback' }, feedback)
-      )
-    ),
-    React.createElement(
-      'div',
-      { className: `bottom-bar ${contentPhaseClass}` },
-      React.createElement('div', { className: 'pagecount' }, React.createElement('b', null, String(activeIndex + 1).padStart(2, '0')), ' / 03'),
-      React.createElement('div', { className: 'track' }),
-      React.createElement('div', { className: 'arrows' }, React.createElement('button', { className: 'arrow-btn', type: 'button', onClick: () => changeSlide((activeIndex - 1 + slides.length) % slides.length) }, '←'), React.createElement('button', { className: 'arrow-btn', type: 'button', onClick: () => changeSlide((activeIndex + 1) % slides.length) }, '→'))
-    )
-  );
-}
+  window.addEventListener('popstate', () => {
+    isHandlingHashChange = true;
+    handleHashNavigation();
+    isHandlingHashChange = false;
+  });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(React.createElement(React.StrictMode, null, React.createElement(App)));
+  window.addEventListener('hashchange', () => {
+    isHandlingHashChange = true;
+    handleHashNavigation();
+    isHandlingHashChange = false;
+  });
+
+
+
+  /* =========================================================
+     GALLERY RENDERING & CATEGORIES
+     ========================================================= */
+  function render(newIdx, opts){
+    opts = opts || {};
+    renderToken += 1;
+    const thisRender = renderToken;
+
+    idx = (newIdx + continents.length) % continents.length;
+    const c = continents[idx];
+
+    root.style.setProperty('--accent', c.accent);
+    root.style.setProperty('--bg-tone', c.bgTone);
+    stage.dataset.category = c.key;
+
+    if (!opts.skipHistory && currentView === 'gallery') {
+      updateRouteHash(inExploreMode ? 'explore' : 'gallery', c.key, { replace: true });
+    }
+
+    if (!opts.keepPhoto && currentView === 'gallery') {
+      setCinematicBackground(c.hero, c.key);
+    }
+
+    panels.forEach(p => p.classList.toggle('is-active', p.dataset.panel === c.key));
+    spineItems.forEach(s => s.classList.toggle('active', s.dataset.target === c.key));
+    panelStack.style.transform = 'none';
+
+    if(cardSwapTimer){
+      window.clearTimeout(cardSwapTimer);
+      cardSwapTimer = null;
+    }
+
+    if(!opts.skipCards && !inExploreMode && currentView === 'gallery'){
+      cardzone.classList.remove('show');
+      cardSwapTimer = window.setTimeout(() => {
+        if(thisRender !== renderToken) return;
+        cardA.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[0].img)}')`;
+        cardA.querySelector('.place').textContent = c.cards[0].place;
+        cardB.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[1].img)}')`;
+        cardB.querySelector('.place').textContent = c.cards[1].place;
+        cardC.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[2] ? c.cards[2].img : c.cards[0].img)}')`;
+        cardC.querySelector('.place').textContent = c.cards[2] ? c.cards[2].place : c.cards[0].place;
+        cardzone.classList.add('show');
+      }, CARD_SWAP_DELAY);
+    }
+
+    if (pageNow) pageNow.textContent = String(idx + 1).padStart(2, '0');
+    const fillPercent = ((idx + 1) / continents.length * 100) + '%';
+    trackFill.style.width = fillPercent;
+    trackFill.style.height = fillPercent;
+
+    if (railNumTop && railNumBtm && railFill && railPip) {
+      railNumTop.classList.toggle('active', idx === 0);
+      railNumBtm.classList.toggle('active', idx === continents.length - 1);
+      const pct = (idx / (continents.length - 1));
+      railPip.style.top = (pct * 100) + '%';
+      const fillHeight = 15 + (pct * 85);
+      railFill.style.height = fillHeight + '%';
+    }
+  }
+
+  function go(newIdx, opts){
+    opts = opts || {};
+    if(inExploreMode || currentView !== 'gallery') return;
+    if(wheelLock && !opts.force) return;
+
+    wheelLock = true;
+    render(newIdx);
+    restartAutoplay();
+    window.setTimeout(() => { wheelLock = false; }, 380);
+  }
+
+  function restartAutoplay(){
+    if(currentView !== 'gallery' || inExploreMode) return;
+    if(timer) clearInterval(timer);
+    timer = window.setInterval(() => go(idx + 1), AUTOPLAY_MS);
+  }
+
+
+  
+  /* =========================================================
+     FINE ART PHOTOGRAPHY METADATA DICTIONARY & RESOLVER
+     ========================================================= */
+  const PHOTO_METADATA_MAP = {
+    // Landscape
+    'PJO05334.jpg': { title: 'Torres del Paine', meta: 'Patagonia, Chile · 35mm f/5.6 · Archival Print' },
+    'PJO05300.jpg': { title: 'Valle de la Luna', meta: 'Desierto de Atacama · 24mm f/8 · Gran Formato' },
+    'faro-fb33fbb3.jpg': { title: 'Faro Austral', meta: 'Tierra del Fuego · 24mm f/11 · Larga Exposición' },
+    'Villarica.jpg': { title: 'Volcán Villarrica al Atardecer', meta: 'Araucanía, Chile · 70-200mm f/4 · Luz Crepuscular' },
+    'JIMENEZ_Patricio_Landschappen_Foto8_mistsunrise.jpg': { title: 'Niebla Dorada al Amanecer', meta: 'Región de los Ríos · 50mm f/2.0 · Amanecer' },
+    'DSC03490-HDR.jpg': { title: 'Silencio en los Fiordos', meta: 'Carretera Austral · 28mm f/8 · Alto Rango Dinámico' },
+    'DSC03310-HDR.jpg': { title: 'Cumbres Andinas', meta: 'Cordillera Central · 85mm f/5.6 · Nieve Eterna' },
+    'PJO05322.jpg': { title: 'Viento sobre la Estepa', meta: 'Estepa Patagónica · 35mm · Luz Natural' },
+    'PJO05321.jpg': { title: 'Laguna de Aguas Turquesas', meta: 'Parque Nacional Torres del Paine · 24mm f/8' },
+    'PJO05688.jpg': { title: 'Glaciar Milenario', meta: 'Campos de Hielo Sur · 70mm f/8' },
+    'PJO06498.jpg': { title: 'Horizonte Infinito', meta: 'Desierto de Atacama · 35mm f/8 · Texturas Salinas' },
+    'PJO06132.jpg': { title: 'Roca y Oleaje Austral', meta: 'Costa del Pacífico · 24mm f/11 · Larga Exposición' },
+    'PJO05409.jpg': { title: 'Quebrada del Silencio', meta: 'Altiplano Chileno · 50mm f/5.6' },
+    'PJO05602.jpg': { title: 'Cascada Oculta', meta: 'Bosque Templado Lluvioso · 35mm f/8' },
+    'PJO05056.jpg': { title: 'Geología Ancestral', meta: 'Cordón Montañoso · 50mm f/8' },
+    'PJO04652.jpg': { title: 'Amanecer en la Meseta', meta: 'Patagonia Austral · 28mm f/4' },
+    'PJO04719.jpg': { title: 'Sombra de la Montaña', meta: 'Andes del Sur · 70mm f/4' },
+    'DSC02503.jpg': { title: 'Oasis en la Puna', meta: 'Norte Grande · 35mm f/5.6' },
+    'PJO05505.jpg': { title: 'Matorral y Escarcha', meta: 'Tierra del Fuego · 50mm f/2.8' },
+    'PJO04545.jpg': { title: 'Río de Deshielo', meta: 'Cuenca Glaciar · 24mm f/8' },
+    'PJO05251.jpg': { title: 'Valle del Viento', meta: 'Cordillera Patagónica · 35mm' },
+    'PJO06643.jpg': { title: 'Púrpura en la Salitrera', meta: 'Desierto de Atacama · 50mm f/4' },
+    'DSC06227.jpg': { title: 'Ladera de Granito', meta: 'Torres del Paine · 70mm f/5.6' },
+    'PJO05301.jpg': { title: 'Luz Rasante', meta: 'Estepa Austral · 35mm f/4' },
+    'PJO05378.jpg': { title: 'Reflejos en Lago Pehoé', meta: 'Torres del Paine · 24mm f/8' },
+    'PJO05376.jpg': { title: 'Contornos al Crepúsculo', meta: 'Patagonia · 50mm f/2.8' },
+    'PJO052632.jpg': { title: 'Morrena y Hielo', meta: 'Glaciar Grey · 35mm f/8' },
+    'PJO05282.jpg': { title: 'Sendero hacia la Cumbre', meta: 'Parque Nacional · 28mm f/5.6' },
+    'PJO05810.jpg': { title: 'Bruma Marina', meta: 'Costa Sur de Chile · 50mm f/4' },
+    'PJO04734.jpg': { title: 'Última Luz del Macizo', meta: 'Torres del Paine · 70mm f/2.8' },
+    'PJO05097.jpg': { title: 'Pedregal de Altura', meta: 'Paso Cordillerano · 35mm f/8' },
+    'PJO05066 (1).jpg': { title: 'Viento Blanco', meta: 'Alta Montaña · 50mm f/5.6' },
+    'PJO062162.jpg': { title: 'Acantilados del Océano', meta: 'Pacífico Austral · 24mm f/8' },
+    'PJO05132.jpg': { title: 'Valle Escondido', meta: 'Cordillera de los Andes · 35mm f/4' },
+    'PJO04671.jpg': { title: 'Gélido Despertar', meta: 'Patagonia · 50mm f/2.0' },
+    'PJO05319.jpg': { title: 'Nubes sobre los Cuernos', meta: 'Torres del Paine · 24mm f/8' },
+    'PJO05173.jpg': { title: 'Formaciones de Rocas', meta: 'Valle Austral · 35mm f/5.6' },
+    'PJO05180.jpg': { title: 'Tierras del Viento', meta: 'Magallanes · 28mm f/8' },
+
+    // Nature
+    'PJO00934.jpg': { title: 'Silvestre al Alba', meta: 'Parque Nacional Conguillío · 400mm f/4 · Luz Suave' },
+    'PJO09920.jpg': { title: 'Pradera Dorada', meta: 'Valle del Rahue · 135mm f/2.0 · Hora Dorada' },
+    'PJO08967.jpg': { title: 'Microcosmos', meta: 'Reserva Huilo Huilo · 90mm Macro f/2.8 · 1:1' },
+    'caracol.jpg': { title: 'Espiral en Rocío', meta: 'Selva Valdiviana · Macro 90mm · Luz Difusa' },
+    'JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.jpg': { title: 'Canto de Primavera', meta: 'Bosque Templado Lluvioso · 300mm f/4' },
+    'JIMENEZ_Patricio_Anderedieren_Foto6_Springand.jpg': { title: 'Brote y Luz', meta: 'Araucanía Andina · 90mm Macro f/2.8' },
+    'JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.jpg': { title: 'Mimetismo en la Corteza', meta: 'Macro Fotografía · f/11 · Detalle Celular' },
+    'Jimenez_Patricio_DSC_03112.jpg': { title: 'Al Acecho', meta: 'Ecosistema Austral · 400mm f/4' },
+    'JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.jpg': { title: 'Vida en los Pétalos', meta: 'Flora Nativa · Macro 100mm f/2.8' },
+    'JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.jpg': { title: 'Vuelo y Envergadura', meta: 'Humedales del Sur · 400mm f/4 · 1/2500s' },
+    'JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.jpg': { title: 'Silueta al Ocaso', meta: 'Marisma Austral · 300mm f/2.8 · Ocaso' },
+    'definitivosaltamonteenano.jpg': { title: 'Pequeño Vigilante', meta: 'Macro 90mm f/8 · 1:1 Life Size' },
+
+    // Adventure
+    'DSC07377_-_2-f8a343cf.jpg': { title: 'Descenso Rápido', meta: 'Río Trancura, Pucón · 70-200mm f/2.8 · 1/2000s' },
+    'PJO01917.jpg': { title: 'Travesía en Cresta', meta: 'Cordillera de los Andes · 24mm f/5.6 · Expedición' },
+    'PJO04973-f6a2848a.jpg': { title: 'Línea Salvaje', meta: 'Laderas Volcánicas · 70mm f/4 · Alta Velocidad' },
+    'DSC07386-f7ad26b2.jpg': { title: 'Torbellino Blanco', meta: 'Rápido Clase V · 200mm f/2.8 · 1/2500s' },
+    'PJO06205-2.jpg': { title: 'Fuerza en la Corriente', meta: 'Río Austral · 85mm f/2.8 · 1/2000s' },
+
+    // Street
+    'PJO02812.jpg': { title: 'Contraluz Urbano', meta: 'Centro Histórico, Santiago · 35mm f/2.0 · Luz de Tarde' },
+    'PJO02840.jpg': { title: 'Transeúntes al Paso', meta: 'Cerro Alegre, Valparaíso · 50mm f/1.8 · Vida Cotidiana' },
+    'PJO05819.jpg': { title: 'Geometría Callejera', meta: 'Barrio Lastarria, Santiago · 35mm f/2.8 · Luz y Sombra' },
+    'PJO04575-d7bdd0bc.jpg': { title: 'Paso Fugaz', meta: 'Paseo Ahumada · 35mm f/2.0 · Street Photography' },
+    'PJO04622-60cc4ccb.jpg': { title: 'Diálogo Urbano', meta: 'Café de Barrio · 50mm f/1.8 · Luz Disponible' },
+    'PJO04590-176b30ca.jpg': { title: 'Reflejos en el Asfalto', meta: 'Lluvia en la Ciudad · 35mm f/2.0 · Reflejos' },
+    'DSC01032-250a524f.jpg': { title: 'La Espera', meta: 'Estación de Tren · 50mm f/2.8 · Blanco y Negro' },
+    'PJO00013.jpg': { title: 'Sombras de Tarde', meta: 'Perspectiva Urbana · 35mm f/2.0' }
+  };
+
+  function getPhotoMetadata(url, categoryKey, photoIndex) {
+    if (!url) return { title: 'Fine Art Portfolio', meta: 'Patricio Jiménez · Fotografía' };
+    const filename = url.split('/').pop().split('?')[0];
+    if (PHOTO_METADATA_MAP[filename]) {
+      return PHOTO_METADATA_MAP[filename];
+    }
+    const safeIdx = String((photoIndex || 0) + 1).padStart(2, '0');
+    switch (categoryKey) {
+      case 'africa':
+        return {
+          title: `Luz Austral · Cuadro ${safeIdx}`,
+          meta: 'Chile & Patagonia · Sony α7R IV · Archival Fine Art'
+        };
+      case 'asia':
+        return {
+          title: `Forma y Vida · Cuadro ${safeIdx}`,
+          meta: 'Naturaleza Austral · Sony α7R IV · Óptica G Master'
+        };
+      case 'australia':
+        return {
+          title: `Momento Decisivo · Cuadro ${safeIdx}`,
+          meta: 'Acción y Cordillera · 1/2000s · Chile'
+        };
+      case 'street':
+        return {
+          title: `Crónica de Ciudad · Cuadro ${safeIdx}`,
+          meta: 'Escena Urbana · 35mm · Luz Disponible'
+        };
+      default:
+        return {
+          title: `Fotografía Fine Art · Cuadro ${safeIdx}`,
+          meta: 'Patricio Jiménez · Fine Art Print'
+        };
+    }
+  }
+
+  function updateExplorePhotoInfo(imgUrl) {
+    const currentCat = continents[idx];
+    if (!currentCat) return;
+    const meta = getPhotoMetadata(imgUrl, currentCat.key, activePhotoIndex);
+    if (explorePhotoTitle) explorePhotoTitle.textContent = meta.title;
+    if (explorePhotoMeta) explorePhotoMeta.textContent = meta.meta;
+  }
+
+  /* =========================================================
+     EXPLORATION MODE & VIEWER CONTROLS
+     ========================================================= */
+  let viewerZoomScale = 1;
+  let viewerPanX = 0;
+  let viewerPanY = 0;
+  let initialPinchDistance = null;
+  let initialPinchScale = 1;
+  let isPinching = false;
+  let panStartX = 0;
+  let panStartY = 0;
+  let initialPanX = 0;
+  let initialPanY = 0;
+  let isPanning = false;
+  let lastTapTime = 0;
+
+  function updateZoomButtonState() {
+    if (!exploreZoomBtn) return;
+    const isZoomed = viewerZoomScale > 1.05;
+    exploreZoomBtn.classList.toggle('is-active', isZoomed);
+    if (isZoomed) {
+      exploreZoomBtn.setAttribute('aria-label', 'Reset zoom');
+      exploreZoomBtn.setAttribute('title', 'Reset zoom');
+    } else {
+      exploreZoomBtn.setAttribute('aria-label', 'Zoom image');
+      exploreZoomBtn.setAttribute('title', 'Zoom photo');
+    }
+  }
+
+  function applyViewerTransform(withTransition) {
+    const currentImg = currentViewerSlot === 'A' ? exploreViewerImgA : exploreViewerImgB;
+    if (!currentImg) return;
+    if (viewerZoomScale <= 1.02) {
+      viewerZoomScale = 1;
+      viewerPanX = 0;
+      viewerPanY = 0;
+      if (withTransition) {
+        currentImg.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-out';
+        currentImg.style.transform = 'translate(-50%, -50%) scale(1)';
+      } else {
+        currentImg.style.transition = 'none';
+        currentImg.style.transform = '';
+      }
+      stage.classList.remove('is-zoomed');
+    } else {
+      if (withTransition) {
+        currentImg.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-out';
+      } else {
+        currentImg.style.transition = 'none';
+      }
+      currentImg.style.transform = `translate(calc(-50% + ${viewerPanX}px), calc(-50% + ${viewerPanY}px)) scale(${viewerZoomScale})`;
+      stage.classList.add('is-zoomed');
+    }
+    updateZoomButtonState();
+  }
+
+  function resetViewerZoom(animated) {
+    viewerZoomScale = 1;
+    viewerPanX = 0;
+    viewerPanY = 0;
+    isPinching = false;
+    isPanning = false;
+    [exploreViewerImgA, exploreViewerImgB].forEach(img => {
+      if (!img) return;
+      if (animated) {
+        img.style.transition = 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-out';
+        img.style.transform = 'translate(-50%, -50%) scale(1)';
+      } else {
+        img.style.transition = 'none';
+        img.style.transform = '';
+      }
+    });
+    stage.classList.remove('is-zoomed');
+    updateZoomButtonState();
+  }
+
+  function triggerExploreIntroTimer() {
+    if (!inExploreMode) return;
+    if (exploreCardsIntroTimer) clearTimeout(exploreCardsIntroTimer);
+    stage.classList.add('explore-cards-intro');
+    exploreCardsIntroTimer = window.setTimeout(() => {
+      stage.classList.remove('explore-cards-intro');
+      exploreCardsIntroTimer = null;
+    }, 2800);
+  }
+
+  function enterExploreMode(categoryKey, targetPhotoUrl, opts) {
+    opts = opts || {};
+    if (categoryKey) {
+      const catIndex = continents.findIndex(c => c.key === categoryKey);
+      if (catIndex !== -1 && catIndex !== idx) {
+        render(catIndex, { skipCards: true });
+      }
+    }
+
+    inExploreMode = true;
+    resetViewerZoom(false);
+    if (timer) clearInterval(timer);
+
+    const currentCat = continents[idx];
+    exploreCatBadge.textContent = currentCat.name;
+
+    exploreCardsTrack.innerHTML = '';
+    activePhotoIndex = 0;
+
+    const target = targetPhotoUrl || currentCat.hero;
+    if (target) {
+      const targetIdx = currentCat.all.indexOf(target);
+      if (targetIdx !== -1) {
+        activePhotoIndex = targetIdx;
+      }
+    }
+
+    setCinematicBackground(currentCat.all[activePhotoIndex]);
+    updateExploreViewerPhoto(currentCat.all[activePhotoIndex]);
+    updateExplorePhotoInfo(currentCat.all[activePhotoIndex]);
+    if (!opts.skipHistory) {
+      updateRouteHash('explore', currentCat.key, { replace: false });
+    }
+
+    currentCat.all.forEach((imgUrl, i) => {
+      const card = document.createElement('div');
+      card.className = `explore-card ${i === activePhotoIndex ? 'active' : ''}`;
+      card.style.backgroundImage = `url('${thumbnailImageUrl(imgUrl)}')`;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', `Photo ${i + 1}`);
+
+      card.addEventListener('click', () => {
+        selectExplorePhoto(i);
+      });
+
+      exploreCardsTrack.appendChild(card);
+    });
+
+    updateExploreCount();
+    stage.classList.add('explore-mode');
+    triggerExploreIntroTimer();
+
+    setTimeout(() => {
+      scrollActiveCardIntoView();
+    }, 150);
+  }
+
+  function selectExplorePhoto(photoIdx) {
+    const currentCat = continents[idx];
+    if (photoIdx < 0 || photoIdx >= currentCat.all.length) return;
+
+    activePhotoIndex = photoIdx;
+    resetViewerZoom(false);
+    const selectedImg = currentCat.all[photoIdx];
+
+    setCinematicBackground(selectedImg);
+    updateExploreViewerPhoto(selectedImg);
+    updateExplorePhotoInfo(selectedImg);
+
+    exploreCardsTrack.querySelectorAll('.explore-card').forEach((c, i) => {
+      c.classList.toggle('active', i === activePhotoIndex);
+    });
+
+    updateExploreCount();
+    triggerExploreIntroTimer();
+    scrollActiveCardIntoView();
+  }
+
+  function scrollActiveCardIntoView() {
+    const activeCard = exploreCardsTrack.querySelector('.explore-card.active');
+    if (activeCard && exploreCardsTrack.scrollWidth > exploreCardsTrack.clientWidth) {
+      const trackCenter = exploreCardsTrack.clientWidth / 2;
+      const cardLeft = activeCard.offsetLeft + (activeCard.clientWidth / 2);
+      exploreCardsTrack.scrollTo({
+        left: cardLeft - trackCenter,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  function updateExploreCount() {
+    const currentCat = continents[idx];
+    const cur = String(activePhotoIndex + 1).padStart(2, '0');
+    const tot = String(currentCat.all.length).padStart(2, '0');
+    explorePhotoCounter.textContent = `${cur} / ${tot}`;
+  }
+
+  function exitExploreMode(opts) {
+    opts = opts || {};
+    inExploreMode = false;
+    resetViewerZoom(false);
+    if (exploreCardsIntroTimer) clearTimeout(exploreCardsIntroTimer);
+    exploreCardsIntroTimer = null;
+    stage.classList.remove('explore-mode', 'explore-cards-intro', 'is-zoomed');
+    if (exploreViewerImgA) {
+      exploreViewerImgA.classList.remove('active', 'prev');
+      exploreViewerImgA.removeAttribute('src');
+      exploreViewerImgA.style.transform = '';
+      exploreViewerImgA.style.transition = '';
+    }
+    if (exploreViewerImgB) {
+      exploreViewerImgB.classList.remove('active', 'prev');
+      exploreViewerImgB.removeAttribute('src');
+      exploreViewerImgB.style.transform = '';
+      exploreViewerImgB.style.transition = '';
+    }
+    render(idx);
+    restartAutoplay();
+    if (!opts.skipHistory) {
+      updateRouteHash('gallery', continents[idx].key, { replace: false });
+    }
+  }
+
+
+  document.querySelectorAll('.explore').forEach(btn => {
+    function onExploreClick(e) {
+      if (e) {
+        if (e.type === 'touchend') e.preventDefault();
+        e.stopPropagation();
+      }
+      enterExploreMode(btn.dataset.explore);
+    }
+    btn.addEventListener('click', onExploreClick);
+    btn.addEventListener('touchend', onExploreClick);
+  });
+
+  [cardA, cardB, cardC].forEach((card, cardIndex) => {
+    function onCardClick(e) {
+      if (e) {
+        if (e.type === 'touchend') e.preventDefault();
+        e.stopPropagation();
+      }
+      const currentCat = continents[idx];
+      const targetCard = currentCat.cards[cardIndex];
+      enterExploreMode(currentCat.key, targetCard ? targetCard.img : null);
+    }
+    card.addEventListener('click', onCardClick);
+    card.addEventListener('touchend', onCardClick);
+  });
+
+  function onClosePillClick(e) {
+    if (e) {
+      if (e.type === 'touchend') e.preventDefault();
+      e.stopPropagation();
+    }
+    exitExploreMode();
+  }
+  exploreClosePill.addEventListener('click', onClosePillClick);
+  exploreClosePill.addEventListener('touchend', onClosePillClick);
+
+  function handleZoomToggle(e) {
+    if (e) {
+      if (e.type === 'touchend') e.preventDefault();
+      e.stopPropagation();
+    }
+    if (viewerZoomScale > 1.05) {
+      resetViewerZoom(true);
+    } else {
+      viewerZoomScale = 2.2;
+      viewerPanX = 0;
+      viewerPanY = 0;
+      applyViewerTransform(true);
+    }
+  }
+
+  if (exploreZoomBtn) {
+    exploreZoomBtn.addEventListener('click', handleZoomToggle);
+    exploreZoomBtn.addEventListener('touchend', handleZoomToggle);
+  }
+
+  const explorePrevBtn = document.getElementById('explorePrevBtn');
+  const exploreNextBtn = document.getElementById('exploreNextBtn');
+
+  function handleExplorePrev(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const currentCat = continents[idx];
+    if (currentCat && currentCat.all && currentCat.all.length > 0) {
+      selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
+    }
+  }
+
+  function handleExploreNext(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const currentCat = continents[idx];
+    if (currentCat && currentCat.all && currentCat.all.length > 0) {
+      selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
+    }
+  }
+
+  if (explorePrevBtn) {
+    explorePrevBtn.addEventListener('click', handleExplorePrev);
+    explorePrevBtn.addEventListener('touchend', handleExplorePrev);
+  }
+
+  if (exploreNextBtn) {
+    exploreNextBtn.addEventListener('click', handleExploreNext);
+    exploreNextBtn.addEventListener('touchend', handleExploreNext);
+  }
+
+  exploreViewerContainer.addEventListener('click', (e) => {
+    if (e.target.closest('.explore-nav-arrow') || e.target.closest('.explore-top-bar') || e.target.closest('.explore-cards-wrap')) return;
+    if (viewerZoomScale > 1.05) return;
+    triggerExploreIntroTimer();
+
+    const rect = exploreViewerContainer.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const currentCat = continents[idx];
+    if (!currentCat || !currentCat.all) return;
+
+    if (clickX > width * 0.72) {
+      selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
+    } else if (clickX < width * 0.28) {
+      selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
+    }
+  });
+
+  // Touch Controller for Pinch-to-Zoom and Panning in Explore Lightbox
+  exploreViewerContainer.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2) {
+      isPinching = true;
+      isPanning = false;
+      initialPinchDistance = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      initialPinchScale = viewerZoomScale;
+    } else if (e.touches.length === 1 && viewerZoomScale > 1.05) {
+      isPanning = true;
+      panStartX = e.touches[0].clientX;
+      panStartY = e.touches[0].clientY;
+      initialPanX = viewerPanX;
+      initialPanY = viewerPanY;
+    }
+  }, { passive: true });
+
+  exploreViewerContainer.addEventListener('touchmove', (e) => {
+    if (isPinching && e.touches.length === 2 && initialPinchDistance) {
+      const currentDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      const factor = currentDist / initialPinchDistance;
+      viewerZoomScale = Math.min(3.8, Math.max(0.88, initialPinchScale * factor));
+      if (viewerZoomScale <= 1.2) {
+        const ratio = Math.max(0, (viewerZoomScale - 1) / 0.2);
+        viewerPanX *= ratio;
+        viewerPanY *= ratio;
+      }
+      applyViewerTransform(false);
+    } else if (isPanning && e.touches.length === 1 && viewerZoomScale > 1.05) {
+      const dx = e.touches[0].clientX - panStartX;
+      const dy = e.touches[0].clientY - panStartY;
+      const maxPanX = (window.innerWidth * (viewerZoomScale - 1)) / 1.8;
+      const maxPanY = (window.innerHeight * (viewerZoomScale - 1)) / 1.8;
+      viewerPanX = Math.max(-maxPanX, Math.min(maxPanX, initialPanX + dx));
+      viewerPanY = Math.max(-maxPanY, Math.min(maxPanY, initialPanY + dy));
+      applyViewerTransform(false);
+    }
+  }, { passive: true });
+
+  exploreViewerContainer.addEventListener('touchend', (e) => {
+    if (e.target.closest('.explore-nav-arrow') || e.target.closest('.explore-close-pill')) return;
+
+    if (e.touches.length === 0) {
+      if (isPinching) {
+        isPinching = false;
+        if (viewerZoomScale < 1.08) {
+          resetViewerZoom(true);
+        } else {
+          applyViewerTransform(true);
+        }
+      } else if (isPanning) {
+        isPanning = false;
+        applyViewerTransform(true);
+      }
+
+      // Double-tap detection
+      const now = performance.now();
+      if (now - lastTapTime < 320 && !isPinching) {
+        if (viewerZoomScale > 1.05) {
+          resetViewerZoom(true);
+        } else {
+          viewerZoomScale = 2.2;
+          viewerPanX = 0;
+          viewerPanY = 0;
+          applyViewerTransform(true);
+        }
+        lastTapTime = 0;
+      } else {
+        lastTapTime = now;
+        if (viewerZoomScale <= 1.05) {
+          triggerExploreIntroTimer();
+        }
+      }
+    } else if (e.touches.length === 1 && isPinching) {
+      isPinching = false;
+      if (viewerZoomScale < 1.08) {
+        resetViewerZoom(true);
+      } else {
+        applyViewerTransform(true);
+      }
+    }
+  }, { passive: true });
+
+  exploreCardsTrack.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    exploreCardsTrack.scrollLeft += e.deltaY;
+  }, { passive: false });
+
+  let isMouseDragging = false;
+  let mouseDragStartX = 0;
+  let mouseDragStartY = 0;
+  let initialMousePanX = 0;
+  let initialMousePanY = 0;
+
+  exploreViewerContainer.addEventListener('mousedown', (e) => {
+    if (viewerZoomScale <= 1.05) return;
+    if (e.target.closest('.explore-nav-arrow') || e.target.closest('.explore-top-bar') || e.target.closest('.explore-cards-wrap')) return;
+    isMouseDragging = true;
+    mouseDragStartX = e.clientX;
+    mouseDragStartY = e.clientY;
+    initialMousePanX = viewerPanX;
+    initialMousePanY = viewerPanY;
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isMouseDragging || viewerZoomScale <= 1.05) return;
+    const dx = e.clientX - mouseDragStartX;
+    const dy = e.clientY - mouseDragStartY;
+    const maxPanX = (window.innerWidth * (viewerZoomScale - 1)) / 1.8;
+    const maxPanY = (window.innerHeight * (viewerZoomScale - 1)) / 1.8;
+    viewerPanX = Math.max(-maxPanX, Math.min(maxPanX, initialMousePanX + dx));
+    viewerPanY = Math.max(-maxPanY, Math.min(maxPanY, initialMousePanY + dy));
+    applyViewerTransform(false);
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isMouseDragging) {
+      isMouseDragging = false;
+      applyViewerTransform(true);
+    }
+  });
+
+
+  /* =========================================================
+     CINEMATIC SPATIAL TRANSITION INTO GALLERY ("NO HUBO CAMBIO DE PÁGINA")
+     ========================================================= */
+  let isStartingGallery = false;
+  let activeEnterGallery = null;
+  let transitionStartTime = 0;
+  let warpTimer = null;
+  let warpEndTimer = null;
+  let rampTimeoutIds = [];
+
+  function clearRampTimers() {
+    rampTimeoutIds.forEach(id => clearTimeout(id));
+    rampTimeoutIds = [];
+  }
+
+  function startCinematicVideoTransition(e) {
+    if (e && e.type === 'touchend') {
+      try { e.preventDefault(); } catch(err){}
+    }
+    // Fast-forward if user clicks/taps again after 600ms
+    if (stage.classList.contains('is-starting')) {
+      if (activeEnterGallery && (performance.now() - transitionStartTime > 600)) {
+        activeEnterGallery();
+      }
+      return;
+    }
+    if (currentView !== 'home' || isStartingGallery) return;
+    isStartingGallery = true;
+    transitionStartTime = performance.now();
+    clearRampTimers();
+
+    // FASE 1: Texto e interfaz de Home se elevan y disuelven suavemente; el video arranca a velocidad 1.0x normal
+    stage.classList.add('is-starting');
+    preloadGalleryAssets();
+
+    let entered = false;
+    const enterGallery = () => {
+      if (entered || currentView !== 'home') return;
+      entered = true;
+      if (warpTimer) { clearTimeout(warpTimer); warpTimer = null; }
+      if (warpEndTimer) { clearTimeout(warpEndTimer); warpEndTimer = null; }
+      clearRampTimers();
+      activeEnterGallery = null;
+
+      // Clase from-home para orquestar la suave entrada escalonada tipo HUD de controles de galería
+      stage.classList.add('from-home');
+
+      // Transición fluida a galería: la foto fija toma el relevo y los controles emergen en cascada armónica
+      switchView('gallery');
+
+      // Tras completar la disolvencia y entrada de todos los controles (2000ms), limpiar video y clases fuera de pantalla
+      setTimeout(() => {
+        stage.classList.remove('from-home');
+        stage.classList.remove('is-starting');
+        stage.classList.remove('is-warping');
+        isStartingGallery = false;
+        try {
+          if (heroBgVideo) {
+            heroBgVideo.pause();
+            heroBgVideo.currentTime = 0;
+            heroBgVideo.playbackRate = 1.0;
+          }
+        } catch(e){}
+      }, 2000);
+    };
+
+    activeEnterGallery = enterGallery;
+
+    if (heroBgVideo) {
+      heroBgVideo.muted = true;
+      heroBgVideo.defaultMuted = true;
+
+      // FASE 1: Primeros 2.0s a velocidad 100% normal (1.0x) — serenidad, atmósfera real y contemplación
+      heroBgVideo.currentTime = 0;
+      heroBgVideo.playbackRate = 1.0;
+      const playPromise = heroBgVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          setTimeout(enterGallery, 400);
+        });
+      }
+
+      // FASE 2: Aceleración progresiva a velocidad de crucero 1.66x (de 2.0s a 4.70s)
+      warpTimer = setTimeout(() => {
+        if (entered || currentView !== 'home') return;
+        stage.classList.add('is-warping');
+
+        // Rampa suave desacoplada de la clase CSS para eliminar cualquier tirón gráfico
+        const rampUpSteps = [
+          { delay: 80,  rate: 1.10 },
+          { delay: 160, rate: 1.24 },
+          { delay: 240, rate: 1.44 },
+          { delay: 320, rate: 1.66 }
+        ];
+
+        rampUpSteps.forEach(step => {
+          const tid = setTimeout(() => {
+            if (!entered && currentView === 'home' && heroBgVideo) {
+              heroBgVideo.playbackRate = step.rate;
+            }
+          }, step.delay);
+          rampTimeoutIds.push(tid);
+        });
+
+        // FASE 3: Desaceleración y retorno a velocidad 100% normal (de 4.70s a 5.18s)
+        const tidDeaccelClass = setTimeout(() => {
+          if (!entered && currentView === 'home') {
+            stage.classList.remove('is-warping');
+          }
+        }, 2700); // 2000ms + 2700ms = 4700ms
+        rampTimeoutIds.push(tidDeaccelClass);
+
+        // Rampa de frenado progresivo hacia 1.00x exacto:
+        const rampDownSteps = [
+          { delay: 2700, rate: 1.45 },
+          { delay: 2820, rate: 1.28 },
+          { delay: 2940, rate: 1.14 },
+          { delay: 3060, rate: 1.05 },
+          { delay: 3180, rate: 1.00 }
+        ];
+
+        rampDownSteps.forEach(step => {
+          const tid = setTimeout(() => {
+            if (!entered && currentView === 'home' && heroBgVideo) {
+              heroBgVideo.playbackRate = step.rate;
+            }
+          }, step.delay);
+          rampTimeoutIds.push(tid);
+        });
+
+        // FASE 4: A los 5.75s (con video a velocidad 1.0x normal, nítido y la pantalla LCD al 100%),
+        // se inicia la transición match-cut combinada hacia la galería (cero corte, orquestación HUD de controles)
+        warpEndTimer = setTimeout(() => {
+          enterGallery();
+        }, 3750); // 2000ms + 3750ms = 5750ms total
+      }, 2000);
+
+      // Fallback de seguridad
+      window.setTimeout(enterGallery, 7500);
+    } else {
+      setTimeout(enterGallery, 400);
+    }
+  }
+
+  startBtn.addEventListener('click', startCinematicVideoTransition);
+  startBtn.addEventListener('touchend', startCinematicVideoTransition);
+
+  /* ── Subtle Mouse Depth Parallax on Hero (Desktop only) ────── */
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const heroTextWrapper = document.querySelector('.hero-text-wrapper');
+    const heroAtmosphere = document.querySelector('.hero-epic-atmosphere');
+    let heroTargetX = 0, heroTargetY = 0;
+    let heroCurrentX = 0, heroCurrentY = 0;
+    let isParallaxActive = false;
+
+    window.addEventListener('mousemove', (e) => {
+      if (currentView !== 'home' || stage.classList.contains('is-starting')) {
+        heroTargetX = 0;
+        heroTargetY = 0;
+        return;
+      }
+      const normX = (e.clientX / window.innerWidth) - 0.5;
+      const normY = (e.clientY / window.innerHeight) - 0.5;
+      heroTargetX = normX * 14;
+      heroTargetY = normY * 10;
+    }, { passive: true });
+
+    window.addEventListener('mouseleave', () => {
+      heroTargetX = 0;
+      heroTargetY = 0;
+    });
+
+    function updateHeroParallax() {
+      if (currentView === 'home' && !stage.classList.contains('is-starting')) {
+        heroCurrentX += (heroTargetX - heroCurrentX) * 0.055;
+        heroCurrentY += (heroTargetY - heroCurrentY) * 0.055;
+        if (heroTextWrapper) {
+          heroTextWrapper.style.transform = `translate3d(${heroCurrentX.toFixed(2)}px, ${heroCurrentY.toFixed(2)}px, 0)`;
+        }
+        if (heroAtmosphere) {
+          heroAtmosphere.style.transform = `translate3d(${(-heroCurrentX * 0.5).toFixed(2)}px, ${(-heroCurrentY * 0.5).toFixed(2)}px, 0) scale(1.02)`;
+        }
+        isParallaxActive = true;
+      } else if (isParallaxActive) {
+        if (heroTextWrapper) heroTextWrapper.style.transform = '';
+        if (heroAtmosphere) heroAtmosphere.style.transform = '';
+        heroCurrentX = 0;
+        heroCurrentY = 0;
+        heroTargetX = 0;
+        heroTargetY = 0;
+        isParallaxActive = false;
+      }
+      requestAnimationFrame(updateHeroParallax);
+    }
+    requestAnimationFrame(updateHeroParallax);
+  }
+
+
+  /* =========================================================
+     CONTACT FORM SUBMISSION
+     ========================================================= */
+  const contactForm = document.getElementById('contactForm');
+  const contactFeedback = document.getElementById('contactFeedback');
+  const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Reset classes
+      contactFeedback.className = 'form-feedback is-sending';
+      contactFeedback.textContent = 'Sending...';
+      contactSubmitBtn.disabled = true;
+
+      const payload = {
+        name: document.getElementById('contactName').value.trim(),
+        email: document.getElementById('contactEmail').value.trim(),
+        message: document.getElementById('contactMessage').value.trim()
+      };
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok) {
+          contactFeedback.className = 'form-feedback is-success';
+          contactFeedback.innerHTML = `
+            <svg class="feedback-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="10" cy="10" r="9" opacity="0.35"/>
+              <path class="feedback-check-path" d="M6 10.5l3 3 5-5.5"/>
+            </svg>
+            <span class="feedback-text-block">
+              <span class="feedback-main">Message received.</span>
+              <span class="feedback-sub">I will be in touch soon.</span>
+            </span>`;
+          contactForm.reset();
+        } else {
+          contactFeedback.className = 'form-feedback is-error';
+          contactFeedback.innerHTML = `
+            <svg class="feedback-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="10" cy="10" r="9" opacity="0.35"/>
+              <line x1="10" y1="6" x2="10" y2="11"/><circle cx="10" cy="13.5" r="0.5" fill="currentColor"/>
+            </svg>
+            <span class="feedback-text-block">
+              <span class="feedback-main"></span>
+            </span>`;
+          contactFeedback.querySelector('.feedback-main').textContent = data.message || 'Could not send message.';
+        }
+      } catch(err) {
+        contactFeedback.className = 'form-feedback is-error';
+        contactFeedback.innerHTML = `
+          <svg class="feedback-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="10" cy="10" r="9" opacity="0.35"/>
+            <line x1="10" y1="6" x2="10" y2="11"/><circle cx="10" cy="13.5" r="0.5" fill="currentColor"/>
+          </svg>
+          <span class="feedback-text-block">
+            <span class="feedback-main">Connection error. Please try again.</span>
+          </span>`;
+      } finally {
+        contactSubmitBtn.disabled = false;
+      }
+    });
+  }
+
+
+  /* =========================================================
+     KEYBOARD & WHEEL NAVIGATION
+     ========================================================= */
+  document.addEventListener('keydown', (e) => {
+    if (currentView === 'home' && (e.code === 'Space' || e.code === 'Enter')) {
+      e.preventDefault();
+      startCinematicVideoTransition();
+    } else if (inExploreMode) {
+      const currentCat = continents[idx];
+      if (!currentCat || !currentCat.all || currentCat.all.length === 0) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        exitExploreMode();
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
+      }
+    } else if (currentView === 'gallery') {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        go(idx + 1, { force: true });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        go(idx - 1, { force: true });
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        navigateViewSequence(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        navigateViewSequence(-1);
+      }
+    } else if (currentView === 'home' || currentView === 'contact') {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        navigateViewSequence(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        navigateViewSequence(-1);
+      }
+    }
+  });
+
+  spineItems.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (inExploreMode) exitExploreMode();
+      const target = continents.findIndex(c => c.key === btn.dataset.target);
+      go(target, { force: true });
+    });
+  });
+
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+
+  function navigateViewSequence(direction) {
+    if (inExploreMode) return;
+    const viewSequence = ['home', 'gallery', 'contact'];
+    const curViewIdx = viewSequence.indexOf(currentView);
+    if (curViewIdx === -1) return;
+    const targetIdx = (curViewIdx + direction + viewSequence.length) % viewSequence.length;
+    switchView(viewSequence[targetIdx]);
+  }
+
+  function updateViewNavButtons() {
+    const viewSequence = ['home', 'gallery', 'contact'];
+    const curViewIdx = viewSequence.indexOf(currentView);
+    if (curViewIdx === -1) return;
+    const prevView = viewSequence[(curViewIdx - 1 + viewSequence.length) % viewSequence.length];
+    const nextView = viewSequence[(curViewIdx + 1) % viewSequence.length];
+
+    const labels = {
+      home: 'Home',
+      gallery: 'Gallery',
+      contact: 'Contact'
+    };
+
+    if (prevBtn) {
+      prevBtn.setAttribute('aria-label', `Go to ${labels[prevView] || prevView}`);
+      prevBtn.setAttribute('title', `${labels[prevView] || prevView}`);
+    }
+    if (nextBtn) {
+      nextBtn.setAttribute('aria-label', `Go to ${labels[nextView] || nextView}`);
+      nextBtn.setAttribute('title', `${labels[nextView] || nextView}`);
+    }
+  }
+
+  function handleNext(e) {
+    if (e) {
+      if (e.type === 'touchend') e.preventDefault();
+      e.stopPropagation();
+    }
+    navigateViewSequence(1);
+  }
+
+  function handlePrev(e) {
+    if (e) {
+      if (e.type === 'touchend') e.preventDefault();
+      e.stopPropagation();
+    }
+    navigateViewSequence(-1);
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', handleNext);
+    nextBtn.addEventListener('touchend', handleNext);
+  }
+  if (prevBtn) {
+    prevBtn.addEventListener('click', handlePrev);
+    prevBtn.addEventListener('touchend', handlePrev);
+  }
+
+  if (mobileRail) {
+    function handleRailInteraction(e) {
+      if (inExploreMode || currentView !== 'gallery') return;
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const rect = mobileRail.getBoundingClientRect();
+      const clientY = (e.touches && e.touches[0]) ? e.touches[0].clientY : ((e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY : e.clientY);
+      const relativeY = clientY - rect.top;
+      const pct = Math.min(0.99, Math.max(0, relativeY / rect.height));
+      const targetIdx = Math.floor(pct * continents.length);
+      go(targetIdx, { force: true });
+    }
+    mobileRail.addEventListener('click', handleRailInteraction);
+    mobileRail.addEventListener('touchend', handleRailInteraction);
+  }
+
+  stage.addEventListener('wheel', (event) => {
+    if (currentView === 'home') {
+      if (event.deltaY > 20) {
+        event.preventDefault();
+        startCinematicVideoTransition();
+      }
+      return;
+    }
+    if (currentView !== 'gallery' || inExploreMode) return;
+    event.preventDefault();
+    const direction = event.deltaY > 0 ? 1 : -1;
+    go(idx + direction);
+  }, { passive:false });
+
+  let isMultiTouchActive = false;
+  let multiTouchCooldown = 0;
+
+  stage.addEventListener('touchstart', (event) => {
+    if (event.touches.length > 1) {
+      isMultiTouchActive = true;
+      multiTouchCooldown = performance.now() + 450;
+      touchStartX = null;
+      touchStartY = null;
+      return;
+    }
+    if (event.target.closest('input, textarea, select, button, a') || 
+        event.target.closest('#exploreCardsTrack') || 
+        event.target.closest('.explore-nav-arrow') ||
+        event.target.closest('.bottombar') ||
+        event.target.closest('.mobile-edge-arrow') ||
+        event.target.closest('.arrow-btn')) return;
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+    touchStartTime = performance.now();
+  }, { passive: true });
+
+  stage.addEventListener('touchmove', (event) => {
+    if (event.touches.length > 1) {
+      isMultiTouchActive = true;
+      multiTouchCooldown = performance.now() + 450;
+      touchStartX = null;
+      touchStartY = null;
+    }
+  }, { passive: true });
+
+  stage.addEventListener('touchcancel', () => {
+    touchStartX = null;
+    touchStartY = null;
+    isMultiTouchActive = false;
+  }, { passive: true });
+
+  stage.addEventListener('touchend', (event) => {
+    if (isMultiTouchActive || performance.now() < multiTouchCooldown) {
+      touchStartX = null;
+      touchStartY = null;
+      if (event.touches.length === 0) {
+        isMultiTouchActive = false;
+      }
+      return;
+    }
+    if (touchStartX === null || touchStartY === null) return;
+    const endX = event.changedTouches[0].clientX;
+    const endY = event.changedTouches[0].clientY;
+    const deltaX = touchStartX - endX;
+    const deltaY = touchStartY - endY;
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+    const elapsed = performance.now() - touchStartTime;
+
+    touchStartX = null;
+    touchStartY = null;
+
+    if (Math.max(absX, absY) < 36 || elapsed > 900) return;
+
+    if (inExploreMode) {
+      if (viewerZoomScale > 1.05) return;
+      if (absX > absY && absX > 36) {
+        const currentCat = continents[idx];
+        if (!currentCat || !currentCat.all) return;
+        if (deltaX > 0) {
+          selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
+        } else {
+          selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
+        }
+      }
+      return;
+    }
+
+    const isMobile = window.matchMedia('(max-width: 980px)').matches;
+
+    if (isMobile) {
+      // Mobile swipe navigation: horizontal swipe switches between home, gallery, and contact
+      if (absX > absY && absX > 36) {
+        const viewSequence = ['home', 'gallery', 'contact'];
+        const curViewIdx = viewSequence.indexOf(currentView);
+        if (curViewIdx !== -1) {
+          if (deltaX > 0) {
+            // Swiped left (finger moved right to left) -> next view
+            const nextViewIdx = (curViewIdx + 1) % viewSequence.length;
+            switchView(viewSequence[nextViewIdx]);
+          } else {
+            // Swiped right (finger moved left to right) -> previous view
+            const prevViewIdx = (curViewIdx - 1 + viewSequence.length) % viewSequence.length;
+            switchView(viewSequence[prevViewIdx]);
+          }
+        }
+      } else if (absY > absX && absY > 40) {
+        // Vertical swipe on mobile gallery changes continents, or on home enters gallery
+        if (currentView === 'gallery') {
+          go(idx + (deltaY > 0 ? 1 : -1), { force: true });
+        } else if (currentView === 'home' && deltaY > 30) {
+          startCinematicVideoTransition();
+        }
+      }
+    } else {
+      // Desktop touch fallback
+      if (currentView === 'home' && absY > absX && deltaY > 30) {
+        startCinematicVideoTransition();
+      } else if (currentView === 'gallery') {
+        if (absX > absY && absX > 36) {
+          go(idx + (deltaX > 0 ? 1 : -1), { force: true });
+        } else if (absY > absX && absY > 40) {
+          go(idx + (deltaY > 0 ? 1 : -1), { force: true });
+        }
+      }
+    }
+  }, { passive: true });
+
+
+  /* =========================================================
+     IMAGE ASSET PROTECTION & ANTI-THEFT (DESKTOP & MOBILE)
+     ========================================================= */
+  // Prevent context menu (right-click on desktop and long-press menu on mobile)
+  document.addEventListener('contextmenu', (e) => {
+    if (e.target.closest('img, .explore-viewer-img, .explore-viewer-container, .bg-layer, .bg-canvas, .dcard, .explore-card')) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Prevent dragging images to desktop or other tabs
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.tagName === 'IMG' || e.target.closest('img, .explore-viewer-img, .bg-layer, .dcard, .explore-card')) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Prevent Ctrl+S / Cmd+S (Save webpage)
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+      e.preventDefault();
+    }
+  });
+
+
+  /* =========================================================
+     INITIALIZE BASED ON URL HASH OR PATH
+     ========================================================= */
+  const initialPath = window.location.pathname.replace('/', '').toLowerCase();
+  const hasSpecificHash = window.location.hash && window.location.hash !== '#home' && window.location.hash !== '#';
+
+  if (hasSpecificHash) {
+    isHandlingHashChange = true;
+    handleHashNavigation();
+    isHandlingHashChange = false;
+  } else if (initialPath === 'gallery' || initialPath === 'gallery.html') {
+    switchView('gallery', { skipHistory: true });
+  } else if (initialPath === 'contact' || initialPath === 'contact.html' || initialPath === 'about' || initialPath === 'about.html') {
+    switchView('contact', { skipHistory: true });
+  } else {
+    currentBgUrl = displayImageUrl(continents[0].hero);
+    switchView('home', { skipHistory: true });
+  }
+
+})();
+
+/* ── Custom Cursor ─────────────────────────────────────────────── */
+(function initCursor() {
+  // Only on devices with a real pointer (not touch)
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  let rx = mx, ry = my;
+  let hidden = true;
+
+  // Move dot instantly, ring lerps behind
+  document.addEventListener('mousemove', (e) => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+    if (hidden) { hidden = false; document.body.classList.remove('csr-hidden'); }
+  });
+
+  document.addEventListener('mouseleave', () => document.body.classList.add('csr-hidden'));
+  document.addEventListener('mouseenter', () => document.body.classList.remove('csr-hidden'));
+
+  // Lerp ring towards mouse
+  (function animateRing() {
+    rx += (mx - rx) * 0.10;
+    ry += (my - ry) * 0.10;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animateRing);
+  })();
+
+  // Hover state: buttons / links
+  const hoverEls = document.querySelectorAll(
+    'a, button, [role="button"], .explore, .spine-item, .view-nav-btn, ' +
+    '.explore-nav-arrow, .explore-close-pill, .explore-zoom-btn'
+  );
+  hoverEls.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('csr-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('csr-hover'));
+  });
+
+  // Photo state: images / gallery cards expand ring softly
+  const photoEls = document.querySelectorAll('.dcard, .explore-viewer-img, .contact-photo img, .bg-layer');
+  photoEls.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('csr-photo'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('csr-photo'));
+  });
+
+  // Start hidden until first move
+  document.body.classList.add('csr-hidden');
+})();
