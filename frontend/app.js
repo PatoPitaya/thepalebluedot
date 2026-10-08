@@ -1,4 +1,4 @@
-﻿(function(){
+(function(){
   const continents = [
     {
       key:'africa', name:'Landscape', accent:'#D4884A', bgTone:'#181208', eyebrow:'Landscape',
@@ -39,7 +39,7 @@
         'images/Landscape/PJO05810.jpg',
         'images/Landscape/PJO04734.jpg',
         'images/Landscape/PJO05097.jpg',
-        'images/Landscape/PJO05066 (1).jpg',
+        'images/Landscape/PJO05066-1.jpg',
         'images/Landscape/PJO062162.jpg',
         'images/Landscape/PJO05132.jpg',
         'images/Landscape/PJO04671.jpg',
@@ -74,7 +74,7 @@
         'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.jpg',
         'images/Nature/PJO03799.jpg',
         'images/Nature/DSC05612.jpg',
-        'images/Nature/2021-06-1922-15-47(B,Radius8,Smoothing4).jpg',
+        'images/Nature/2021-06-1922-15-47-B-Radius8-Smoothing4.jpg',
         'images/Nature/DSC08682.jpg',
         'images/Nature/DSC00345.jpg',
         'images/Nature/DSC06112-2.jpg',
@@ -237,6 +237,7 @@
   const explorePhotoTitle = document.getElementById('explorePhotoTitle');
   const explorePhotoMeta = document.getElementById('explorePhotoMeta');
   const exploreClosePill = document.getElementById('exploreClosePill');
+  const exploreFullscreenBtn = document.getElementById('exploreFullscreenBtn');
   const exploreZoomBtn = document.getElementById('exploreZoomBtn');
   const exploreViewerContainer = document.getElementById('exploreViewerContainer');
   const exploreViewerImgA = document.getElementById('exploreViewerImgA');
@@ -735,84 +736,167 @@
      FINE ART PHOTOGRAPHY METADATA DICTIONARY & RESOLVER
      ========================================================= */
   const PHOTO_METADATA_MAP = {
-    // Landscape
-    'PJO05334.jpg': { title: 'Torres del Paine', meta: 'Patagonia, Chile · 35mm f/5.6 · Archival Print' },
-    'PJO05300.jpg': { title: 'Valle de la Luna', meta: 'Desierto de Atacama · 24mm f/8 · Gran Formato' },
-    'faro-fb33fbb3.jpg': { title: 'Faro Austral', meta: 'Tierra del Fuego · 24mm f/11 · Larga Exposición' },
-    'Villarica.jpg': { title: 'Volcán Villarrica al Atardecer', meta: 'Araucanía, Chile · 70-200mm f/4 · Luz Crepuscular' },
-    'JIMENEZ_Patricio_Landschappen_Foto8_mistsunrise.jpg': { title: 'Niebla Dorada al Amanecer', meta: 'Región de los Ríos · 50mm f/2.0 · Amanecer' },
-    'DSC03490-HDR.jpg': { title: 'Silencio en los Fiordos', meta: 'Carretera Austral · 28mm f/8 · Alto Rango Dinámico' },
-    'DSC03310-HDR.jpg': { title: 'Cumbres Andinas', meta: 'Cordillera Central · 85mm f/5.6 · Nieve Eterna' },
-    'PJO05322.jpg': { title: 'Viento sobre la Estepa', meta: 'Estepa Patagónica · 35mm · Luz Natural' },
-    'PJO05321.jpg': { title: 'Laguna de Aguas Turquesas', meta: 'Parque Nacional Torres del Paine · 24mm f/8' },
-    'PJO05688.jpg': { title: 'Glaciar Milenario', meta: 'Campos de Hielo Sur · 70mm f/8' },
-    'PJO06498.jpg': { title: 'Horizonte Infinito', meta: 'Desierto de Atacama · 35mm f/8 · Texturas Salinas' },
-    'PJO06132.jpg': { title: 'Roca y Oleaje Austral', meta: 'Costa del Pacífico · 24mm f/11 · Larga Exposición' },
-    'PJO05409.jpg': { title: 'Quebrada del Silencio', meta: 'Altiplano Chileno · 50mm f/5.6' },
-    'PJO05602.jpg': { title: 'Cascada Oculta', meta: 'Bosque Templado Lluvioso · 35mm f/8' },
-    'PJO05056.jpg': { title: 'Geología Ancestral', meta: 'Cordón Montañoso · 50mm f/8' },
-    'PJO04652.jpg': { title: 'Amanecer en la Meseta', meta: 'Patagonia Austral · 28mm f/4' },
-    'PJO04719.jpg': { title: 'Sombra de la Montaña', meta: 'Andes del Sur · 70mm f/4' },
-    'DSC02503.jpg': { title: 'Oasis en la Puna', meta: 'Norte Grande · 35mm f/5.6' },
-    'PJO05505.jpg': { title: 'Matorral y Escarcha', meta: 'Tierra del Fuego · 50mm f/2.8' },
-    'PJO04545.jpg': { title: 'Río de Deshielo', meta: 'Cuenca Glaciar · 24mm f/8' },
-    'PJO05251.jpg': { title: 'Valle del Viento', meta: 'Cordillera Patagónica · 35mm' },
-    'PJO06643.jpg': { title: 'Púrpura en la Salitrera', meta: 'Desierto de Atacama · 50mm f/4' },
-    'DSC06227.jpg': { title: 'Ladera de Granito', meta: 'Torres del Paine · 70mm f/5.6' },
-    'PJO05301.jpg': { title: 'Luz Rasante', meta: 'Estepa Austral · 35mm f/4' },
-    'PJO05378.jpg': { title: 'Reflejos en Lago Pehoé', meta: 'Torres del Paine · 24mm f/8' },
-    'PJO05376.jpg': { title: 'Contornos al Crepúsculo', meta: 'Patagonia · 50mm f/2.8' },
-    'PJO052632.jpg': { title: 'Morrena y Hielo', meta: 'Glaciar Grey · 35mm f/8' },
-    'PJO05282.jpg': { title: 'Sendero hacia la Cumbre', meta: 'Parque Nacional · 28mm f/5.6' },
-    'PJO05810.jpg': { title: 'Bruma Marina', meta: 'Costa Sur de Chile · 50mm f/4' },
-    'PJO04734.jpg': { title: 'Última Luz del Macizo', meta: 'Torres del Paine · 70mm f/2.8' },
-    'PJO05097.jpg': { title: 'Pedregal de Altura', meta: 'Paso Cordillerano · 35mm f/8' },
-    'PJO05066 (1).jpg': { title: 'Viento Blanco', meta: 'Alta Montaña · 50mm f/5.6' },
-    'PJO062162.jpg': { title: 'Acantilados del Océano', meta: 'Pacífico Austral · 24mm f/8' },
-    'PJO05132.jpg': { title: 'Valle Escondido', meta: 'Cordillera de los Andes · 35mm f/4' },
-    'PJO04671.jpg': { title: 'Gélido Despertar', meta: 'Patagonia · 50mm f/2.0' },
-    'PJO05319.jpg': { title: 'Nubes sobre los Cuernos', meta: 'Torres del Paine · 24mm f/8' },
-    'PJO05173.jpg': { title: 'Formaciones de Rocas', meta: 'Valle Austral · 35mm f/5.6' },
-    'PJO05180.jpg': { title: 'Tierras del Viento', meta: 'Magallanes · 28mm f/8' },
 
-    // Nature
-    'PJO00934.jpg': { title: 'Silvestre al Alba', meta: 'Parque Nacional Conguillío · 400mm f/4 · Luz Suave' },
-    'PJO09920.jpg': { title: 'Pradera Dorada', meta: 'Valle del Rahue · 135mm f/2.0 · Hora Dorada' },
-    'PJO08967.jpg': { title: 'Microcosmos', meta: 'Reserva Huilo Huilo · 90mm Macro f/2.8 · 1:1' },
-    'caracol.jpg': { title: 'Espiral en Rocío', meta: 'Selva Valdiviana · Macro 90mm · Luz Difusa' },
-    'JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.jpg': { title: 'Canto de Primavera', meta: 'Bosque Templado Lluvioso · 300mm f/4' },
-    'JIMENEZ_Patricio_Anderedieren_Foto6_Springand.jpg': { title: 'Brote y Luz', meta: 'Araucanía Andina · 90mm Macro f/2.8' },
-    'JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.jpg': { title: 'Mimetismo en la Corteza', meta: 'Macro Fotografía · f/11 · Detalle Celular' },
-    'Jimenez_Patricio_DSC_03112.jpg': { title: 'Al Acecho', meta: 'Ecosistema Austral · 400mm f/4' },
-    'JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.jpg': { title: 'Vida en los Pétalos', meta: 'Flora Nativa · Macro 100mm f/2.8' },
-    'JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.jpg': { title: 'Vuelo y Envergadura', meta: 'Humedales del Sur · 400mm f/4 · 1/2500s' },
-    'JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.jpg': { title: 'Silueta al Ocaso', meta: 'Marisma Austral · 300mm f/2.8 · Ocaso' },
-    'definitivosaltamonteenano.jpg': { title: 'Pequeño Vigilante', meta: 'Macro 90mm f/8 · 1:1 Life Size' },
+    // ==========================================
+    // LANDSCAPE (38 fotos)
+    // ==========================================
+    'images/Landscape/display/PJO05300.webp': { title: 'Sector Grey Trekking', meta: 'Torres del Paine, Chile · 80mm f/5.6' },
+    'images/Landscape/display/PJO05322.webp': { title: 'Británico lookout', meta: 'Torres del Paine, Chile · 20mm f/8' },
+    'images/Landscape/display/JIMENEZ_Patricio_Landschappen_Foto8_mistsunrise.webp': { title: 'Brandtoren', meta: 'Kalmthoutse Heide, Belgium · 600mm f/8' },
+    'images/Landscape/display/DSC03490-HDR.webp': { title: 'De Stapper Uitkijktoren', meta: 'kalmthoutse heide, Belgium ·600mm f/8' },
+    'images/Landscape/display/faro-fb33fbb3.webp': { title: 'Nieuwpoort Vuurtoren', meta: 'Nieuwpoort, Belgium · 100mm f/8' },
+    'images/Landscape/display/PJO05321.webp': { title: 'Británico lookout', meta: 'Torres del Paine, Chile · 85mm f/2.5' },
+    'images/Landscape/display/PJO05688.webp': { title: 'Ferry to Chiloé', meta: 'Aysén, Chile · 70mm f/4' },
+    'images/Landscape/display/DSC03310-HDR.webp': { title: 'Brandtoren', meta: 'Kalmthoutse Heide, Belgium · 200mm f/5.6' },
+    'images/Landscape/display/PJO06498.webp': { title: 'Salar de Uyuni', meta: 'Uyuni, Bolivia · 20mm f/4' },
+    'images/Landscape/display/PJO06132.webp': { title: 'Valle de Marte/ Valle de la Muerte', meta: 'Desierto de Atacama, Chile · 20mm f/8 ·' },
+    'images/Landscape/display/PJO05409.webp': { title: 'Base Torres Trekking', meta: 'Torres del Paine, Chile · 50mm f/5.6' },
+    'images/Landscape/display/PJO05602.webp': { title: 'Ferry to Chiloé', meta: 'Aysén, Chile · 85mm f/4' },
+    'images/Landscape/display/PJO05056.webp': { title: 'Villarrica Volcano', meta: 'Villarrica, Chile · 20mm f/1.8' },
+    'images/Landscape/display/PJO04652.webp': { title: 'Aussichtspunkt Vorderarni', meta: 'Gurtnellen, Switzerland · 28mm f/4' },
+    'images/Landscape/display/PJO04719.webp': { title: 'Franzosen-Platz', meta: 'Andermatt, Switzerland · 35mm f/4' },
+    'images/Landscape/display/DSC02503.webp': { title: 'De Nekker', meta: 'Mechelen, Belgium · 100mm f/11' },
+    'images/Landscape/display/PJO05505.webp': { title: 'Torres del Paine', meta: 'Torres del Paine, Chile · 20mm f/8' },
+    'images/Landscape/display/PJO04545.webp': { title: 'canal de la Serre', meta: 'Vibersviller, France · 135mm f/8' },
+    'images/Landscape/display/PJO05251.webp': { title: 'Grey Glacier', meta: 'Torres del Paine, Chile · 85mm f/8z' },
+    'images/Landscape/display/PJO06643.webp': { title: 'Salar de Uyuni', meta: 'Uyuni, Bolivia · 85mm f/1.4' },
+    'images/Landscape/display/DSC06227.webp': { title: 'Sint Laureinsstrand', meta: 'Middelkerke, Belgium · 100mm f/5.6' },
+    'images/Landscape/display/PJO05301.webp': { title: 'Sector Grey Trekking', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
+    'images/Landscape/display/PJO05378.webp': { title: 'Británico lookout', meta: 'Torres del Paine, Chile · 20mm f/8' },
+    'images/Landscape/display/PJO05376.webp': { title: 'Británico lookout', meta: 'Patagonia, Chile · 20mm f/8' },
+    'images/Landscape/display/PJO052632.webp': { title: 'Grey Glacier', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
+    'images/Landscape/display/PJO05282.webp': { title: 'Sector Grey Trekking', meta: 'Torres del Paine, Chile · 20mm f/16' },
+    'images/Landscape/display/PJO05334.webp': { title: 'Británico lookout', meta: 'Torres del Paine, Chile · 20mm f/8' },
+    'images/Landscape/display/PJO05810.webp': { title: 'Puerto Raúl Marín Balmaceda', meta: 'Cisnes, Chile · 50mm f/4' },
+    'images/Landscape/display/PJO04734.webp': { title: 'Tauchplatz Rütenen', meta: 'Beckenried, Switzerland · 35mm f/4' },
+    'images/Landscape/display/PJO05097.webp': { title: 'Dickson Trekking', meta: 'Torres del Paine, Chile · 85mm f/4' },
+    'images/Landscape/display/PJO05066-1.webp': { title: 'Villarrica Volcano', meta: 'Villarrica, Chile · 20mm f/16' },
+    'images/Landscape/display/PJO062162.webp': { title: 'Licancabur Volcano', meta: 'San Pedro de Atacama, Chile · 85mm f/4' },
+    'images/Landscape/display/PJO05132.webp': { title: 'Dickson Sector', meta: 'Torres del Paine, Chile · 85mm f/16' },
+    'images/Landscape/display/PJO04671.webp': { title: 'Santa Margherita', meta: 'Lugano, Switzerland · 135mm f/4' },
+    'images/Landscape/display/PJO05319.webp': { title: 'Paine Grande Trekking', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
+    'images/Landscape/display/PJO05173.webp': { title: 'Autumn in Patagonia', meta: 'Torres del Paine, Chile · 20mm f/16' },
+    'images/Landscape/display/PJO05180.webp': { title: 'Patagonia and her colours', meta: 'Torres del Paine, Chile · 20mm f/16' },
+    'images/Landscape/display/Villarica.webp': { title: 'Villarrica Volcano', meta: 'Villarrica, Chile · 50mm f/4' },
 
-    // Adventure
-    'DSC07377_-_2-f8a343cf.jpg': { title: 'Descenso Rápido', meta: 'Río Trancura, Pucón · 70-200mm f/2.8 · 1/2000s' },
-    'PJO01917.jpg': { title: 'Travesía en Cresta', meta: 'Cordillera de los Andes · 24mm f/5.6 · Expedición' },
-    'PJO04973-f6a2848a.jpg': { title: 'Línea Salvaje', meta: 'Laderas Volcánicas · 70mm f/4 · Alta Velocidad' },
-    'DSC07386-f7ad26b2.jpg': { title: 'Torbellino Blanco', meta: 'Rápido Clase V · 200mm f/2.8 · 1/2500s' },
-    'PJO06205-2.jpg': { title: 'Fuerza en la Corriente', meta: 'Río Austral · 85mm f/2.8 · 1/2000s' },
+    // ==========================================
+    // NATURE (62 fotos)
+    // ==========================================
+    'images/Nature/display/DSC05597.webp': { title: 'A free duck', meta: 'De Nekker, Belgium · 135mm f/4' },
+    'images/Nature/display/PJO06305.webp': { title: 'A beautiful LLamas', meta: 'Bolivia · 85mm f/4' },
+    'images/Nature/display/PJO02719.webp': { title: 'Sunset with a seagull', meta: 'Sint Laureinsstrand, Belgium · 600mm f/7' },
+    'images/Nature/display/PJO09863.webp': { title: 'Beautiful cow', meta: 'Robbroeck, Belgium · 600mm f/7' },
+    'images/Nature/display/DSC05535.webp': { title: 'Roses of joy for Piper', meta: 'Vrijbroekpark, Belgium · 100mm f/2' },
+    'images/Nature/display/PJO05101.webp': { title: 'A condor in the heights', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
+    'images/Nature/display/PJO00825.webp': { title: 'Small fox', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC05627.webp': { title: 'Curious little cows', meta: 'De Nekker, Belgium · 135mm f/1.8' },
+    'images/Nature/display/DSC03520.webp': { title: 'Mystical Buizer', meta: 'De Nekker, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO05575-3.webp': { title: 'Puma in Torres del Paine', meta: 'Torres del Paine, Chile · 85mm f/2.8' },
+    'images/Nature/display/caracol.webp': { title: 'Snail in its little house', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/PJO03852.webp': { title: 'Seagull in the blue hour', meta: 'Sint Laureinsstrand, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC07034.webp': { title: 'Goldenrod Crab Spider', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.webp': { title: 'A frog in its habitat', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
+    'images/Nature/display/PJO03799.webp': { title: 'Oystercatcher at sunset', meta: 'Sint Laureinsstrand, Belgium · 600mm f/8' },
+    'images/Nature/display/DSC05612.webp': { title: 'A scene of cows', meta: 'De Nekker, Belgium · 135mm f/2.8' },
+    'images/Nature/display/2021-06-1922-15-47-B-Radius8-Smoothing4.webp': { title: 'Hidden bug', meta: 'De Nekker, Belgium · 100mm f/5.6' },
+    'images/Nature/display/DSC08682.webp': { title: 'Simple beautiful bird', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC00345.webp': { title: 'Cormorant', meta: 'Hofstade, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC06112-2.webp': { title: 'A little beetle', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/definitivosaltamonteenano.webp': { title: 'Delphacidae', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/PJO09920.webp': { title: 'Bunny watching the sunset', meta: 'Robbroeck, Belgium · 200mm f/5.6' },
+    'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto6_Springand.webp': { title: 'A pair of deer', meta: 'Biezenweiden, Belgium · 600mm f/6.3' },
+    'images/Nature/display/3.webp': { title: 'Red-breasted Flycatcher', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO01954.webp': { title: 'Happy dog', meta: 'France · 85mm f/2.8' },
+    'images/Nature/display/PJO06296.webp': { title: 'Llamas in their natural habitat', meta: 'Bolivia · 85mm f/4' },
+    'images/Nature/display/DSC03711.webp': { title: 'A couple of Tufted ducks', meta: 'De Nekker, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO00934.webp': { title: 'A little European stonechat', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO00370.webp': { title: 'Morning horses', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
+    'images/Nature/display/IMAG0019.webp': { title: 'Greylag goose', meta: 'De Nekker, Belgium · 600mm f/8' },
+    'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.webp': { title: 'Fencepost jumping spider', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/PJO05149.webp': { title: 'Horse company', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
+    'images/Nature/display/Jimenez_Patricio_DSC_03112.webp': { title: 'Cute jumping spider', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
+    'images/Nature/display/PJO09283.webp': { title: 'Red-backed shrike', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC01761.webp': { title: 'Small food for a small life', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
+    'images/Nature/display/PJO08967.webp': { title: 'The white bird', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO02818.webp': { title: 'Oystercatcher reunion', meta: 'Sint Laureinsstrand, Belgium · 600mm f/7' },
+    'images/Nature/display/DSC08590.webp': { title: 'A couple of parakeets', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC01770.webp': { title: 'Macro spider', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/DSC00088.webp': { title: 'Greylag goose in a blue sky', meta: 'De Nekker, Belgium · 600mm f/8' },
+    'images/Nature/display/DSC07853-17969db0.webp': { title: 'Piper and her new rain jacket', meta: 'Vrijbroekpark, Belgium · 20mm f/1.8' },
+    'images/Nature/display/DSC03039.webp': { title: 'Red bug', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.webp': { title: 'There is life inside the flowers', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/DSC01788.webp': { title: 'Little bee', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/DSC04789.webp': { title: 'Mosquito', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/DSC06045-1b482605.webp': { title: 'Woella', meta: 'Mechelen, Belgium · 85mm f/1.4' },
+    'images/Nature/display/DSC06998.webp': { title: 'Beautiful house', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.webp': { title: 'The stork and the spring', meta: 'De Nekker, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO04035.webp': { title: 'Beach colors', meta: 'Sint Laureinsstrand, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO01504-2.webp': { title: 'Parakeet', meta: 'Vrijbroekpark, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC09699.webp': { title: 'Nature · Foto 51', meta: 'Biezenweiden, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC03123.webp': { title: 'Flower love spiders', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
+    'images/Nature/display/PJO05534.webp': { title: 'Woodpecker', meta: 'Torres del Paine, Chile · 85mm f/1.4' },
+    'images/Nature/display/PJO05843.webp': { title: 'A beautiful hummingbird', meta: 'Chiloé, Chile · 85mm f/1.4' },
+    'images/Nature/display/PJO01455.webp': { title: 'Baby cows', meta: 'Robbroeck, Belgium · 200mm f/5.6' },
+    'images/Nature/display/DSC06286-2-2.webp': { title: 'Little woodlouse', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/PJO069652.webp': { title: 'Freezing sky', meta: 'Mechelen, Belgium · 600mm f/6.3' },
+    'images/Nature/display/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.webp': { title: 'A Lapwing', meta: 'De Nekker, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO05965.webp': { title: 'Beautiful black buzzard', meta: 'De Nekker, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC06215-ca4b56a4-2500.webp': { title: 'Beach and dog', meta: 'Sint Laureinsstrand, Belgium · 100mm f/2.8' },
+    'images/Nature/display/PJO08386-2.webp': { title: 'Jupiter', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
+    'images/Nature/display/PJO09701.webp': { title: 'Snow days', meta: 'Robbroeck , Belgium · 600mm f/6.3' },
 
-    // Street
-    'PJO02812.jpg': { title: 'Contraluz Urbano', meta: 'Centro Histórico, Santiago · 35mm f/2.0 · Luz de Tarde' },
-    'PJO02840.jpg': { title: 'Transeúntes al Paso', meta: 'Cerro Alegre, Valparaíso · 50mm f/1.8 · Vida Cotidiana' },
-    'PJO05819.jpg': { title: 'Geometría Callejera', meta: 'Barrio Lastarria, Santiago · 35mm f/2.8 · Luz y Sombra' },
-    'PJO04575-d7bdd0bc.jpg': { title: 'Paso Fugaz', meta: 'Paseo Ahumada · 35mm f/2.0 · Street Photography' },
-    'PJO04622-60cc4ccb.jpg': { title: 'Diálogo Urbano', meta: 'Café de Barrio · 50mm f/1.8 · Luz Disponible' },
-    'PJO04590-176b30ca.jpg': { title: 'Reflejos en el Asfalto', meta: 'Lluvia en la Ciudad · 35mm f/2.0 · Reflejos' },
-    'DSC01032-250a524f.jpg': { title: 'La Espera', meta: 'Estación de Tren · 50mm f/2.8 · Blanco y Negro' },
-    'PJO00013.jpg': { title: 'Sombras de Tarde', meta: 'Perspectiva Urbana · 35mm f/2.0' }
+    // ==========================================
+    // ADVENTURE (5 fotos)
+    // ==========================================
+    'images/Sport/display/DSC07386-f7ad26b2.webp': { title: 'Julian Alaphilippe', meta: 'Leuven, Belgium · 20mm f/5.6' },
+    'images/Sport/display/DSC07377_-_2-f8a343cf.webp': { title: 'Centenary of the UCI Road World Championships', meta: 'Mechelen, Belgium · 20mm f/8' },
+    'images/Sport/display/PJO06205-2.webp': { title: 'Mars Valley', meta: 'San Pedro de Atacama, Chile · 85mm f/5.6' },
+    'images/Sport/display/PJO04973-f6a2848a.webp': { title: 'Final kayak', meta: 'Mechelen, Belgium · 85mm f/5.6' },
+    'images/Sport/display/PJO01917.webp': { title: 'Bickepacking', meta: 'Laon, France · 85mm f/4' },
+
+    // ==========================================
+    // STREET (22 fotos)
+    // ==========================================
+    'images/Street/display/PJO02840.webp': { title: 'A day in Brussels', meta: 'Brussels, Belgium · 35mm f/2.8' },
+    'images/Street/display/PJO04575-d7bdd0bc.webp': { title: 'Château du Haut-Barr', meta: 'Saverne, France · 20mm f/5.6' },
+    'images/Street/display/PJO02812.webp': { title: 'Unseen movements', meta: 'Brussels, Belgium · 35mm f/1.4' },
+    'images/Street/display/PJO04622-60cc4ccb.webp': { title: 'Kapellbrücke', meta: 'Lucerne, Switzerland · 135mm f/1.8' },
+    'images/Street/display/PJO04590-176b30ca.webp': { title: 'Lucerne Jesuit Church', meta: 'Lucerne, Switzerland · 35mm f/1.4' },
+    'images/Street/display/DSC01032-250a524f.webp': { title: 'De Pelikaan', meta: 'Mechelen, Belgium · 20mm f/5.6' },
+    'images/Street/display/PJO05819.webp': { title: 'Watchdog', meta: 'Castro, Chiloé · 20mm f/8' },
+    'images/Street/display/PJO00013.webp': { title: 'Sunsret', meta: 'Rotterdam, Netherlands · 35mm f/2.8' },
+    'images/Street/display/PJO05828.webp': { title: 'Stilt houses', meta: 'Castro, Chiloé · 85mm f/2.8' },
+    'images/Street/display/PJO05842.webp': { title: 'Stilt houses', meta: 'Castro, Chiloé · 35mm f/2.8' },
+    'images/Street/display/PJO09814.webp': { title: 'Cube houses', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
+    'images/Street/display/PJO09821.webp': { title: 'The white house', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
+    'images/Street/display/PJO09838.webp': { title: 'Cube houses', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
+    'images/Street/display/PJO09849.webp': { title: 'Market Hall', meta: 'Rotterdam, Netherlands · 35mm f/1.4' },
+    'images/Street/display/PJO09860.webp': { title: 'A floating restaurant', meta: 'Rotterdam, Netherlands · 35mm f/1.4' },
+    'images/Street/display/PJO09884.webp': { title: 'Fair o Carnival', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO09905.webp': { title: 'Skyview', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO09906.webp': { title: 'Skyview', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO09913.webp': { title: 'Depot Museum Boijmans Van Beuningen', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO09924.webp': { title: 'Water taxi', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO09941.webp': { title: 'Hotel New York', meta: 'Rotterdam, Netherlands · 35mm f/2' },
   };
 
   function getPhotoMetadata(url, categoryKey, photoIndex) {
     if (!url) return { title: 'Fine Art Portfolio', meta: 'Patricio Jiménez · Fotografía' };
-    const filename = url.split('/').pop().split('?')[0];
-    if (PHOTO_METADATA_MAP[filename]) {
-      return PHOTO_METADATA_MAP[filename];
+    const cleanUrl = url.split('?')[0];
+    const filename = cleanUrl.split('/').pop();
+    const stem = filename.replace(/\.[^.]+$/, '');
+
+    if (PHOTO_METADATA_MAP[cleanUrl]) return PHOTO_METADATA_MAP[cleanUrl];
+    if (PHOTO_METADATA_MAP[filename]) return PHOTO_METADATA_MAP[filename];
+
+    for (const key in PHOTO_METADATA_MAP) {
+      const keyFilename = key.split('/').pop();
+      const keyStem = keyFilename.replace(/\.[^.]+$/, '');
+      if (keyFilename === filename || keyStem === stem) {
+        return PHOTO_METADATA_MAP[key];
+      }
     }
+
     const safeIdx = String((photoIndex || 0) + 1).padStart(2, '0');
     switch (categoryKey) {
       case 'africa':
@@ -843,7 +927,7 @@
     }
   }
 
-  function updateExplorePhotoInfo(imgUrl) {
+    function updateExplorePhotoInfo(imgUrl) {
     const currentCat = continents[idx];
     if (!currentCat) return;
     const meta = getPhotoMetadata(imgUrl, currentCat.key, activePhotoIndex);
@@ -1038,6 +1122,14 @@
     opts = opts || {};
     inExploreMode = false;
     resetViewerZoom(false);
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+      try {
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+        else if (document.msExitFullscreen) document.msExitFullscreen();
+      } catch (err) {}
+    }
     if (exploreCardsIntroTimer) clearTimeout(exploreCardsIntroTimer);
     exploreCardsIntroTimer = null;
     stage.classList.remove('explore-mode', 'explore-cards-intro', 'is-zoomed');
@@ -1116,6 +1208,54 @@
     exploreZoomBtn.addEventListener('click', handleZoomToggle);
     exploreZoomBtn.addEventListener('touchend', handleZoomToggle);
   }
+
+  function toggleFullscreen(e) {
+    if (e) {
+      if (e.type === 'touchend') e.preventDefault();
+      e.stopPropagation();
+    }
+    const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+    if (!isFs) {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch(() => {});
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+      } else if (docEl.mozRequestFullScreen) {
+        docEl.mozRequestFullScreen();
+      } else if (docEl.msRequestFullscreen) {
+        docEl.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+  }
+
+  function updateFullscreenBtnState() {
+    if (!exploreFullscreenBtn) return;
+    const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+    exploreFullscreenBtn.classList.toggle('is-active', isFs);
+    const label = isFs ? 'Exit fullscreen' : 'Fullscreen';
+    exploreFullscreenBtn.setAttribute('title', label);
+    exploreFullscreenBtn.setAttribute('aria-label', label);
+  }
+
+  if (exploreFullscreenBtn) {
+    exploreFullscreenBtn.addEventListener('click', toggleFullscreen);
+    exploreFullscreenBtn.addEventListener('touchend', toggleFullscreen);
+  }
+
+  ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+    document.addEventListener(evt, updateFullscreenBtnState);
+  });
 
   const explorePrevBtn = document.getElementById('explorePrevBtn');
   const exploreNextBtn = document.getElementById('exploreNextBtn');
