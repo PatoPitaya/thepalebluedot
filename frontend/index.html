@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261001">
+<link rel="stylesheet" href="styles.css?v=20261012-faststrip">
 <link rel="preload" as="image" href="images/Inicio/poster.jpg" fetchpriority="high">
 <link rel="preload" as="image" href="images/Landscape/display/PJO05334.webp" type="image/webp">
 <script type="application/ld+json">
@@ -96,7 +96,7 @@
   <!-- ================= SECTION 1: HERO (HOME) ================= -->
   <section class="hero-section" id="heroSection">
     <div class="hero-video-layer" id="heroVideoLayer">
-      <video class="hero-video" id="heroBgVideo" playsinline muted preload="auto"
+      <video class="hero-video" id="heroBgVideo" playsinline webkit-playsinline muted preload="auto"
              aria-label="Cinematic introduction — fine art photography by Patricio Jiménez"
              poster="images/Inicio/poster.jpg">
         <source src="images/Inicio/Inicio video.mp4" type="video/mp4">
@@ -127,14 +127,26 @@
   <!-- ================= SECTION 2: GALLERY ================= -->
   <section class="gallery-section" id="gallerySection">
 
-    <!-- Spine Index (01 02 03 04) -->
-    <div class="spine" id="gallerySpine">
-      <div class="spine-line"></div>
-      <button class="spine-item active" data-target="africa"><span class="num">01</span><span class="dot"></span></button>
-      <button class="spine-item" data-target="asia"><span class="num">02</span><span class="dot"></span></button>
-      <button class="spine-item" data-target="australia"><span class="num">03</span><span class="dot"></span></button>
-      <button class="spine-item" data-target="street"><span class="num">04</span><span class="dot"></span></button>
-    </div>
+    <!-- Spine Navigation (Micro-Etiquetas de Colección) -->
+    <nav class="spine" id="gallerySpine" aria-label="Colecciones de fotografía">
+      <div class="spine-line">
+        <div class="spine-fill" id="spineFill"></div>
+      </div>
+      <div class="spine-items">
+        <button class="spine-item active" data-target="africa" aria-label="Colección Landscape">
+          <span class="label-text"><span class="abbr">L</span><span class="full">andscape</span></span>
+        </button>
+        <button class="spine-item" data-target="asia" aria-label="Colección Nature">
+          <span class="label-text"><span class="abbr">N</span><span class="full">ature</span></span>
+        </button>
+        <button class="spine-item" data-target="australia" aria-label="Colección Adventure">
+          <span class="label-text"><span class="abbr">A</span><span class="full">dventure</span></span>
+        </button>
+        <button class="spine-item" data-target="street" aria-label="Colección Street">
+          <span class="label-text"><span class="abbr">S</span><span class="full">treet</span></span>
+        </button>
+      </div>
+    </nav>
 
     <!-- Gallery Content Panels -->
     <div class="gallery-content" id="galleryContent">
@@ -142,7 +154,7 @@
         <div class="panel is-active" data-panel="africa">
           <div class="panel-body">
             <h1 class="title"><span class="title-word">Landscape</span></h1>
-            <p class="desc">Landscapes that unfold slowly, as if waiting to be seen. Natural light, silence, and an atmosphere that invites you to walk without hurry, letting the place speak first.</p>
+            <p class="desc">Natural light, silence, and an atmosphere that invites you to walk without hurry, letting the place speak first.</p>
             <button class="explore" type="button" data-explore="africa">Explore
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
@@ -151,7 +163,7 @@
         <div class="panel" data-panel="asia">
           <div class="panel-body">
             <h1 class="title"><span class="title-word">Nature</span></h1>
-            <p class="desc">Textures that only appear when you stop moving: dense vegetation, shapes that grow without asking permission. Here, nature isn't the background, it's the protagonist.</p>
+            <p class="desc">Dense vegetation, shapes that grow without asking permission. Here, nature isn't the background, it's the protagonist.</p>
             <button class="explore" type="button" data-explore="asia">Explore
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
@@ -160,7 +172,7 @@
         <div class="panel" data-panel="australia">
           <div class="panel-body">
             <h1 class="title"><span class="title-word">Adventure</span></h1>
-            <p class="desc">Every mile earned, every summit chosen, the weight of the climb, the rhythm of the ride. Stories written in motion, where effort and landscape move as one.</p>
+            <p class="desc">Stories written in motion, where effort and landscape move as one.</p>
             <button class="explore" type="button" data-explore="australia">Explore
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
@@ -169,7 +181,7 @@
         <div class="panel" data-panel="street">
           <div class="panel-body">
             <h1 class="title"><span class="title-word">Street</span></h1>
-            <p class="desc">Gestures that go unnoticed by most, yet tell a whole story. The street as an everyday stage where life happens without performing for anyone.</p>
+            <p class="desc">The street as an everyday stage where life happens without performing for anyone.</p>
             <button class="explore" type="button" data-explore="street">Explore
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
@@ -178,24 +190,38 @@
       </div>
     </div>
 
-    <!-- Destination Card Stack (Side Preview) -->
-    <div class="cardzone show" id="cardzone">
-      <div class="dcard b" id="cardB" role="button" tabindex="0" aria-label="Explore Valle de la Luna — Atacama" style="background-image:url('images/Landscape/thumbs/PJO05300.webp')">
-        <div class="meta"><p class="place">Valle de la Luna — Atacama</p></div>
+    <!-- Series Preview Cards (Side Contact Strip) -->
+    <div class="cardzone show" id="cardzone" aria-label="Series preview works">
+      <div class="dcard" id="cardA" role="button" tabindex="0" aria-label="Explore Británico Lookout — Torres del Paine">
+        <div class="dcard-thumb" style="background-image:url('images/Landscape/thumbs/PJO05334.webp')"></div>
+        <div class="meta">
+          <p class="place">Británico Lookout</p>
+          <span class="sub">Torres del Paine</span>
+        </div>
       </div>
-      <div class="dcard a" id="cardA" role="button" tabindex="0" aria-label="Explore Torres del Paine — Patagonia" style="background-image:url('images/Landscape/thumbs/PJO05334.webp')">
-        <div class="meta"><p class="place">Torres del Paine — Patagonia</p></div>
+      <div class="dcard" id="cardB" role="button" tabindex="0" aria-label="Explore Sector Grey Trekking — Torres del Paine">
+        <div class="dcard-thumb" style="background-image:url('images/Landscape/thumbs/PJO05300.webp')"></div>
+        <div class="meta">
+          <p class="place">Sector Grey Trekking</p>
+          <span class="sub">Torres del Paine</span>
+        </div>
       </div>
-      <div class="dcard c" id="cardC" role="button" tabindex="0" aria-label="Explore Faro Austral — Tierra del Fuego" style="background-image:url('images/Landscape/thumbs/faro-fb33fbb3.webp')">
-        <div class="meta"><p class="place">Faro Austral — Tierra del Fuego</p></div>
+      <div class="dcard" id="cardC" role="button" tabindex="0" aria-label="Explore Nieuwpoort Lighthouse — Belgium">
+        <div class="dcard-thumb" style="background-image:url('images/Landscape/thumbs/faro-fb33fbb3.webp')"></div>
+        <div class="meta">
+          <p class="place">Nieuwpoort Lighthouse</p>
+          <span class="sub">Belgium</span>
+        </div>
       </div>
     </div>
 
     <!-- Gallery Bottom Bar -->
-    <div class="bottombar" id="bottomBar" role="region" aria-label="Gallery category navigation">
-      <!-- Desktop Counter -->
-      <div class="pagecount">
-        <b id="pageNow">01</b><span class="count-divider">&nbsp;/&nbsp;</span><span class="count-total">04</span>
+    <div class="bottombar" id="bottomBar" role="region" aria-label="Gallery artwork details">
+      <!-- Fine Art Photograph Metadata (Bottom Left) -->
+      <div class="gallery-photo-info is-active" id="galleryPhotoInfo">
+        <span class="photo-info-title" id="galleryPhotoTitle">Británico Lookout</span>
+        <span class="photo-info-sep">—</span>
+        <span class="photo-info-meta" id="galleryPhotoMeta">Torres del Paine, Chile · 20mm f/8</span>
       </div>
 
       <!-- Mobile Minimalist Indicator: Number 1 on top, vertical line, Number 4 at bottom -->
@@ -207,9 +233,6 @@
         </div>
         <span class="rail-num rail-btm" id="railNumBtm">4</span>
       </div>
-
-      <!-- Desktop Track -->
-      <div class="track"><div class="track-fill" id="trackFill"></div></div>
     </div>
 
     <!-- ================= EXPLORATION MODE INTERFACE ================= -->
@@ -220,8 +243,8 @@
         <span class="explore-photo-counter" id="explorePhotoCounter">01 / 29</span>
       </div>
       <div class="explore-top-center" id="exploreTopCenter">
-        <span class="explore-photo-title" id="explorePhotoTitle">Torres del Paine — Patagonia</span>
-        <span class="explore-photo-meta" id="explorePhotoMeta">Sony α7R IV · 24mm · f/8 · 1/250s · ISO 100</span>
+        <span class="explore-photo-title" id="explorePhotoTitle">Británico Lookout</span>
+        <span class="explore-photo-meta" id="explorePhotoMeta">Torres del Paine, Chile · 20mm f/8</span>
       </div>
       <div class="explore-top-right">
         <button class="explore-fullscreen-btn" id="exploreFullscreenBtn" type="button" aria-label="Fullscreen" title="Toggle fullscreen">
@@ -266,7 +289,13 @@
 
     <!-- Explore Bottom Thumbnails Track -->
     <div class="explore-cards-wrap" id="exploreCardsWrap">
+      <button class="explore-strip-arrow prev is-hidden" id="exploreStripPrev" type="button" aria-label="Desplazar miniaturas hacia la izquierda" title="Desplazar miniaturas hacia la izquierda">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
       <div class="explore-cards-track" id="exploreCardsTrack"></div>
+      <button class="explore-strip-arrow next" id="exploreStripNext" type="button" aria-label="Desplazar miniaturas hacia la derecha" title="Desplazar miniaturas hacia la derecha">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
     </div>
 
   </section>
@@ -303,7 +332,7 @@
             <textarea class="form-textarea" id="contactMessage" name="message" placeholder="How can I help you?" aria-label="How can I help you?" maxlength="4000" required></textarea>
           </div>
           <div class="form-bottom-row">
-            <button class="form-btn" id="contactSubmitBtn" type="submit">Send Message</button>
+            <button class="form-btn" id="contactSubmitBtn" type="submit">Send a message</button>
             <div class="form-feedback" id="contactFeedback" role="status" aria-live="polite"></div>
           </div>
         </form>
@@ -350,6 +379,6 @@
 
 </div>
 
-<script src="app.js?v=20261001d" defer></script>
+<script src="app.js?v=20261012-faststrip" defer></script>
 </body>
 </html>

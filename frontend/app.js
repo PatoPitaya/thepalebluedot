@@ -4,9 +4,9 @@
       key:'africa', name:'Landscape', accent:'#D4884A', bgTone:'#181208', eyebrow:'Landscape',
       hero:'images/Landscape/PJO05334.jpg',
       cards:[
-        {img:'images/Landscape/PJO05334.jpg',    place:'Torres del Paine — Patagonia'},
-        {img:'images/Landscape/PJO05300.jpg',    place:'Valle de la Luna — Atacama'},
-        {img:'images/Landscape/faro-fb33fbb3.jpg', place:'Faro Austral — Tierra del Fuego'}
+        {img:'images/Landscape/PJO05334.jpg',    place:'Británico Lookout — Torres del Paine'},
+        {img:'images/Landscape/PJO05300.jpg',    place:'Sector Grey Trekking — Torres del Paine'},
+        {img:'images/Landscape/faro-fb33fbb3.jpg', place:'Nieuwpoort Lighthouse — Belgium'}
       ],
       all:[
         'images/Landscape/PJO05300.jpg',
@@ -53,9 +53,9 @@
       key:'asia', name:'Nature', accent:'#7BA05B', bgTone:'#111a10', eyebrow:'Nature',
       hero:'images/Nature/PJO00934.jpg',
       cards:[
-        {img:'images/Nature/PJO00934.jpg',       place:'Silvestre al Alba — Araucanía'},
-        {img:'images/Nature/PJO09920.jpg',        place:'Pradera Dorada — Los Lagos'},
-        {img:'images/Nature/PJO08967.jpg',        place:'Microcosmos — Selva Valdiviana'}
+        {img:'images/Nature/PJO00934.jpg',       place:'European Stonechat — Robbroeck'},
+        {img:'images/Nature/PJO09920.jpg',        place:'Bunny at Sunset — Robbroeck'},
+        {img:'images/Nature/PJO08967.jpg',        place:'The White Bird — Robbroeck'}
       ],
       all:[
         'images/Nature/DSC05597.jpg',
@@ -126,9 +126,9 @@
       key:'australia', name:'Adventure', accent:'#6E9AB0', bgTone:'#0e161e', eyebrow:'Adventure',
       hero:'images/Sport/DSC07377_-_2-f8a343cf.jpg',
       cards:[
-        {img:'images/Sport/DSC07377_-_2-f8a343cf.jpg', place:'Descenso Rápido — Río Trancura'},
-        {img:'images/Sport/PJO01917.jpg',            place:'Travesía en Cresta — Cordillera de los Andes'},
-        {img:'images/Sport/PJO04973-f6a2848a.jpg',   place:'Línea Salvaje — Pucón'}
+        {img:'images/Sport/DSC07377_-_2-f8a343cf.jpg', place:'UCI World Championships — Mechelen'},
+        {img:'images/Sport/PJO01917.jpg',            place:'Bikepacking — Laon, France'},
+        {img:'images/Sport/PJO04973-f6a2848a.jpg',   place:'Kayak on the Dyle — Mechelen'}
       ],
       all:[
         'images/Sport/DSC07386-f7ad26b2.jpg',
@@ -142,9 +142,9 @@
       key:'street', name:'Street', accent:'#A0785A', bgTone:'#17120e', eyebrow:'Street',
       hero:'images/Street/PJO02812.jpg',
       cards:[
-        {img:'images/Street/PJO02812.jpg',           place:'Contraluz Urbano — Santiago'},
-        {img:'images/Street/PJO02840.jpg',           place:'Transeúntes — Valparaíso'},
-        {img:'images/Street/PJO05819.jpg',           place:'Geometría Callejera — Barrio Lastarria'}
+        {img:'images/Street/PJO02812.jpg',           place:'Unseen Movements — Brussels'},
+        {img:'images/Street/PJO02840.jpg',           place:'A Day in Brussels — Belgium'},
+        {img:'images/Street/PJO05819.jpg',           place:'Watchdog — Castro, Chiloé'}
       ],
       all:[
         'images/Street/PJO02840.jpg',
@@ -204,7 +204,7 @@
   const CARD_SWAP_DELAY = 60;
   const GALLERY_DRIFT_MS = 28000;
   let galleryDriftStartedAt = 0;
-  const AUTOPLAY_MS = 12000;
+  const AUTOPLAY_MS = 10000;
 
   const root = document.documentElement;
   const stage = document.getElementById('stage');
@@ -219,6 +219,10 @@
   const cardB = document.getElementById('cardB');
   const cardC = document.getElementById('cardC');
   const cardzone = document.getElementById('cardzone');
+  const spineFill = document.getElementById('spineFill');
+  const galleryPhotoInfo = document.getElementById('galleryPhotoInfo');
+  const galleryPhotoTitle = document.getElementById('galleryPhotoTitle');
+  const galleryPhotoMeta = document.getElementById('galleryPhotoMeta');
   const pageNow = document.getElementById('pageNow');
   const trackFill = document.getElementById('trackFill');
   const mobileRail = document.getElementById('mobileRail');
@@ -231,7 +235,11 @@
   const navItems = document.querySelectorAll('.nav-item');
 
   // Explore Elements (Dual Buffer)
+  const exploreTopBar = document.getElementById('exploreTopBar');
+  const exploreTopCenter = document.getElementById('exploreTopCenter');
   const exploreCardsTrack = document.getElementById('exploreCardsTrack');
+  const exploreStripPrev = document.getElementById('exploreStripPrev');
+  const exploreStripNext = document.getElementById('exploreStripNext');
   const exploreCatBadge = document.getElementById('exploreCatBadge');
   const explorePhotoCounter = document.getElementById('explorePhotoCounter');
   const explorePhotoTitle = document.getElementById('explorePhotoTitle');
@@ -247,39 +255,17 @@
 
   const ASSET_VERSION = '20260923-4k';
 
-  // Ã¢â€â‚¬Ã¢â€â‚¬ Video first-frame poster Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
-  // Capture the first visible frame of the hero video into a canvas blob and
-  // set it as the poster so there is NO black/empty flash when the page loads.
-  (function initVideoPoster() {
-    if (!heroBgVideo) return;
-
-    let posterSet = false;
-    const setFirstFrame = () => {
-      if (posterSet) return;
-      if (heroBgVideo.readyState < 2) return; // HAVE_CURRENT_DATA not yet
-      try {
-        const canvas = document.createElement('canvas');
-        canvas.width  = heroBgVideo.videoWidth  || 1920;
-        canvas.height = heroBgVideo.videoHeight || 1080;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(heroBgVideo, 0, 0, canvas.width, canvas.height);
-        canvas.toBlob((blob) => {
-          if (!blob || posterSet) return;
-          posterSet = true;
-          const url = URL.createObjectURL(blob);
-          heroBgVideo.poster = url;
-        }, 'image/jpeg', 0.85);
-      } catch (e) {
-        // Cross-origin or security error fallback
-      }
-    };
-
-    heroBgVideo.addEventListener('loadeddata', setFirstFrame, { once: true });
-    heroBgVideo.addEventListener('seeked', setFirstFrame, { once: true });
-
-    // If the video is already ready (cached), capture immediately
-    if (heroBgVideo.readyState >= 2) setFirstFrame();
-  })();
+  // Hero video pre-warming & optimization
+  if (heroBgVideo) {
+    heroBgVideo.muted = true;
+    heroBgVideo.defaultMuted = true;
+    heroBgVideo.playsInline = true;
+    heroBgVideo.setAttribute('playsinline', '');
+    heroBgVideo.setAttribute('webkit-playsinline', '');
+    try {
+      heroBgVideo.load();
+    } catch (e) {}
+  }
 
   function preloadImage(url) {
     if (!url || imgMemoryCache.has(url)) return;
@@ -355,6 +341,7 @@
       outgoingImg.classList.add('prev');
 
       currentViewerSlot = nextSlot;
+      updateMobileExplorePillPosition(incomingImg);
     };
 
     if (imgMemoryCache.has(fullUrl) && imgMemoryCache.get(fullUrl).complete && imgMemoryCache.get(fullUrl).naturalWidth > 0) {
@@ -477,7 +464,7 @@
       if (typeof warpEndTimer !== 'undefined' && warpEndTimer) clearTimeout(warpEndTimer);
       root.style.setProperty('--accent', '#E8935B');
       root.style.setProperty('--bg-tone', '#0e0c0b');
-      if (timer) clearInterval(timer);
+      stopAutoplay();
       try {
         if (heroBgVideo) {
           heroBgVideo.pause();
@@ -499,7 +486,7 @@
       if (typeof clearRampTimers === 'function') clearRampTimers();
       if (typeof warpTimer !== 'undefined' && warpTimer) clearTimeout(warpTimer);
       if (typeof warpEndTimer !== 'undefined' && warpEndTimer) clearTimeout(warpEndTimer);
-      if (timer) clearInterval(timer);
+      stopAutoplay();
       root.style.setProperty('--accent', '#E8935B');
       root.style.setProperty('--bg-tone', '#14110f');
       setCinematicBackground('images/contact/PJO05448.jpg');
@@ -688,20 +675,45 @@
       cardzone.classList.remove('show');
       cardSwapTimer = window.setTimeout(() => {
         if(thisRender !== renderToken) return;
-        cardA.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[0].img)}')`;
-        cardA.querySelector('.place').textContent = c.cards[0].place;
-        cardB.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[1].img)}')`;
-        cardB.querySelector('.place').textContent = c.cards[1].place;
-        cardC.style.backgroundImage = `url('${thumbnailImageUrl(c.cards[2] ? c.cards[2].img : c.cards[0].img)}')`;
-        cardC.querySelector('.place').textContent = c.cards[2] ? c.cards[2].place : c.cards[0].place;
+        function updateCardContent(cardEl, cardData) {
+          if (!cardEl || !cardData) return;
+          const thumb = cardEl.querySelector('.dcard-thumb') || cardEl;
+          thumb.style.backgroundImage = `url('${thumbnailImageUrl(cardData.img)}')`;
+          const rawPlace = cardData.place || '';
+          const parts = rawPlace.split(' — ');
+          const title = parts[0] || rawPlace;
+          const sub = parts[1] || '';
+          const placeEl = cardEl.querySelector('.place');
+          const subEl = cardEl.querySelector('.sub');
+          if (placeEl) placeEl.textContent = title;
+          if (subEl) subEl.textContent = sub;
+          cardEl.setAttribute('aria-label', `Explore ${rawPlace}`);
+        }
+        updateCardContent(cardA, c.cards[0]);
+        updateCardContent(cardB, c.cards[1]);
+        updateCardContent(cardC, c.cards[2] || c.cards[0]);
         cardzone.classList.add('show');
       }, CARD_SWAP_DELAY);
     }
 
+    // Update bottom-left fine art photograph information
+    if (galleryPhotoInfo) {
+      const heroMeta = getPhotoMetadata(c.hero, c.key, 0);
+      galleryPhotoInfo.classList.remove('is-active');
+      window.setTimeout(() => {
+        if (thisRender !== renderToken) return;
+        if (galleryPhotoTitle) galleryPhotoTitle.textContent = heroMeta.title;
+        if (galleryPhotoMeta) galleryPhotoMeta.textContent = heroMeta.meta;
+        galleryPhotoInfo.classList.add('is-active');
+      }, 120);
+    }
+
     if (pageNow) pageNow.textContent = String(idx + 1).padStart(2, '0');
-    const fillPercent = ((idx + 1) / continents.length * 100) + '%';
-    trackFill.style.width = fillPercent;
-    trackFill.style.height = fillPercent;
+    if (trackFill) {
+      const fillPercent = ((idx + 1) / continents.length * 100) + '%';
+      trackFill.style.width = fillPercent;
+      trackFill.style.height = fillPercent;
+    }
 
     if (railNumTop && railNumBtm && railFill && railPip) {
       railNumTop.classList.toggle('active', idx === 0);
@@ -724,11 +736,61 @@
     window.setTimeout(() => { wheelLock = false; }, 380);
   }
 
-  function restartAutoplay(){
-    if(currentView !== 'gallery' || inExploreMode) return;
-    if(timer) clearInterval(timer);
-    timer = window.setInterval(() => go(idx + 1), AUTOPLAY_MS);
+  let autoplayTimer = null;
+
+  function stopAutoplay() {
+    if (autoplayTimer) {
+      window.clearTimeout(autoplayTimer);
+      autoplayTimer = null;
+    }
+    if (timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+    if (spineFill) {
+      spineFill.style.transition = 'none';
+      spineFill.style.transform = 'scaleY(0)';
+    }
   }
+
+  function restartAutoplay() {
+    if (currentView !== 'gallery' || inExploreMode) {
+      stopAutoplay();
+      return;
+    }
+    if (autoplayTimer) {
+      window.clearTimeout(autoplayTimer);
+      autoplayTimer = null;
+    }
+    if (timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+
+    if (spineFill) {
+      spineFill.style.transition = 'none';
+      spineFill.style.transform = 'scaleY(0)';
+      void spineFill.offsetWidth; // Force reflow
+      spineFill.style.transition = `transform ${AUTOPLAY_MS}ms linear`;
+      spineFill.style.transform = 'scaleY(1)';
+    }
+
+    autoplayTimer = window.setTimeout(() => {
+      if (currentView === 'gallery' && !inExploreMode) {
+        go(idx + 1);
+      }
+    }, AUTOPLAY_MS);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoplay();
+    } else {
+      if (currentView === 'gallery' && !inExploreMode) {
+        restartAutoplay();
+      }
+    }
+  });
 
 
   
@@ -738,37 +800,37 @@
   const PHOTO_METADATA_MAP = {
 
     // ==========================================
-    // LANDSCAPE (38 fotos)
+    // LANDSCAPE (38 photos)
     // ==========================================
     'images/Landscape/display/PJO05300.webp': { title: 'Sector Grey Trekking', meta: 'Torres del Paine, Chile · 80mm f/5.6' },
-    'images/Landscape/display/PJO05322.webp': { title: 'Británico lookout', meta: 'Torres del Paine, Chile · 20mm f/8' },
-    'images/Landscape/display/JIMENEZ_Patricio_Landschappen_Foto8_mistsunrise.webp': { title: 'Brandtoren', meta: 'Kalmthoutse Heide, Belgium · 600mm f/8' },
-    'images/Landscape/display/DSC03490-HDR.webp': { title: 'De Stapper Uitkijktoren', meta: 'kalmthoutse heide, Belgium ·600mm f/8' },
-    'images/Landscape/display/faro-fb33fbb3.webp': { title: 'Nieuwpoort Vuurtoren', meta: 'Nieuwpoort, Belgium · 100mm f/8' },
-    'images/Landscape/display/PJO05321.webp': { title: 'Británico lookout', meta: 'Torres del Paine, Chile · 85mm f/2.5' },
-    'images/Landscape/display/PJO05688.webp': { title: 'Ferry to Chiloé', meta: 'Aysén, Chile · 70mm f/4' },
-    'images/Landscape/display/DSC03310-HDR.webp': { title: 'Brandtoren', meta: 'Kalmthoutse Heide, Belgium · 200mm f/5.6' },
+    'images/Landscape/display/PJO05322.webp': { title: 'Británico Lookout', meta: 'Torres del Paine, Chile · 20mm f/8' },
+    'images/Landscape/display/JIMENEZ_Patricio_Landschappen_Foto8_mistsunrise.webp': { title: 'Brandtoren Watchtower', meta: 'Kalmthoutse Heide, Belgium · 600mm f/8' },
+    'images/Landscape/display/DSC03490-HDR.webp': { title: 'De Stapper Observation Tower', meta: 'Kalmthoutse Heide, Belgium · 600mm f/8' },
+    'images/Landscape/display/faro-fb33fbb3.webp': { title: 'Nieuwpoort Lighthouse', meta: 'Nieuwpoort, Belgium · 100mm f/8' },
+    'images/Landscape/display/PJO05321.webp': { title: 'Británico Lookout', meta: 'Torres del Paine, Chile · 85mm f/2.5' },
+    'images/Landscape/display/PJO05688.webp': { title: 'Ferry to Chiloé', meta: 'Aysén, Chile · 80mm f/4' },
+    'images/Landscape/display/DSC03310-HDR.webp': { title: 'Brandtoren Watchtower', meta: 'Kalmthoutse Heide, Belgium · 200mm f/5.6' },
     'images/Landscape/display/PJO06498.webp': { title: 'Salar de Uyuni', meta: 'Uyuni, Bolivia · 20mm f/4' },
-    'images/Landscape/display/PJO06132.webp': { title: 'Valle de Marte/ Valle de la Muerte', meta: 'Desierto de Atacama, Chile · 20mm f/8 ·' },
-    'images/Landscape/display/PJO05409.webp': { title: 'Base Torres Trekking', meta: 'Torres del Paine, Chile · 50mm f/5.6' },
+    'images/Landscape/display/PJO06132.webp': { title: 'Valley of Mars / Death Valley', meta: 'San Pedro de Atacama, Chile · 20mm f/8' },
+    'images/Landscape/display/PJO05409.webp': { title: 'Base Torres Trekking', meta: 'Torres del Paine, Chile · 20mm f/1.8' },
     'images/Landscape/display/PJO05602.webp': { title: 'Ferry to Chiloé', meta: 'Aysén, Chile · 85mm f/4' },
     'images/Landscape/display/PJO05056.webp': { title: 'Villarrica Volcano', meta: 'Villarrica, Chile · 20mm f/1.8' },
-    'images/Landscape/display/PJO04652.webp': { title: 'Aussichtspunkt Vorderarni', meta: 'Gurtnellen, Switzerland · 28mm f/4' },
+    'images/Landscape/display/PJO04652.webp': { title: 'Vorderarni', meta: 'Gurtnellen, Switzerland · 135mm f/2' },
     'images/Landscape/display/PJO04719.webp': { title: 'Franzosen-Platz', meta: 'Andermatt, Switzerland · 35mm f/4' },
     'images/Landscape/display/DSC02503.webp': { title: 'De Nekker', meta: 'Mechelen, Belgium · 100mm f/11' },
     'images/Landscape/display/PJO05505.webp': { title: 'Torres del Paine', meta: 'Torres del Paine, Chile · 20mm f/8' },
-    'images/Landscape/display/PJO04545.webp': { title: 'canal de la Serre', meta: 'Vibersviller, France · 135mm f/8' },
-    'images/Landscape/display/PJO05251.webp': { title: 'Grey Glacier', meta: 'Torres del Paine, Chile · 85mm f/8z' },
+    'images/Landscape/display/PJO04545.webp': { title: 'Canal de la Serre', meta: 'Vibersviller, France · 135mm f/8' },
+    'images/Landscape/display/PJO05251.webp': { title: 'Grey Glacier', meta: 'Torres del Paine, Chile · 85mm f/8' },
     'images/Landscape/display/PJO06643.webp': { title: 'Salar de Uyuni', meta: 'Uyuni, Bolivia · 85mm f/1.4' },
-    'images/Landscape/display/DSC06227.webp': { title: 'Sint Laureinsstrand', meta: 'Middelkerke, Belgium · 100mm f/5.6' },
+    'images/Landscape/display/DSC06227.webp': { title: 'Sint Laureins Beach', meta: 'Middelkerke, Belgium · 100mm f/5.6' },
     'images/Landscape/display/PJO05301.webp': { title: 'Sector Grey Trekking', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
-    'images/Landscape/display/PJO05378.webp': { title: 'Británico lookout', meta: 'Torres del Paine, Chile · 20mm f/8' },
-    'images/Landscape/display/PJO05376.webp': { title: 'Británico lookout', meta: 'Patagonia, Chile · 20mm f/8' },
+    'images/Landscape/display/PJO05378.webp': { title: 'Británico Lookout', meta: 'Torres del Paine, Chile · 20mm f/8' },
+    'images/Landscape/display/PJO05376.webp': { title: 'Británico Lookout', meta: 'Patagonia, Chile · 20mm f/8' },
     'images/Landscape/display/PJO052632.webp': { title: 'Grey Glacier', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
     'images/Landscape/display/PJO05282.webp': { title: 'Sector Grey Trekking', meta: 'Torres del Paine, Chile · 20mm f/16' },
-    'images/Landscape/display/PJO05334.webp': { title: 'Británico lookout', meta: 'Torres del Paine, Chile · 20mm f/8' },
-    'images/Landscape/display/PJO05810.webp': { title: 'Puerto Raúl Marín Balmaceda', meta: 'Cisnes, Chile · 50mm f/4' },
-    'images/Landscape/display/PJO04734.webp': { title: 'Tauchplatz Rütenen', meta: 'Beckenried, Switzerland · 35mm f/4' },
+    'images/Landscape/display/PJO05334.webp': { title: 'Británico Lookout', meta: 'Torres del Paine, Chile · 20mm f/8' },
+    'images/Landscape/display/PJO05810.webp': { title: 'Puerto Raúl Marín Balmaceda', meta: 'Cisnes, Chile · 20mm f/4' },
+    'images/Landscape/display/PJO04734.webp': { title: 'Rütenen Dive Site', meta: 'Beckenried, Switzerland · 35mm f/4' },
     'images/Landscape/display/PJO05097.webp': { title: 'Dickson Trekking', meta: 'Torres del Paine, Chile · 85mm f/4' },
     'images/Landscape/display/PJO05066-1.webp': { title: 'Villarrica Volcano', meta: 'Villarrica, Chile · 20mm f/16' },
     'images/Landscape/display/PJO062162.webp': { title: 'Licancabur Volcano', meta: 'San Pedro de Atacama, Chile · 85mm f/4' },
@@ -776,112 +838,114 @@
     'images/Landscape/display/PJO04671.webp': { title: 'Santa Margherita', meta: 'Lugano, Switzerland · 135mm f/4' },
     'images/Landscape/display/PJO05319.webp': { title: 'Paine Grande Trekking', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
     'images/Landscape/display/PJO05173.webp': { title: 'Autumn in Patagonia', meta: 'Torres del Paine, Chile · 20mm f/16' },
-    'images/Landscape/display/PJO05180.webp': { title: 'Patagonia and her colours', meta: 'Torres del Paine, Chile · 20mm f/16' },
-    'images/Landscape/display/Villarica.webp': { title: 'Villarrica Volcano', meta: 'Villarrica, Chile · 50mm f/4' },
+    'images/Landscape/display/PJO05180.webp': { title: 'Patagonia Colors', meta: 'Torres del Paine, Chile · 20mm f/16' },
+    'images/Landscape/display/Villarica.webp': { title: 'Villarrica Volcano', meta: 'Villarrica, Chile · 35mm f/4' },
 
     // ==========================================
-    // NATURE (62 fotos)
+    // NATURE (62 photos)
     // ==========================================
-    'images/Nature/display/DSC05597.webp': { title: 'A free duck', meta: 'De Nekker, Belgium · 135mm f/4' },
-    'images/Nature/display/PJO06305.webp': { title: 'A beautiful LLamas', meta: 'Bolivia · 85mm f/4' },
-    'images/Nature/display/PJO02719.webp': { title: 'Sunset with a seagull', meta: 'Sint Laureinsstrand, Belgium · 600mm f/7' },
-    'images/Nature/display/PJO09863.webp': { title: 'Beautiful cow', meta: 'Robbroeck, Belgium · 600mm f/7' },
-    'images/Nature/display/DSC05535.webp': { title: 'Roses of joy for Piper', meta: 'Vrijbroekpark, Belgium · 100mm f/2' },
-    'images/Nature/display/PJO05101.webp': { title: 'A condor in the heights', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
-    'images/Nature/display/PJO00825.webp': { title: 'Small fox', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
-    'images/Nature/display/DSC05627.webp': { title: 'Curious little cows', meta: 'De Nekker, Belgium · 135mm f/1.8' },
-    'images/Nature/display/DSC03520.webp': { title: 'Mystical Buizer', meta: 'De Nekker, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC05597.webp': { title: 'A Free Duck', meta: 'De Nekker, Belgium · 135mm f/4' },
+    'images/Nature/display/PJO06305.webp': { title: 'Beautiful Llamas', meta: 'Bolivia · 85mm f/4' },
+    'images/Nature/display/PJO02719.webp': { title: 'Sunset with a Seagull', meta: 'Sint Laureins Beach, Belgium · 600mm f/7' },
+    'images/Nature/display/PJO09863.webp': { title: 'Grazing Cow', meta: 'Robbroeck, Belgium · 600mm f/7' },
+    'images/Nature/display/DSC05535.webp': { title: 'Roses of Joy for Piper', meta: 'Vrijbroekpark, Belgium · 100mm f/2' },
+    'images/Nature/display/PJO05101.webp': { title: 'Condor in Flight', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
+    'images/Nature/display/PJO00825.webp': { title: 'Little Fox', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC05627.webp': { title: 'Curious Cows', meta: 'De Nekker, Belgium · 135mm f/1.8' },
+    'images/Nature/display/DSC03520.webp': { title: 'Mystical Buzzard', meta: 'De Nekker, Belgium · 600mm f/6.3' },
     'images/Nature/display/PJO05575-3.webp': { title: 'Puma in Torres del Paine', meta: 'Torres del Paine, Chile · 85mm f/2.8' },
-    'images/Nature/display/caracol.webp': { title: 'Snail in its little house', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
-    'images/Nature/display/PJO03852.webp': { title: 'Seagull in the blue hour', meta: 'Sint Laureinsstrand, Belgium · 600mm f/6.3' },
+    'images/Nature/display/caracol.webp': { title: 'Snail on the Move', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/PJO03852.webp': { title: 'Seagull in the Blue Hour', meta: 'Sint Laureins Beach, Belgium · 600mm f/6.3' },
     'images/Nature/display/DSC07034.webp': { title: 'Goldenrod Crab Spider', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
-    'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.webp': { title: 'A frog in its habitat', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
-    'images/Nature/display/PJO03799.webp': { title: 'Oystercatcher at sunset', meta: 'Sint Laureinsstrand, Belgium · 600mm f/8' },
-    'images/Nature/display/DSC05612.webp': { title: 'A scene of cows', meta: 'De Nekker, Belgium · 135mm f/2.8' },
-    'images/Nature/display/2021-06-1922-15-47-B-Radius8-Smoothing4.webp': { title: 'Hidden bug', meta: 'De Nekker, Belgium · 100mm f/5.6' },
-    'images/Nature/display/DSC08682.webp': { title: 'Simple beautiful bird', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.webp': { title: 'Singing Frog', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
+    'images/Nature/display/PJO03799.webp': { title: 'Oystercatcher at Sunset', meta: 'Sint Laureins Beach, Belgium · 600mm f/8' },
+    'images/Nature/display/DSC05612.webp': { title: 'Cattle by the Meadow', meta: 'De Nekker, Belgium · 135mm f/2.8' },
+    'images/Nature/display/2021-06-1922-15-47-B-Radius8-Smoothing4.webp': { title: 'Hidden Insect', meta: 'De Nekker, Belgium · 100mm f/5.6' },
+    'images/Nature/display/DSC08682.webp': { title: 'Perched Songbird', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
     'images/Nature/display/DSC00345.webp': { title: 'Cormorant', meta: 'Hofstade, Belgium · 600mm f/6.3' },
-    'images/Nature/display/DSC06112-2.webp': { title: 'A little beetle', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
-    'images/Nature/display/definitivosaltamonteenano.webp': { title: 'Delphacidae', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
-    'images/Nature/display/PJO09920.webp': { title: 'Bunny watching the sunset', meta: 'Robbroeck, Belgium · 200mm f/5.6' },
-    'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto6_Springand.webp': { title: 'A pair of deer', meta: 'Biezenweiden, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC06112-2.webp': { title: 'Little Beetle', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/definitivosaltamonteenano.webp': { title: 'Delphacidae Planthopper', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/PJO09920.webp': { title: 'Bunny at Sunset', meta: 'Robbroeck, Belgium · 200mm f/5.6' },
+    'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto6_Springand.webp': { title: 'Pair of Deer', meta: 'Biezenweiden, Belgium · 600mm f/6.3' },
     'images/Nature/display/3.webp': { title: 'Red-breasted Flycatcher', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
-    'images/Nature/display/PJO01954.webp': { title: 'Happy dog', meta: 'France · 85mm f/2.8' },
-    'images/Nature/display/PJO06296.webp': { title: 'Llamas in their natural habitat', meta: 'Bolivia · 85mm f/4' },
-    'images/Nature/display/DSC03711.webp': { title: 'A couple of Tufted ducks', meta: 'De Nekker, Belgium · 600mm f/6.3' },
-    'images/Nature/display/PJO00934.webp': { title: 'A little European stonechat', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
-    'images/Nature/display/PJO00370.webp': { title: 'Morning horses', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
-    'images/Nature/display/IMAG0019.webp': { title: 'Greylag goose', meta: 'De Nekker, Belgium · 600mm f/8' },
-    'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.webp': { title: 'Fencepost jumping spider', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
-    'images/Nature/display/PJO05149.webp': { title: 'Horse company', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
-    'images/Nature/display/Jimenez_Patricio_DSC_03112.webp': { title: 'Cute jumping spider', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
-    'images/Nature/display/PJO09283.webp': { title: 'Red-backed shrike', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
-    'images/Nature/display/DSC01761.webp': { title: 'Small food for a small life', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
-    'images/Nature/display/PJO08967.webp': { title: 'The white bird', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
-    'images/Nature/display/PJO02818.webp': { title: 'Oystercatcher reunion', meta: 'Sint Laureinsstrand, Belgium · 600mm f/7' },
-    'images/Nature/display/DSC08590.webp': { title: 'A couple of parakeets', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
-    'images/Nature/display/DSC01770.webp': { title: 'Macro spider', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
-    'images/Nature/display/DSC00088.webp': { title: 'Greylag goose in a blue sky', meta: 'De Nekker, Belgium · 600mm f/8' },
-    'images/Nature/display/DSC07853-17969db0.webp': { title: 'Piper and her new rain jacket', meta: 'Vrijbroekpark, Belgium · 20mm f/1.8' },
-    'images/Nature/display/DSC03039.webp': { title: 'Red bug', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
-    'images/Nature/display/JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.webp': { title: 'There is life inside the flowers', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
-    'images/Nature/display/DSC01788.webp': { title: 'Little bee', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
-    'images/Nature/display/DSC04789.webp': { title: 'Mosquito', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/PJO01954.webp': { title: 'Happy Dog', meta: 'France · 85mm f/2.8' },
+    'images/Nature/display/PJO06296.webp': { title: 'Llamas in the Altiplano', meta: 'Bolivia · 85mm f/4' },
+    'images/Nature/display/DSC03711.webp': { title: 'Pair of Tufted Ducks', meta: 'De Nekker, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO00934.webp': { title: 'European Stonechat', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO00370.webp': { title: 'Morning Horses', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
+    'images/Nature/display/IMAG0019.webp': { title: 'Greylag Goose', meta: 'De Nekker, Belgium · 600mm f/8' },
+    'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.webp': { title: 'Fencepost Jumping Spider', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/PJO05149.webp': { title: 'Patagonian Horses', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
+    'images/Jimenez_Patricio_DSC_03112.webp': { title: 'Jumping Spider', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
+    'images/Nature/display/Jimenez_Patricio_DSC_03112.webp': { title: 'Jumping Spider', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
+    'images/Nature/display/PJO09283.webp': { title: 'Red-backed Shrike', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC01761.webp': { title: 'Tiny Life', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
+    'images/Nature/display/PJO08967.webp': { title: 'The White Bird', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO02818.webp': { title: 'Oystercatcher Gathering', meta: 'Sint Laureins Beach, Belgium · 600mm f/7' },
+    'images/Nature/display/DSC08590.webp': { title: 'Pair of Parakeets', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC01770.webp': { title: 'Macro Spider', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/DSC00088.webp': { title: 'Greylag Goose in Flight', meta: 'De Nekker, Belgium · 600mm f/8' },
+    'images/Nature/display/DSC07853-17969db0.webp': { title: 'Piper with her new rain jacket', meta: 'Vrijbroekpark, Belgium · 20mm f/1.8' },
+    'images/Nature/display/DSC03039.webp': { title: 'Red Beetle', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
+    'images/Nature/display/JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.webp': { title: 'Life Inside the Flowers', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/DSC01788.webp': { title: 'Little Honeybee', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/DSC04789.webp': { title: 'Mosquito Macro', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
     'images/Nature/display/DSC06045-1b482605.webp': { title: 'Woella', meta: 'Mechelen, Belgium · 85mm f/1.4' },
-    'images/Nature/display/DSC06998.webp': { title: 'Beautiful house', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
-    'images/Nature/display/JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.webp': { title: 'The stork and the spring', meta: 'De Nekker, Belgium · 600mm f/6.3' },
-    'images/Nature/display/PJO04035.webp': { title: 'Beach colors', meta: 'Sint Laureinsstrand, Belgium · 600mm f/6.3' },
-    'images/Nature/display/PJO01504-2.webp': { title: 'Parakeet', meta: 'Vrijbroekpark, Belgium · 600mm f/6.3' },
-    'images/Nature/display/DSC09699.webp': { title: 'Nature · Foto 51', meta: 'Biezenweiden, Belgium · 600mm f/6.3' },
-    'images/Nature/display/DSC03123.webp': { title: 'Flower love spiders', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
-    'images/Nature/display/PJO05534.webp': { title: 'Woodpecker', meta: 'Torres del Paine, Chile · 85mm f/1.4' },
-    'images/Nature/display/PJO05843.webp': { title: 'A beautiful hummingbird', meta: 'Chiloé, Chile · 85mm f/1.4' },
-    'images/Nature/display/PJO01455.webp': { title: 'Baby cows', meta: 'Robbroeck, Belgium · 200mm f/5.6' },
-    'images/Nature/display/DSC06286-2-2.webp': { title: 'Little woodlouse', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
-    'images/Nature/display/PJO069652.webp': { title: 'Freezing sky', meta: 'Mechelen, Belgium · 600mm f/6.3' },
-    'images/Nature/display/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.webp': { title: 'A Lapwing', meta: 'De Nekker, Belgium · 600mm f/6.3' },
-    'images/Nature/display/PJO05965.webp': { title: 'Beautiful black buzzard', meta: 'De Nekker, Belgium · 600mm f/6.3' },
-    'images/Nature/display/DSC06215-ca4b56a4-2500.webp': { title: 'Beach and dog', meta: 'Sint Laureinsstrand, Belgium · 100mm f/2.8' },
-    'images/Nature/display/PJO08386-2.webp': { title: 'Jupiter', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
-    'images/Nature/display/PJO09701.webp': { title: 'Snow days', meta: 'Robbroeck , Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC06998.webp': { title: 'Summer Flora', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.webp': { title: 'White Stork in Spring', meta: 'De Nekker, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO04035.webp': { title: 'Coastal Dusk', meta: 'Sint Laureins Beach, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO01504-2.webp': { title: 'Green Parakeet', meta: 'Vrijbroekpark, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC09699.webp': { title: 'Nature · Photo 51', meta: 'Biezenweiden, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC03123.webp': { title: 'Spider on Blossom', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
+    'images/Nature/display/PJO05534.webp': { title: 'Magellanic Woodpecker', meta: 'Torres del Paine, Chile · 85mm f/1.4' },
+    'images/Nature/display/PJO05843.webp': { title: 'Green-backed Firecrown', meta: 'Chiloé, Chile · 85mm f/1.4' },
+    'images/Nature/display/PJO01455.webp': { title: 'Calves in the Field', meta: 'Robbroeck, Belgium · 200mm f/5.6' },
+    'images/Nature/display/DSC06286-2-2.webp': { title: 'Woodlouse Macro', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
+    'images/Nature/display/PJO069652.webp': { title: 'Freezing Winter Sky', meta: 'Mechelen, Belgium · 600mm f/6.3' },
+    'images/Nature/display/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.webp': { title: 'Northern Lapwing', meta: 'De Nekker, Belgium · 600mm f/6.3' },
+    'images/Nature/display/PJO05965.webp': { title: 'Common Buzzard', meta: 'De Nekker, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC06215-ca4b56a4-2500.webp': { title: 'Beach and Dog', meta: 'Sint Laureins Beach, Belgium · 100mm f/2.8' },
+    'images/Nature/display/PJO08386-2.webp': { title: 'Jupiter the Dog', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
+    'images/Nature/display/PJO09701.webp': { title: 'Snow Days', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
 
     // ==========================================
-    // ADVENTURE (5 fotos)
+    // ADVENTURE (5 photos)
     // ==========================================
     'images/Sport/display/DSC07386-f7ad26b2.webp': { title: 'Julian Alaphilippe', meta: 'Leuven, Belgium · 20mm f/5.6' },
-    'images/Sport/display/DSC07377_-_2-f8a343cf.webp': { title: 'Centenary of the UCI Road World Championships', meta: 'Mechelen, Belgium · 20mm f/8' },
-    'images/Sport/display/PJO06205-2.webp': { title: 'Mars Valley', meta: 'San Pedro de Atacama, Chile · 85mm f/5.6' },
-    'images/Sport/display/PJO04973-f6a2848a.webp': { title: 'Final kayak', meta: 'Mechelen, Belgium · 85mm f/5.6' },
-    'images/Sport/display/PJO01917.webp': { title: 'Bickepacking', meta: 'Laon, France · 85mm f/4' },
+    'images/Sport/display/DSC07377_-_2-f8a343cf.webp': { title: 'UCI Road World Championships 100th Anniversary', meta: 'Mechelen, Belgium · 20mm f/8' },
+    'images/Sport/display/PJO06205-2.webp': { title: 'Valley of Mars', meta: 'San Pedro de Atacama, Chile · 85mm f/5.6' },
+    'images/Sport/display/PJO04973-f6a2848a.webp': { title: 'Kayak on the Dyle', meta: 'Mechelen, Belgium · 85mm f/5.6' },
+    'images/Sport/display/PJO01917.webp': { title: 'Bikepacking', meta: 'Laon, France · 85mm f/4' },
 
     // ==========================================
-    // STREET (22 fotos)
+    // STREET (22 photos)
     // ==========================================
-    'images/Street/display/PJO02840.webp': { title: 'A day in Brussels', meta: 'Brussels, Belgium · 35mm f/2.8' },
+    'images/Street/display/PJO02840.webp': { title: 'A Day in Brussels', meta: 'Brussels, Belgium · 35mm f/2.8' },
     'images/Street/display/PJO04575-d7bdd0bc.webp': { title: 'Château du Haut-Barr', meta: 'Saverne, France · 20mm f/5.6' },
-    'images/Street/display/PJO02812.webp': { title: 'Unseen movements', meta: 'Brussels, Belgium · 35mm f/1.4' },
+    'images/Street/display/PJO02812.webp': { title: 'Unseen Movements', meta: 'Brussels, Belgium · 35mm f/1.4' },
     'images/Street/display/PJO04622-60cc4ccb.webp': { title: 'Kapellbrücke', meta: 'Lucerne, Switzerland · 135mm f/1.8' },
     'images/Street/display/PJO04590-176b30ca.webp': { title: 'Lucerne Jesuit Church', meta: 'Lucerne, Switzerland · 35mm f/1.4' },
     'images/Street/display/DSC01032-250a524f.webp': { title: 'De Pelikaan', meta: 'Mechelen, Belgium · 20mm f/5.6' },
     'images/Street/display/PJO05819.webp': { title: 'Watchdog', meta: 'Castro, Chiloé · 20mm f/8' },
-    'images/Street/display/PJO00013.webp': { title: 'Sunsret', meta: 'Rotterdam, Netherlands · 35mm f/2.8' },
-    'images/Street/display/PJO05828.webp': { title: 'Stilt houses', meta: 'Castro, Chiloé · 85mm f/2.8' },
-    'images/Street/display/PJO05842.webp': { title: 'Stilt houses', meta: 'Castro, Chiloé · 35mm f/2.8' },
-    'images/Street/display/PJO09814.webp': { title: 'Cube houses', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
-    'images/Street/display/PJO09821.webp': { title: 'The white house', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
-    'images/Street/display/PJO09838.webp': { title: 'Cube houses', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
-    'images/Street/display/PJO09849.webp': { title: 'Market Hall', meta: 'Rotterdam, Netherlands · 35mm f/1.4' },
-    'images/Street/display/PJO09860.webp': { title: 'A floating restaurant', meta: 'Rotterdam, Netherlands · 35mm f/1.4' },
-    'images/Street/display/PJO09884.webp': { title: 'Fair o Carnival', meta: 'Rotterdam, Netherlands · 35mm f/2' },
-    'images/Street/display/PJO09905.webp': { title: 'Skyview', meta: 'Rotterdam, Netherlands · 35mm f/2' },
-    'images/Street/display/PJO09906.webp': { title: 'Skyview', meta: 'Rotterdam, Netherlands · 35mm f/2' },
-    'images/Street/display/PJO09913.webp': { title: 'Depot Museum Boijmans Van Beuningen', meta: 'Rotterdam, Netherlands · 35mm f/2' },
-    'images/Street/display/PJO09924.webp': { title: 'Water taxi', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO00013.webp': { title: 'Sunset at the Port', meta: 'Rotterdam, Netherlands · 35mm f/2.8' },
+    'images/Street/display/PJO05828.webp': { title: 'Stilt Houses', meta: 'Castro, Chiloé · 85mm f/2.8' },
+    'images/Street/display/PJO05842.webp': { title: 'Stilt Houses', meta: 'Castro, Chiloé · 35mm f/2.8' },
+    'images/Street/display/PJO09814.webp': { title: 'Cube Houses', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
+    'images/Street/display/PJO09821.webp': { title: 'The White House (Het Witte Huis)', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
+    'images/Street/display/PJO09838.webp': { title: 'Cube Houses', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
+    'images/Street/display/PJO09842.webp': { title: 'City Triangle', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
+    'images/Street/display/PJO09849.webp': { title: 'Markthal', meta: 'Rotterdam, Netherlands · 35mm f/1.4' },
+    'images/Street/display/PJO09860.webp': { title: 'Floating Restaurant', meta: 'Rotterdam, Netherlands · 35mm f/1.4' },
+    'images/Street/display/PJO09884.webp': { title: 'Fair or Carnival', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO09905.webp': { title: 'Skyview Ferris Wheel', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO09906.webp': { title: 'Skyview Ferris Wheel', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO09913.webp': { title: 'Depot Boijmans Van Beuningen', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO09924.webp': { title: 'Water Taxi', meta: 'Rotterdam, Netherlands · 35mm f/2' },
     'images/Street/display/PJO09941.webp': { title: 'Hotel New York', meta: 'Rotterdam, Netherlands · 35mm f/2' },
   };
 
   function getPhotoMetadata(url, categoryKey, photoIndex) {
-    if (!url) return { title: 'Fine Art Portfolio', meta: 'Patricio Jiménez · Fotografía' };
+    if (!url) return { title: 'Fine Art Portfolio', meta: 'Patricio Jiménez · Photography' };
     const cleanUrl = url.split('?')[0];
     const filename = cleanUrl.split('/').pop();
     const stem = filename.replace(/\.[^.]+$/, '');
@@ -901,27 +965,27 @@
     switch (categoryKey) {
       case 'africa':
         return {
-          title: `Luz Austral · Cuadro ${safeIdx}`,
+          title: `Southern Light · Frame ${safeIdx}`,
           meta: 'Chile & Patagonia · Sony α7R IV · Archival Fine Art'
         };
       case 'asia':
         return {
-          title: `Forma y Vida · Cuadro ${safeIdx}`,
-          meta: 'Naturaleza Austral · Sony α7R IV · Óptica G Master'
+          title: `Form and Life · Frame ${safeIdx}`,
+          meta: 'Wild Nature · Sony α7R IV · G Master Optics'
         };
       case 'australia':
         return {
-          title: `Momento Decisivo · Cuadro ${safeIdx}`,
-          meta: 'Acción y Cordillera · 1/2000s · Chile'
+          title: `Decisive Moment · Frame ${safeIdx}`,
+          meta: 'Action & Mountains · 1/2000s · Chile'
         };
       case 'street':
         return {
-          title: `Crónica de Ciudad · Cuadro ${safeIdx}`,
-          meta: 'Escena Urbana · 35mm · Luz Disponible'
+          title: `City Chronicles · Frame ${safeIdx}`,
+          meta: 'Urban Scene · 35mm · Available Light'
         };
       default:
         return {
-          title: `Fotografía Fine Art · Cuadro ${safeIdx}`,
+          title: `Fine Art Photography · Frame ${safeIdx}`,
           meta: 'Patricio Jiménez · Fine Art Print'
         };
     }
@@ -933,6 +997,54 @@
     const meta = getPhotoMetadata(imgUrl, currentCat.key, activePhotoIndex);
     if (explorePhotoTitle) explorePhotoTitle.textContent = meta.title;
     if (explorePhotoMeta) explorePhotoMeta.textContent = meta.meta;
+  }
+
+  function updateMobileExplorePillPosition(forceImg) {
+    if (!inExploreMode || !exploreTopCenter || !exploreTopBar) return;
+    const isMobile = window.matchMedia('(max-width: 980px)').matches;
+    const isLandscapeMode = window.matchMedia('(max-height: 520px) and (orientation: landscape)').matches;
+    if (!isMobile || isLandscapeMode) {
+      exploreTopBar.style.removeProperty('--explore-pill-top');
+      return;
+    }
+
+    const currentImg = forceImg || (currentViewerSlot === 'A' ? exploreViewerImgA : exploreViewerImgB);
+    if (!currentImg) return;
+
+    const compute = () => {
+      const barRect = exploreTopBar.getBoundingClientRect();
+      const imgRect = currentImg.getBoundingClientRect();
+      const pillHeight = exploreTopCenter.offsetHeight || 36;
+      let photoTop = 0;
+
+      if (imgRect.height > 20 && imgRect.top > 0) {
+        photoTop = imgRect.top;
+      } else if (exploreViewerContainer) {
+        const contRect = exploreViewerContainer.getBoundingClientRect();
+        if (contRect.height > 20) {
+          const natW = currentImg.naturalWidth || 3;
+          const natH = currentImg.naturalHeight || 2;
+          const ratio = (natW > 0 && natH > 0) ? (natW / natH) : 1.5;
+          const availW = Math.min(window.innerWidth - 20, window.innerWidth * 0.95);
+          const availH = contRect.height;
+          const renderedH = Math.min(availH, availW / ratio);
+          photoTop = contRect.top + (availH - renderedH) / 2;
+        }
+      }
+
+      if (photoTop > 0) {
+        // Position strictly 12px ABOVE the photo's top edge
+        const targetTop = (photoTop - barRect.top) - pillHeight - 12;
+        // Never go higher than 44px (below row 1 of the top bar)
+        // AND never go lower than (photoTop - barRect.top - pillHeight - 6px) to guarantee ZERO overlap
+        const maxAllowed = (photoTop - barRect.top) - pillHeight - 6;
+        const safeTop = Math.max(44, Math.min(maxAllowed, Math.round(targetTop)));
+        exploreTopBar.style.setProperty('--explore-pill-top', `${safeTop}px`);
+      }
+    };
+
+    compute();
+    requestAnimationFrame(compute);
   }
 
   /* =========================================================
@@ -1009,6 +1121,7 @@
     });
     stage.classList.remove('is-zoomed');
     updateZoomButtonState();
+    updateMobileExplorePillPosition();
   }
 
   function triggerExploreIntroTimer() {
@@ -1031,8 +1144,9 @@
     }
 
     inExploreMode = true;
+    stage.classList.add('explore-mode');
     resetViewerZoom(false);
-    if (timer) clearInterval(timer);
+    stopAutoplay();
 
     const currentCat = continents[idx];
     exploreCatBadge.textContent = currentCat.name;
@@ -1048,19 +1162,22 @@
       }
     }
 
-    setCinematicBackground(currentCat.all[activePhotoIndex]);
-    updateExploreViewerPhoto(currentCat.all[activePhotoIndex]);
-    updateExplorePhotoInfo(currentCat.all[activePhotoIndex]);
+    const initialPhoto = currentCat.all[activePhotoIndex];
+    setCinematicBackground(initialPhoto);
+    updateExploreViewerPhoto(initialPhoto);
+    updateExplorePhotoInfo(initialPhoto);
     if (!opts.skipHistory) {
       updateRouteHash('explore', currentCat.key, { replace: false });
     }
 
     currentCat.all.forEach((imgUrl, i) => {
+      const meta = getPhotoMetadata(imgUrl, currentCat.key, i);
       const card = document.createElement('div');
       card.className = `explore-card ${i === activePhotoIndex ? 'active' : ''}`;
       card.style.backgroundImage = `url('${thumbnailImageUrl(imgUrl)}')`;
       card.setAttribute('role', 'button');
-      card.setAttribute('aria-label', `Photo ${i + 1}`);
+      card.setAttribute('aria-label', `${meta.title} (${i + 1} of ${currentCat.all.length})`);
+      card.setAttribute('title', meta.title);
 
       card.addEventListener('click', () => {
         selectExplorePhoto(i);
@@ -1070,8 +1187,24 @@
     });
 
     updateExploreCount();
-    stage.classList.add('explore-mode');
     triggerExploreIntroTimer();
+
+    // Prevent any slide-in glitch from the top: set pill position instantly for the first image
+    if (exploreTopCenter) {
+      exploreTopCenter.style.transition = 'none';
+    }
+    updateMobileExplorePillPosition();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (exploreTopCenter) exploreTopCenter.style.transition = '';
+      });
+    });
+    setTimeout(() => {
+      updateMobileExplorePillPosition();
+    }, 60);
+    setTimeout(() => {
+      updateMobileExplorePillPosition();
+    }, 250);
 
     setTimeout(() => {
       scrollActiveCardIntoView();
@@ -1108,6 +1241,9 @@
         left: cardLeft - trackCenter,
         behavior: 'smooth'
       });
+      setTimeout(updateStripArrowsVisibility, 340);
+    } else {
+      updateStripArrowsVisibility();
     }
   }
 
@@ -1398,9 +1534,191 @@
     }
   }, { passive: true });
 
+  /* =========================================================
+     EXPLORE BOTTOM THUMBNAILS: FAST DRAG & QUICK SCROLL
+     ========================================================= */
+  let isTrackDragging = false;
+  let trackStartX = 0;
+  let trackStartScrollLeft = 0;
+  let trackMoved = false;
+  let trackLastX = 0;
+  let trackLastTime = 0;
+  let trackVelocity = 0;
+  let trackMomentumRaf = null;
+
+  function updateStripArrowsVisibility() {
+    if (!exploreStripPrev || !exploreStripNext || !exploreCardsTrack) return;
+    const canScroll = exploreCardsTrack.scrollWidth > exploreCardsTrack.clientWidth + 6;
+    if (!canScroll) {
+      exploreStripPrev.classList.add('is-hidden');
+      exploreStripNext.classList.add('is-hidden');
+      return;
+    }
+    const scrollLeft = exploreCardsTrack.scrollLeft;
+    const maxScroll = exploreCardsTrack.scrollWidth - exploreCardsTrack.clientWidth;
+    exploreStripPrev.classList.toggle('is-hidden', scrollLeft <= 6);
+    exploreStripNext.classList.toggle('is-hidden', scrollLeft >= maxScroll - 6);
+  }
+
+  function handleStripArrowScroll(direction) {
+    if (trackMomentumRaf) {
+      cancelAnimationFrame(trackMomentumRaf);
+      trackMomentumRaf = null;
+    }
+    const step = Math.max(340, Math.floor(window.innerWidth * 0.35));
+    exploreCardsTrack.scrollBy({
+      left: direction * step,
+      behavior: 'smooth'
+    });
+    setTimeout(updateStripArrowsVisibility, 350);
+  }
+
+  function setupStripArrow(btn, direction) {
+    if (!btn) return;
+    let holdTimer = null;
+    let holdInterval = null;
+
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      handleStripArrowScroll(direction);
+    });
+
+    btn.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      holdTimer = setTimeout(() => {
+        exploreCardsTrack.style.scrollBehavior = 'auto';
+        holdInterval = setInterval(() => {
+          exploreCardsTrack.scrollLeft += direction * 22;
+          updateStripArrowsVisibility();
+        }, 16);
+      }, 260);
+    });
+
+    const stopHold = () => {
+      clearTimeout(holdTimer);
+      clearInterval(holdInterval);
+      exploreCardsTrack.style.scrollBehavior = '';
+      updateStripArrowsVisibility();
+    };
+
+    btn.addEventListener('mouseup', stopHold);
+    btn.addEventListener('mouseleave', stopHold);
+  }
+
+  setupStripArrow(exploreStripPrev, -1);
+  setupStripArrow(exploreStripNext, 1);
+
+  exploreCardsTrack.addEventListener('scroll', () => {
+    updateStripArrowsVisibility();
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    if (inExploreMode) {
+      updateStripArrowsVisibility();
+    }
+  }, { passive: true });
+
+  // Click & Drag (Grab to scroll)
+  exploreCardsTrack.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    if (trackMomentumRaf) {
+      cancelAnimationFrame(trackMomentumRaf);
+      trackMomentumRaf = null;
+    }
+    isTrackDragging = true;
+    trackMoved = false;
+    trackStartX = e.pageX;
+    trackStartScrollLeft = exploreCardsTrack.scrollLeft;
+    trackLastX = e.pageX;
+    trackLastTime = performance.now();
+    trackVelocity = 0;
+    exploreCardsTrack.style.scrollBehavior = 'auto';
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isTrackDragging) return;
+    const dx = e.pageX - trackStartX;
+    if (!trackMoved && Math.abs(dx) > 4) {
+      trackMoved = true;
+      exploreCardsTrack.classList.add('is-dragging');
+      document.body.style.userSelect = 'none';
+    }
+    if (trackMoved) {
+      exploreCardsTrack.scrollLeft = trackStartScrollLeft - dx;
+      const now = performance.now();
+      const dt = now - trackLastTime;
+      if (dt > 10) {
+        trackVelocity = (e.pageX - trackLastX) / dt;
+        trackLastX = e.pageX;
+        trackLastTime = now;
+      }
+    }
+  });
+
+  const endTrackDrag = () => {
+    if (!isTrackDragging) return;
+    isTrackDragging = false;
+    document.body.style.userSelect = '';
+    exploreCardsTrack.classList.remove('is-dragging');
+
+    if (trackMoved) {
+      // Keep trackMoved = true briefly so click events generated on thumbnails are suppressed
+      setTimeout(() => {
+        trackMoved = false;
+      }, 50);
+
+      if (Math.abs(trackVelocity) > 0.15) {
+        let vel = trackVelocity * 16;
+        const maxScroll = exploreCardsTrack.scrollWidth - exploreCardsTrack.clientWidth;
+        const coast = () => {
+          vel *= 0.92;
+          exploreCardsTrack.scrollLeft -= vel;
+          if (Math.abs(vel) > 0.4 && exploreCardsTrack.scrollLeft > 0 && exploreCardsTrack.scrollLeft < maxScroll) {
+            trackMomentumRaf = requestAnimationFrame(coast);
+          } else {
+            exploreCardsTrack.style.scrollBehavior = '';
+            trackMomentumRaf = null;
+            updateStripArrowsVisibility();
+          }
+        };
+        trackMomentumRaf = requestAnimationFrame(coast);
+      } else {
+        exploreCardsTrack.style.scrollBehavior = '';
+        updateStripArrowsVisibility();
+      }
+    } else {
+      exploreCardsTrack.style.scrollBehavior = '';
+    }
+  };
+
+  window.addEventListener('mouseup', endTrackDrag);
+  window.addEventListener('blur', endTrackDrag);
+
+  // Suppress thumbnail activation if mouse drag occurred
+  exploreCardsTrack.addEventListener('click', (e) => {
+    if (trackMoved) {
+      e.preventDefault();
+      e.stopPropagation();
+      trackMoved = false;
+    }
+  }, true);
+
+  exploreCardsTrack.addEventListener('dragstart', (e) => {
+    e.preventDefault();
+  });
+
+  // Accelerated responsive wheel scroll
   exploreCardsTrack.addEventListener('wheel', (e) => {
     e.preventDefault();
-    exploreCardsTrack.scrollLeft += e.deltaY;
+    if (trackMomentumRaf) {
+      cancelAnimationFrame(trackMomentumRaf);
+      trackMomentumRaf = null;
+    }
+    exploreCardsTrack.style.scrollBehavior = 'auto';
+    const delta = (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY);
+    exploreCardsTrack.scrollLeft += delta * 2.2;
+    updateStripArrowsVisibility();
   }, { passive: false });
 
   let isMouseDragging = false;
@@ -1475,21 +1793,38 @@
     preloadGalleryAssets();
 
     let entered = false;
+    let videoSettledHandled = false;
+    const cleanupVideoListeners = () => {
+      if (heroBgVideo) {
+        heroBgVideo.removeEventListener('timeupdate', onVideoTimeUpdate);
+        heroBgVideo.removeEventListener('ended', onVideoEnded);
+      }
+    };
+
     const enterGallery = () => {
       if (entered || currentView !== 'home') return;
       entered = true;
+      videoSettledHandled = true;
+      cleanupVideoListeners();
       if (warpTimer) { clearTimeout(warpTimer); warpTimer = null; }
       if (warpEndTimer) { clearTimeout(warpEndTimer); warpEndTimer = null; }
       clearRampTimers();
       activeEnterGallery = null;
 
-      // Clase from-home para orquestar la suave entrada escalonada tipo HUD de controles de galería
+      // Freeze video immediately on the exact final frame (identical to PJO05334 photograph)
+      try {
+        if (heroBgVideo) {
+          heroBgVideo.pause();
+        }
+      } catch(e){}
+
+      // from-home class to orchestrate the smooth staggered HUD-like entry of gallery controls
       stage.classList.add('from-home');
 
-      // Transición fluida a galería: la foto fija toma el relevo y los controles emergen en cascada armónica
+      // Seamless transition to gallery: the still photo takes over and controls emerge harmoniously
       switchView('gallery');
 
-      // Tras completar la disolvencia y entrada de todos los controles (2000ms), limpiar video y clases fuera de pantalla
+      // After completing the dissolve and entry of all controls (2000ms), clean up video and off-screen classes
       setTimeout(() => {
         stage.classList.remove('from-home');
         stage.classList.remove('is-starting');
@@ -1505,15 +1840,37 @@
       }, 2000);
     };
 
+    const onVideoTimeUpdate = () => {
+      if (videoSettledHandled) return;
+      // Settled final frame corresponds to currentTime >= 7.91s
+      if (heroBgVideo && heroBgVideo.currentTime >= 7.91) {
+        enterGallery();
+      }
+    };
+
+    const onVideoEnded = () => {
+      if (videoSettledHandled) return;
+      enterGallery();
+    };
+
     activeEnterGallery = enterGallery;
 
     if (heroBgVideo) {
       heroBgVideo.muted = true;
       heroBgVideo.defaultMuted = true;
+      heroBgVideo.playsInline = true;
+      heroBgVideo.setAttribute('playsinline', '');
+      heroBgVideo.setAttribute('webkit-playsinline', '');
 
-      // FASE 1: Primeros 2.0s a velocidad 100% normal (1.0x) — serenidad, atmósfera real y contemplación
-      heroBgVideo.currentTime = 0;
+      // Avoid unnecessary seek that flushes video decoder pipeline on mobile
+      if (heroBgVideo.currentTime > 0.08) {
+        heroBgVideo.currentTime = 0;
+      }
       heroBgVideo.playbackRate = 1.0;
+
+      heroBgVideo.addEventListener('timeupdate', onVideoTimeUpdate);
+      heroBgVideo.addEventListener('ended', onVideoEnded);
+
       const playPromise = heroBgVideo.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
@@ -1521,17 +1878,16 @@
         });
       }
 
-      // FASE 2: Aceleración progresiva a velocidad de crucero 1.66x (de 2.0s a 4.70s)
+      // FASE 2: Aceleración progresiva a velocidad de crucero 1.68x (de 2.0s a 4.80s) con túnel warp
       warpTimer = setTimeout(() => {
         if (entered || currentView !== 'home') return;
         stage.classList.add('is-warping');
 
         // Rampa suave desacoplada de la clase CSS para eliminar cualquier tirón gráfico
         const rampUpSteps = [
-          { delay: 80,  rate: 1.10 },
-          { delay: 160, rate: 1.24 },
-          { delay: 240, rate: 1.44 },
-          { delay: 320, rate: 1.66 }
+          { delay: 100, rate: 1.20 },
+          { delay: 250, rate: 1.45 },
+          { delay: 400, rate: 1.68 }
         ];
 
         rampUpSteps.forEach(step => {
@@ -1543,21 +1899,19 @@
           rampTimeoutIds.push(tid);
         });
 
-        // FASE 3: Desaceleración y retorno a velocidad 100% normal (de 4.70s a 5.18s)
+        // FASE 3: Desaceleración y retorno a velocidad 100% normal (a partir de 4.80s)
         const tidDeaccelClass = setTimeout(() => {
           if (!entered && currentView === 'home') {
             stage.classList.remove('is-warping');
           }
-        }, 2700); // 2000ms + 2700ms = 4700ms
+        }, 2800); // 2000ms + 2800ms = 4800ms
         rampTimeoutIds.push(tidDeaccelClass);
 
         // Rampa de frenado progresivo hacia 1.00x exacto:
         const rampDownSteps = [
-          { delay: 2700, rate: 1.45 },
-          { delay: 2820, rate: 1.28 },
-          { delay: 2940, rate: 1.14 },
-          { delay: 3060, rate: 1.05 },
-          { delay: 3180, rate: 1.00 }
+          { delay: 2800, rate: 1.40 },
+          { delay: 3100, rate: 1.20 },
+          { delay: 3400, rate: 1.00 }
         ];
 
         rampDownSteps.forEach(step => {
@@ -1569,11 +1923,11 @@
           rampTimeoutIds.push(tid);
         });
 
-        // FASE 4: A los 5.75s (con video a velocidad 1.0x normal, nítido y la pantalla LCD al 100%),
-        // se inicia la transición match-cut combinada hacia la galería (cero corte, orquestación HUD de controles)
+        // FASE 4: Alrededor de 6.05s (con el video alcanzando t=7.92s-7.95s y asentándose exactamente en la foto),
+        // se congela el fotograma y se produce la transición sin corte combinada
         warpEndTimer = setTimeout(() => {
           enterGallery();
-        }, 3750); // 2000ms + 3750ms = 5750ms total
+        }, 4050); // 2000ms + 4050ms = 6050ms total
       }, 2000);
 
       // Fallback de seguridad
@@ -1586,55 +1940,7 @@
   startBtn.addEventListener('click', startCinematicVideoTransition);
   startBtn.addEventListener('touchend', startCinematicVideoTransition);
 
-  /* ── Subtle Mouse Depth Parallax on Hero (Desktop only) ────── */
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    const heroTextWrapper = document.querySelector('.hero-text-wrapper');
-    const heroAtmosphere = document.querySelector('.hero-epic-atmosphere');
-    let heroTargetX = 0, heroTargetY = 0;
-    let heroCurrentX = 0, heroCurrentY = 0;
-    let isParallaxActive = false;
-
-    window.addEventListener('mousemove', (e) => {
-      if (currentView !== 'home' || stage.classList.contains('is-starting')) {
-        heroTargetX = 0;
-        heroTargetY = 0;
-        return;
-      }
-      const normX = (e.clientX / window.innerWidth) - 0.5;
-      const normY = (e.clientY / window.innerHeight) - 0.5;
-      heroTargetX = normX * 14;
-      heroTargetY = normY * 10;
-    }, { passive: true });
-
-    window.addEventListener('mouseleave', () => {
-      heroTargetX = 0;
-      heroTargetY = 0;
-    });
-
-    function updateHeroParallax() {
-      if (currentView === 'home' && !stage.classList.contains('is-starting')) {
-        heroCurrentX += (heroTargetX - heroCurrentX) * 0.055;
-        heroCurrentY += (heroTargetY - heroCurrentY) * 0.055;
-        if (heroTextWrapper) {
-          heroTextWrapper.style.transform = `translate3d(${heroCurrentX.toFixed(2)}px, ${heroCurrentY.toFixed(2)}px, 0)`;
-        }
-        if (heroAtmosphere) {
-          heroAtmosphere.style.transform = `translate3d(${(-heroCurrentX * 0.5).toFixed(2)}px, ${(-heroCurrentY * 0.5).toFixed(2)}px, 0) scale(1.02)`;
-        }
-        isParallaxActive = true;
-      } else if (isParallaxActive) {
-        if (heroTextWrapper) heroTextWrapper.style.transform = '';
-        if (heroAtmosphere) heroAtmosphere.style.transform = '';
-        heroCurrentX = 0;
-        heroCurrentY = 0;
-        heroTargetX = 0;
-        heroTargetY = 0;
-        isParallaxActive = false;
-      }
-      requestAnimationFrame(updateHeroParallax);
-    }
-    requestAnimationFrame(updateHeroParallax);
-  }
+  // Hero desktop parallax removed to keep desktop 100% calm, stable and identical to mobile
 
 
   /* =========================================================
@@ -1965,6 +2271,18 @@
       }
     }
   }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    if (inExploreMode) {
+      updateMobileExplorePillPosition();
+    }
+  });
+
+  window.addEventListener('orientationchange', () => {
+    if (inExploreMode) {
+      setTimeout(updateMobileExplorePillPosition, 100);
+    }
+  });
 
 
   /* =========================================================

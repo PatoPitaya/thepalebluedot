@@ -260,7 +260,7 @@ class MeridianHandler(BaseHTTPRequestHandler):
         elif candidate.suffix.lower() in {".webp", ".jpg", ".jpeg", ".png", ".gif"}:
             cache_control = "public, max-age=86400"
         elif candidate.suffix.lower() in {".css", ".js"}:
-            cache_control = "public, max-age=86400"
+            cache_control = "no-cache, must-revalidate"
         else:
             cache_control = "no-cache"
 
@@ -469,7 +469,13 @@ class MeridianHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    server = ThreadingHTTPServer(("127.0.0.1", 8000), MeridianHandler)
-    print("Aplicación disponible en http://127.0.0.1:8000")
-    print("API en http://127.0.0.1:8000/health")
-    server.serve_forever()
+    port = int(os.environ.get("PORT", 8008))
+    for candidate in [port, 8080, 8000]:
+        try:
+            server = ThreadingHTTPServer(("127.0.0.1", candidate), MeridianHandler)
+            print(f"Aplicación disponible en http://127.0.0.1:{candidate}")
+            print(f"API en http://127.0.0.1:{candidate}/health")
+            server.serve_forever()
+            break
+        except OSError:
+            continue
