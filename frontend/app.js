@@ -914,7 +914,7 @@
     'images/Sport/display/DSC07386-f7ad26b2.webp': { title: 'Julian Alaphilippe', meta: 'Leuven, Belgium · 20mm f/5.6' },
     'images/Sport/display/DSC07377_-_2-f8a343cf.webp': { title: 'UCI Road World Championships 100th Anniversary', meta: 'Mechelen, Belgium · 20mm f/8' },
     'images/Sport/display/PJO06205-2.webp': { title: 'Valley of Mars', meta: 'San Pedro de Atacama, Chile · 85mm f/5.6' },
-    'images/Sport/display/PJO04973-f6a2848a.webp': { title: 'Kayak on the Dyle', meta: 'Mechelen, Belgium · 85mm f/5.6' },
+    'images/Sport/display/PJO04973-f6a2848a.webp': { title: 'Kayak competition', meta: 'Mechelen, Belgium · 85mm f/5.6' },
     'images/Sport/display/PJO01917.webp': { title: 'Bikepacking', meta: 'Laon, France · 85mm f/4' },
 
     // ==========================================
