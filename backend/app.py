@@ -230,12 +230,12 @@ class MeridianHandler(BaseHTTPRequestHandler):
 
         return json.loads(body or "{}")
 
-    def _send_json(self, status_code, payload):
+    def _send_json(self, status_code, payload, head_only=False):
         body = json.dumps(payload).encode("utf-8")
         self.send_response(status_code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, HEAD, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("X-Frame-Options", "SAMEORIGIN")
@@ -243,7 +243,39 @@ class MeridianHandler(BaseHTTPRequestHandler):
         self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
-        self.wfile.write(body)
+        if not head_only and self.command != "HEAD":
+            self.wfile.write(body)
+
+    def _get_request_origin(self) -> str:
+        host = (self.headers.get("X-Forwarded-Host") or self.headers.get("Host") or "").split(",")[0].strip()
+        proto = (self.headers.get("X-Forwarded-Proto") or "").split(",")[0].strip().lower()
+        if not proto:
+            proto = "http" if host.startswith(("127.0.0.1", "localhost")) else "https"
+        if host:
+            return f"{proto}://{host}"
+        return "https://thepalebluedot.cl"
+
+    def _send_index_html(self):
+        candidate = (FRONTEND_DIR / "index.html").resolve()
+        if not candidate.exists() or not candidate.is_file():
+            self._send_json(404, {"error": "not_found"})
+            return
+        html_text = candidate.read_text(encoding="utf-8")
+        origin = self._get_request_origin().rstrip("/")
+        html_text = html_text.replace("https://thepalebluedot.cl", origin)
+        body = html_text.encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "SAMEORIGIN")
+        self.send_header("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
+        self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        if self.command != "HEAD":
+            self.wfile.write(body)
 
     def _send_static(self, file_path):
         candidate = file_path.resolve()
@@ -291,12 +323,12 @@ class MeridianHandler(BaseHTTPRequestHandler):
                 self.send_header("Cache-Control", cache_control)
                 self.send_header("Access-Control-Allow-Origin", "*")
                 self.end_headers()
-                self.wfile.write(chunk)
+                if self.command != "HEAD":
+                    self.wfile.write(chunk)
                 return
             except Exception:
                 pass
 
-        body = candidate.read_bytes()
         self.send_response(200)
         self.send_header("Content-Type", content_type)
         self.send_header("Accept-Ranges", "bytes")
@@ -306,9 +338,13 @@ class MeridianHandler(BaseHTTPRequestHandler):
         self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
         self.send_header("Cache-Control", cache_control)
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Content-Length", str(file_size))
         self.end_headers()
-        self.wfile.write(body)
+        if self.command != "HEAD":
+            self.wfile.write(candidate.read_bytes())
+
+    def do_HEAD(self):
+        self.do_GET()
 
     def do_GET(self):
         parsed_path = urlparse(self.path)
@@ -321,7 +357,7 @@ class MeridianHandler(BaseHTTPRequestHandler):
             return
 
         if parsed_path.path in {"/", "/index.html"}:
-            self._send_static(FRONTEND_DIR / "index.html")
+            self._send_index_html()
             return
 
         if parsed_path.path in {"/favicon.ico", "/favicon.svg"}:
@@ -331,7 +367,7 @@ class MeridianHandler(BaseHTTPRequestHandler):
                 return
 
         if parsed_path.path in {"/gallery", "/gallery.html", "/about", "/about.html", "/contact", "/contact.html"}:
-            self._send_static(FRONTEND_DIR / "index.html")
+            self._send_index_html()
             return
 
         raw_path = unquote(parsed_path.path)
@@ -345,14 +381,15 @@ class MeridianHandler(BaseHTTPRequestHandler):
             # Graceful fallbacks if display/ or thumbs/ have not been generated yet
             # e.g., Landscape/display/foo.webp -> optimized/Landscape/foo.webp -> Landscape/foo.jpg
             parts = Path(requested_path).parts
-            if len(parts) >= 3 and parts[1] in {"display", "thumbs"}:
-                section, variant, filename = parts[0], parts[1], Path(parts[2]).stem
+            if len(parts) >= 3 and parts[-2] in {"display", "thumbs"}:
+                section_dir = Path(*parts[:-2])
+                variant, filename = parts[-2], Path(parts[-1]).stem
                 fallback_paths = [
-                    IMAGES_DIR / ("optimized" if variant == "display" else "thumbs") / section / f"{filename}.webp",
-                    IMAGES_DIR / section / f"{filename}.webp",
-                    IMAGES_DIR / section / f"{filename}.jpg",
-                    IMAGES_DIR / section / f"{filename}.jpeg",
-                    IMAGES_DIR / section / f"{filename}.png"
+                    IMAGES_DIR / ("optimized" if variant == "display" else "thumbs") / section_dir / f"{filename}.webp",
+                    IMAGES_DIR / section_dir / f"{filename}.webp",
+                    IMAGES_DIR / section_dir / f"{filename}.jpg",
+                    IMAGES_DIR / section_dir / f"{filename}.jpeg",
+                    IMAGES_DIR / section_dir / f"{filename}.png"
                 ]
                 for fb in fallback_paths:
                     fb_res = fb.resolve()
@@ -470,11 +507,12 @@ class MeridianHandler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8008))
+    bind_host = os.environ.get("HOST", "0.0.0.0" if "PORT" in os.environ else "127.0.0.1")
     for candidate in [port, 8080, 8000]:
         try:
-            server = ThreadingHTTPServer(("127.0.0.1", candidate), MeridianHandler)
-            print(f"Aplicación disponible en http://127.0.0.1:{candidate}")
-            print(f"API en http://127.0.0.1:{candidate}/health")
+            server = ThreadingHTTPServer((bind_host, candidate), MeridianHandler)
+            print(f"Aplicación disponible en http://{bind_host}:{candidate}")
+            print(f"API en http://{bind_host}:{candidate}/health")
             server.serve_forever()
             break
         except OSError:

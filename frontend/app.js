@@ -51,76 +51,119 @@
     },
     {
       key:'asia', name:'Nature', accent:'#7BA05B', bgTone:'#111a10', eyebrow:'Nature',
+      activeSubcat:'wildlife',
       hero:'images/Nature/PJO00934.jpg',
       cards:[
         {img:'images/Nature/PJO00934.jpg',       place:'European Stonechat — Robbroeck'},
         {img:'images/Nature/PJO09920.jpg',        place:'Bunny at Sunset — Robbroeck'},
         {img:'images/Nature/PJO08967.jpg',        place:'The White Bird — Robbroeck'}
       ],
-      all:[
-        'images/Nature/DSC05597.jpg',
-        'images/Nature/PJO06305.jpg',
-        'images/Nature/PJO02719.jpg',
-        'images/Nature/PJO09863.jpg',
-        'images/Nature/DSC05535.jpg',
-        'images/Nature/PJO05101.jpg',
-        'images/Nature/PJO00825.jpg',
-        'images/Nature/DSC05627.jpg',
-        'images/Nature/DSC03520.jpg',
-        'images/Nature/PJO05575-3.jpg',
-        'images/Nature/caracol.jpg',
-        'images/Nature/PJO03852.jpg',
-        'images/Nature/DSC07034.jpg',
-        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.jpg',
-        'images/Nature/PJO03799.jpg',
-        'images/Nature/DSC05612.jpg',
-        'images/Nature/2021-06-1922-15-47-B-Radius8-Smoothing4.jpg',
-        'images/Nature/DSC08682.jpg',
-        'images/Nature/DSC00345.jpg',
-        'images/Nature/DSC06112-2.jpg',
-        'images/Nature/definitivosaltamonteenano.jpg',
-        'images/Nature/PJO09920.jpg',
-        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto6_Springand.jpg',
-        'images/Nature/3.jpg',
-        'images/Nature/PJO01954.jpg',
-        'images/Nature/PJO06296.jpg',
-        'images/Nature/DSC03711.jpg',
-        'images/Nature/PJO00934.jpg',
-        'images/Nature/PJO00370.jpg',
-        'images/Nature/IMAG0019.jpg',
-        'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.jpg',
-        'images/Nature/PJO05149.jpg',
-        'images/Nature/Jimenez_Patricio_DSC_03112.jpg',
-        'images/Nature/PJO09283.jpg',
-        'images/Nature/DSC01761.jpg',
-        'images/Nature/PJO08967.jpg',
-        'images/Nature/PJO02818.jpg',
-        'images/Nature/DSC08590.jpg',
-        'images/Nature/DSC01770.jpg',
-        'images/Nature/DSC00088.jpg',
-        'images/Nature/DSC07853-17969db0.jpg',
-        'images/Nature/DSC03039.jpg',
-        'images/Nature/JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.jpg',
-        'images/Nature/DSC01788.jpg',
-        'images/Nature/DSC04789.jpg',
-        'images/Nature/DSC06045-1b482605.jpg',
-        'images/Nature/DSC06998.jpg',
-        'images/Nature/JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.jpg',
-        'images/Nature/PJO04035.jpg',
-        'images/Nature/PJO01504-2.jpg',
-        'images/Nature/DSC09699.jpg',
-        'images/Nature/DSC03123.jpg',
-        'images/Nature/PJO05534.jpg',
-        'images/Nature/PJO05843.jpg',
-        'images/Nature/PJO01455.jpg',
-        'images/Nature/DSC06286-2-2.jpg',
-        'images/Nature/PJO069652.jpg',
-        'images/Nature/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.jpg',
-        'images/Nature/PJO05965.jpg',
-        'images/Nature/DSC06215-ca4b56a4-2500.jpg',
-        'images/Nature/PJO08386-2.jpg',
-        'images/Nature/PJO09701.jpg'
-      ]
+      subcollections: {
+        wildlife: {
+          name: 'Nature',
+          badge: 'Nature · Wildlife',
+          desc: "Dense vegetation, shapes that grow without asking permission. Here, nature isn't the background, it's the protagonist.",
+          hero: 'images/Nature/PJO00934.jpg',
+          cards: [
+            {img:'images/Nature/PJO00934.jpg',       place:'European Stonechat — Robbroeck'},
+            {img:'images/Nature/PJO09920.jpg',        place:'Bunny at Sunset — Robbroeck'},
+            {img:'images/Nature/PJO08967.jpg',        place:'The White Bird — Robbroeck'}
+          ],
+          all: [
+            'images/Nature/DSC05597.jpg',
+            'images/Nature/PJO06305.jpg',
+            'images/Nature/PJO02719.jpg',
+            'images/Nature/PJO09863.jpg',
+            'images/Nature/PJO05101.jpg',
+            'images/Nature/PJO00825.jpg',
+            'images/Nature/DSC05627.jpg',
+            'images/Nature/DSC03520.jpg',
+            'images/Nature/PJO05575-3.jpg',
+            'images/Nature/caracol.jpg',
+            'images/Nature/PJO03852.jpg',
+            'images/Nature/DSC07034.jpg',
+            'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto7_Singinginspring.jpg',
+            'images/Nature/PJO03799.jpg',
+            'images/Nature/DSC05612.jpg',
+            'images/Nature/2021-06-1922-15-47-B-Radius8-Smoothing4.jpg',
+            'images/Nature/DSC08682.jpg',
+            'images/Nature/DSC00345.jpg',
+            'images/Nature/DSC06112-2.jpg',
+            'images/Nature/definitivosaltamonteenano.jpg',
+            'images/Nature/PJO09920.jpg',
+            'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto6_Springand.jpg',
+            'images/Nature/3.jpg',
+            'images/Nature/PJO06296.jpg',
+            'images/Nature/DSC03711.jpg',
+            'images/Nature/PJO00934.jpg',
+            'images/Nature/PJO00370.jpg',
+            'images/Nature/IMAG0019.jpg',
+            'images/Nature/JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.jpg',
+            'images/Nature/PJO05149.jpg',
+            'images/Nature/Jimenez_Patricio_DSC_03112.jpg',
+            'images/Nature/PJO09283.jpg',
+            'images/Nature/DSC01761.jpg',
+            'images/Nature/PJO08967.jpg',
+            'images/Nature/PJO02818.jpg',
+            'images/Nature/DSC08590.jpg',
+            'images/Nature/DSC01770.jpg',
+            'images/Nature/DSC00088.jpg',
+            'images/Nature/DSC03039.jpg',
+            'images/Nature/JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.jpg',
+            'images/Nature/DSC01788.jpg',
+            'images/Nature/DSC04789.jpg',
+            'images/Nature/DSC06998.jpg',
+            'images/Nature/JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.jpg',
+            'images/Nature/PJO04035.jpg',
+            'images/Nature/PJO01504-2.jpg',
+            'images/Nature/DSC09699.jpg',
+            'images/Nature/DSC03123.jpg',
+            'images/Nature/PJO05534.jpg',
+            'images/Nature/PJO05843.jpg',
+            'images/Nature/PJO01455.jpg',
+            'images/Nature/DSC06286-2-2.jpg',
+            'images/Nature/PJO069652.jpg',
+            'images/Nature/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.jpg',
+            'images/Nature/PJO05965.jpg',
+            'images/Nature/PJO09701.jpg'
+          ]
+        },
+        portraits: {
+          name: 'Portrait',
+          badge: 'Nature · Portrait',
+          desc: 'Intimate portraits of loyal companions and quiet personal moments shared in the open air.',
+          heroDesktop: 'images/Nature/Portrait/woela-33c16872.jpg',
+          heroMobile: 'images/Nature/Portrait/DSC07993.jpg',
+          get hero() {
+            return (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 980px)').matches)
+              ? this.heroMobile
+              : this.heroDesktop;
+          },
+          set hero(val) {
+            this.heroDesktop = val;
+          },
+          cards: [
+            {img:'images/Nature/Portrait/woela-33c16872.jpg',       place:'Woella in the Garden — Mechelen'},
+            {img:'images/Nature/Portrait/DSC07993.jpg',            place:'Autumn Walk with Piper — Vrijbroekpark'},
+            {img:'images/Nature/Portrait/DSC07853-17969db0.jpg',   place:'Piper in the Rain — Vrijbroekpark'}
+          ],
+          all: [
+            'images/Nature/Portrait/woela-33c16872.jpg',
+            'images/Nature/Portrait/DSC07993.jpg',
+            'images/Nature/Portrait/DSC07853-17969db0.jpg',
+            'images/Nature/Portrait/PJO07805.jpg',
+            'images/Nature/Portrait/PJO04670.jpg',
+            'images/Nature/Portrait/PJO07746_genErase_genErase.jpg',
+            'images/Nature/Portrait/DSC07627-18db21bf-2500.jpg',
+            'images/Nature/Portrait/DSC06215.jpg',
+            'images/Nature/Portrait/DSC05535.jpg',
+            'images/Nature/Portrait/PJO08386-2.jpg',
+            'images/Nature/Portrait/DSC06045-1b482605.jpg',
+            'images/Nature/Portrait/PJO01954.jpg'
+          ]
+        }
+      },
+      all:[]
     },
     {
       key:'australia', name:'Adventure', accent:'#6E9AB0', bgTone:'#0e161e', eyebrow:'Adventure',
@@ -183,7 +226,15 @@
   }
 
   continents.forEach(c => {
-    shuffleArray(c.all);
+    if (c.subcollections) {
+      Object.values(c.subcollections).forEach(sub => shuffleArray(sub.all));
+      const defaultSub = c.subcollections[c.activeSubcat || 'wildlife'];
+      c.all = defaultSub.all;
+      c.hero = defaultSub.hero;
+      c.cards = defaultSub.cards;
+    } else {
+      shuffleArray(c.all);
+    }
   });
 
   let currentView = 'home'; // 'home', 'gallery', 'contact'
@@ -198,6 +249,7 @@
   let inExploreMode = false;
   let activePhotoIndex = 0;
   let exploreCardsIntroTimer = null;
+  let exploreExitTimer = null;
   let currentBgSlot = 'A';
   let currentBgUrl = '';
   const TRANSITION_MS = 4800;
@@ -242,6 +294,9 @@
   const exploreStripNext = document.getElementById('exploreStripNext');
   const exploreCatBadge = document.getElementById('exploreCatBadge');
   const explorePhotoCounter = document.getElementById('explorePhotoCounter');
+  const exploreSubcatSwitch = document.getElementById('exploreSubcatSwitch');
+  const natureSubcatPills = document.getElementById('natureSubcatPills');
+  const naturePanelDesc = document.getElementById('naturePanelDesc');
   const explorePhotoTitle = document.getElementById('explorePhotoTitle');
   const explorePhotoMeta = document.getElementById('explorePhotoMeta');
   const exploreClosePill = document.getElementById('exploreClosePill');
@@ -283,17 +338,12 @@
       .replace(/^(?:optimized\/|thumbs\/|display\/)/, '')
       .replace(/\.jpe?g$/i, '.webp');
 
-    const parts = clean.split('/');
-    if (parts.length >= 3 && (parts[1] === 'display' || parts[1] === 'thumbs' || parts[1] === 'optimized')) {
-      clean = parts[0] + '/' + parts.slice(2).join('/');
-    }
-
-    const cleanParts = clean.split('/');
-  let targetPath = '';
-    if (cleanParts.length >= 2) {
-      const section = cleanParts[0];
-      const filename = cleanParts.slice(1).join('/');
-      targetPath = `images/${section}/${variant}/${filename}`;
+    const rawParts = clean.split('/').filter(p => p && p !== 'display' && p !== 'thumbs' && p !== 'optimized');
+    let targetPath = '';
+    if (rawParts.length >= 2) {
+      const dirPath = rawParts.slice(0, -1).join('/');
+      const filename = rawParts[rawParts.length - 1];
+      targetPath = `images/${dirPath}/${variant}/${filename}`;
     } else {
       targetPath = `images/${variant}/${clean}`;
     }
@@ -416,7 +466,11 @@
       else if (typeof idx !== 'undefined' && continents[idx]) catKey = continents[idx].key;
     }
     if (catKey) {
-      incomingLayer.dataset.bg = catKey;
+      if (catKey === 'asia' && ((continents[1] && continents[1].activeSubcat === 'portraits') || /\/Portrait\//i.test(imageUrl))) {
+        incomingLayer.dataset.bg = 'asia-portraits';
+      } else {
+        incomingLayer.dataset.bg = catKey;
+      }
     } else {
       delete incomingLayer.dataset.bg;
     }
@@ -487,7 +541,7 @@
       if (typeof warpTimer !== 'undefined' && warpTimer) clearTimeout(warpTimer);
       if (typeof warpEndTimer !== 'undefined' && warpEndTimer) clearTimeout(warpEndTimer);
       stopAutoplay();
-      root.style.setProperty('--accent', '#E8935B');
+      root.style.setProperty('--accent', '#E8CFA3');
       root.style.setProperty('--bg-tone', '#14110f');
       setCinematicBackground('images/contact/PJO05448.jpg');
       const contactSec = document.getElementById('contactSection');
@@ -653,6 +707,11 @@
     root.style.setProperty('--accent', c.accent);
     root.style.setProperty('--bg-tone', c.bgTone);
     stage.dataset.category = c.key;
+    if (c.subcollections && c.activeSubcat) {
+      stage.dataset.subcat = c.activeSubcat;
+    } else {
+      delete stage.dataset.subcat;
+    }
 
     if (!opts.skipHistory && currentView === 'gallery') {
       updateRouteHash(inExploreMode ? 'explore' : 'gallery', c.key, { replace: true });
@@ -842,13 +901,12 @@
     'images/Landscape/display/Villarica.webp': { title: 'Villarrica Volcano', meta: 'Villarrica, Chile · 35mm f/4' },
 
     // ==========================================
-    // NATURE (62 photos)
+    // NATURE · WILDLIFE (56 photos)
     // ==========================================
     'images/Nature/display/DSC05597.webp': { title: 'A Free Duck', meta: 'De Nekker, Belgium · 135mm f/4' },
     'images/Nature/display/PJO06305.webp': { title: 'Beautiful Llamas', meta: 'Bolivia · 85mm f/4' },
     'images/Nature/display/PJO02719.webp': { title: 'Sunset with a Seagull', meta: 'Sint Laureins Beach, Belgium · 600mm f/7' },
     'images/Nature/display/PJO09863.webp': { title: 'Grazing Cow', meta: 'Robbroeck, Belgium · 600mm f/7' },
-    'images/Nature/display/DSC05535.webp': { title: 'Roses of Joy for Piper', meta: 'Vrijbroekpark, Belgium · 100mm f/2' },
     'images/Nature/display/PJO05101.webp': { title: 'Condor in Flight', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
     'images/Nature/display/PJO00825.webp': { title: 'Little Fox', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
     'images/Nature/display/DSC05627.webp': { title: 'Curious Cows', meta: 'De Nekker, Belgium · 135mm f/1.8' },
@@ -868,7 +926,6 @@
     'images/Nature/display/PJO09920.webp': { title: 'Bunny at Sunset', meta: 'Robbroeck, Belgium · 200mm f/5.6' },
     'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto6_Springand.webp': { title: 'Pair of Deer', meta: 'Biezenweiden, Belgium · 600mm f/6.3' },
     'images/Nature/display/3.webp': { title: 'Red-breasted Flycatcher', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
-    'images/Nature/display/PJO01954.webp': { title: 'Happy Dog', meta: 'France · 85mm f/2.8' },
     'images/Nature/display/PJO06296.webp': { title: 'Llamas in the Altiplano', meta: 'Bolivia · 85mm f/4' },
     'images/Nature/display/DSC03711.webp': { title: 'Pair of Tufted Ducks', meta: 'De Nekker, Belgium · 600mm f/6.3' },
     'images/Nature/display/PJO00934.webp': { title: 'European Stonechat', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
@@ -876,7 +933,6 @@
     'images/Nature/display/IMAG0019.webp': { title: 'Greylag Goose', meta: 'De Nekker, Belgium · 600mm f/8' },
     'images/Nature/display/JIMENEZ_Patricio_Anderedieren_Foto2_Schorsmarpissa.webp': { title: 'Fencepost Jumping Spider', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
     'images/Nature/display/PJO05149.webp': { title: 'Patagonian Horses', meta: 'Torres del Paine, Chile · 85mm f/5.6' },
-    'images/Jimenez_Patricio_DSC_03112.webp': { title: 'Jumping Spider', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
     'images/Nature/display/Jimenez_Patricio_DSC_03112.webp': { title: 'Jumping Spider', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
     'images/Nature/display/PJO09283.webp': { title: 'Red-backed Shrike', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
     'images/Nature/display/DSC01761.webp': { title: 'Tiny Life', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
@@ -885,17 +941,15 @@
     'images/Nature/display/DSC08590.webp': { title: 'Pair of Parakeets', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
     'images/Nature/display/DSC01770.webp': { title: 'Macro Spider', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
     'images/Nature/display/DSC00088.webp': { title: 'Greylag Goose in Flight', meta: 'De Nekker, Belgium · 600mm f/8' },
-    'images/Nature/display/DSC07853-17969db0.webp': { title: 'Piper with her new rain jacket', meta: 'Vrijbroekpark, Belgium · 20mm f/1.8' },
     'images/Nature/display/DSC03039.webp': { title: 'Red Beetle', meta: 'Vrijbroekpark, Belgium · 100mm f/5.6' },
     'images/Nature/display/JIMENEZ_Patricio_flora_Foto1_There_is_life_inside_the_flowers-7a16a85c.webp': { title: 'Life Inside the Flowers', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
     'images/Nature/display/DSC01788.webp': { title: 'Little Honeybee', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
     'images/Nature/display/DSC04789.webp': { title: 'Mosquito Macro', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
-    'images/Nature/display/DSC06045-1b482605.webp': { title: 'Woella', meta: 'Mechelen, Belgium · 85mm f/1.4' },
     'images/Nature/display/DSC06998.webp': { title: 'Summer Flora', meta: 'Vrijbroekpark, Belgium · 100mm f/2.8' },
     'images/Nature/display/JIMENEZ_Patricio_Vogels_Foto3_Ooievaar.webp': { title: 'White Stork in Spring', meta: 'De Nekker, Belgium · 600mm f/6.3' },
     'images/Nature/display/PJO04035.webp': { title: 'Coastal Dusk', meta: 'Sint Laureins Beach, Belgium · 600mm f/6.3' },
     'images/Nature/display/PJO01504-2.webp': { title: 'Green Parakeet', meta: 'Vrijbroekpark, Belgium · 600mm f/6.3' },
-    'images/Nature/display/DSC09699.webp': { title: 'Nature · Photo 51', meta: 'Biezenweiden, Belgium · 600mm f/6.3' },
+    'images/Nature/display/DSC09699.webp': { title: 'Reed Bunting on Plume', meta: 'Biezenweiden, Belgium · 600mm f/6.3' },
     'images/Nature/display/DSC03123.webp': { title: 'Spider on Blossom', meta: 'Vrijbroekpark, Belgium · 100mm f/4' },
     'images/Nature/display/PJO05534.webp': { title: 'Magellanic Woodpecker', meta: 'Torres del Paine, Chile · 85mm f/1.4' },
     'images/Nature/display/PJO05843.webp': { title: 'Green-backed Firecrown', meta: 'Chiloé, Chile · 85mm f/1.4' },
@@ -904,9 +958,23 @@
     'images/Nature/display/PJO069652.webp': { title: 'Freezing Winter Sky', meta: 'Mechelen, Belgium · 600mm f/6.3' },
     'images/Nature/display/JIMENEZ_Patricio_Vogels_Foto2_Kievitandsunset.webp': { title: 'Northern Lapwing', meta: 'De Nekker, Belgium · 600mm f/6.3' },
     'images/Nature/display/PJO05965.webp': { title: 'Common Buzzard', meta: 'De Nekker, Belgium · 600mm f/6.3' },
-    'images/Nature/display/DSC06215-ca4b56a4-2500.webp': { title: 'Beach and Dog', meta: 'Sint Laureins Beach, Belgium · 100mm f/2.8' },
-    'images/Nature/display/PJO08386-2.webp': { title: 'Jupiter the Dog', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
     'images/Nature/display/PJO09701.webp': { title: 'Snow Days', meta: 'Robbroeck, Belgium · 600mm f/6.3' },
+
+    // ==========================================
+    // NATURE · PORTRAITS (12 photos)
+    // ==========================================
+    'images/Nature/Portrait/display/woela-33c16872.webp': { title: 'Woella in the Garden', meta: 'Mechelen, Belgium · 100mm f/2.8' },
+    'images/Nature/Portrait/display/DSC07853-17969db0.webp': { title: 'Piper with her new rain jacket', meta: 'Vrijbroekpark, Belgium · 20mm f/1.8' },
+    'images/Nature/Portrait/display/PJO07805.webp': { title: 'Christmas Lights', meta: 'Belgium · 85mm f/1.4' },
+    'images/Nature/Portrait/display/DSC07993.webp': { title: 'Autumn Walk with Piper', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
+    'images/Nature/Portrait/display/PJO04670.webp': { title: 'Golden Bokeh Smile', meta: 'Belgium · 135mm f/1.8' },
+    'images/Nature/Portrait/display/PJO07746_genErase_genErase.webp': { title: 'Two-Tone Gaze', meta: 'Belgium · 35mm f/1.4' },
+    'images/Nature/Portrait/display/DSC07627-18db21bf-2500.webp': { title: 'Halloween in the Woods', meta: 'Vrijbroekpark, Belgium · 20mm f/1.8' },
+    'images/Nature/Portrait/display/DSC06215.webp': { title: 'Beach and Dog', meta: 'Sint Laureins Beach, Belgium · 100mm f/2.8' },
+    'images/Nature/Portrait/display/DSC05535.webp': { title: 'Roses of Joy for Piper', meta: 'Vrijbroekpark, Belgium · 100mm f/2' },
+    'images/Nature/Portrait/display/PJO08386-2.webp': { title: 'Jupiter the Dog', meta: 'Vrijbroekpark, Belgium · 135mm f/1.8' },
+    'images/Nature/Portrait/display/DSC06045-1b482605.webp': { title: 'Woella', meta: 'Mechelen, Belgium · 85mm f/1.4' },
+    'images/Nature/Portrait/display/PJO01954.webp': { title: 'Happy Dog', meta: 'France · 85mm f/2.8' },
 
     // ==========================================
     // ADVENTURE (5 photos)
@@ -936,7 +1004,7 @@
     'images/Street/display/PJO09842.webp': { title: 'City Triangle', meta: 'Rotterdam, Netherlands · 35mm f/5.6' },
     'images/Street/display/PJO09849.webp': { title: 'Markthal', meta: 'Rotterdam, Netherlands · 35mm f/1.4' },
     'images/Street/display/PJO09860.webp': { title: 'Floating Restaurant', meta: 'Rotterdam, Netherlands · 35mm f/1.4' },
-    'images/Street/display/PJO09884.webp': { title: 'Fair or Carnival', meta: 'Rotterdam, Netherlands · 35mm f/2' },
+    'images/Street/display/PJO09884.webp': { title: 'Rotterdam Fairground', meta: 'Rotterdam, Netherlands · 35mm f/2' },
     'images/Street/display/PJO09905.webp': { title: 'Skyview Ferris Wheel', meta: 'Rotterdam, Netherlands · 35mm f/2' },
     'images/Street/display/PJO09906.webp': { title: 'Skyview Ferris Wheel', meta: 'Rotterdam, Netherlands · 35mm f/2' },
     'images/Street/display/PJO09913.webp': { title: 'Depot Boijmans Van Beuningen', meta: 'Rotterdam, Netherlands · 35mm f/2' },
@@ -991,12 +1059,75 @@
     }
   }
 
-    function updateExplorePhotoInfo(imgUrl) {
+  function updateExplorePhotoInfo(imgUrl) {
     const currentCat = continents[idx];
     if (!currentCat) return;
     const meta = getPhotoMetadata(imgUrl, currentCat.key, activePhotoIndex);
     if (explorePhotoTitle) explorePhotoTitle.textContent = meta.title;
     if (explorePhotoMeta) explorePhotoMeta.textContent = meta.meta;
+  }
+
+  function syncSubcatUI(subcatKey) {
+    if (natureSubcatPills) {
+      natureSubcatPills.querySelectorAll('.subcat-pill').forEach(btn => {
+        const active = btn.dataset.subcat === subcatKey;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    }
+    if (exploreSubcatSwitch) {
+      exploreSubcatSwitch.querySelectorAll('.explore-subcat-btn').forEach(btn => {
+        const active = btn.dataset.subcat === subcatKey;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    }
+  }
+
+  function switchNatureSubcategory(subcatKey) {
+    const natureCat = continents.find(c => c.key === 'asia');
+    if (!natureCat || !natureCat.subcollections || !natureCat.subcollections[subcatKey]) return;
+    if (natureCat.activeSubcat === subcatKey && (!inExploreMode || exploreCardsTrack.children.length === natureCat.subcollections[subcatKey].all.length)) {
+      return;
+    }
+
+    natureCat.activeSubcat = subcatKey;
+    const sub = natureCat.subcollections[subcatKey];
+    natureCat.all = sub.all;
+    natureCat.hero = sub.hero;
+    natureCat.cards = sub.cards;
+
+    if (naturePanelDesc && sub.desc) {
+      naturePanelDesc.textContent = sub.desc;
+    }
+    syncSubcatUI(subcatKey);
+
+    if (inExploreMode && continents[idx] && continents[idx].key === 'asia') {
+      enterExploreMode('asia', sub.hero, { skipHistory: true });
+    } else if (currentView === 'gallery' && continents[idx] && continents[idx].key === 'asia') {
+      render(idx, { skipHistory: true });
+      restartAutoplay();
+    }
+  }
+
+  if (natureSubcatPills) {
+    natureSubcatPills.querySelectorAll('.subcat-pill').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        switchNatureSubcategory(btn.dataset.subcat);
+      });
+    });
+  }
+
+  if (exploreSubcatSwitch) {
+    exploreSubcatSwitch.querySelectorAll('.explore-subcat-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        switchNatureSubcategory(btn.dataset.subcat);
+      });
+    });
   }
 
   function updateMobileExplorePillPosition(forceImg) {
@@ -1025,7 +1156,7 @@
           const natW = currentImg.naturalWidth || 3;
           const natH = currentImg.naturalHeight || 2;
           const ratio = (natW > 0 && natH > 0) ? (natW / natH) : 1.5;
-          const availW = Math.min(window.innerWidth - 20, window.innerWidth * 0.95);
+          const availW = Math.min(window.innerWidth - 10, window.innerWidth * 0.97);
           const availH = contRect.height;
           const renderedH = Math.min(availH, availW / ratio);
           photoTop = contRect.top + (availH - renderedH) / 2;
@@ -1033,12 +1164,12 @@
       }
 
       if (photoTop > 0) {
-        // Position strictly 12px ABOVE the photo's top edge
-        const targetTop = (photoTop - barRect.top) - pillHeight - 12;
-        // Never go higher than 44px (below row 1 of the top bar)
+        // Position strictly 10px ABOVE the photo's top edge
+        const targetTop = (photoTop - barRect.top) - pillHeight - 10;
+        // Never go higher than 42px (below row 1 of the top bar)
         // AND never go lower than (photoTop - barRect.top - pillHeight - 6px) to guarantee ZERO overlap
         const maxAllowed = (photoTop - barRect.top) - pillHeight - 6;
-        const safeTop = Math.max(44, Math.min(maxAllowed, Math.round(targetTop)));
+        const safeTop = Math.max(42, Math.min(maxAllowed, Math.round(targetTop)));
         exploreTopBar.style.setProperty('--explore-pill-top', `${safeTop}px`);
       }
     };
@@ -1136,6 +1267,12 @@
 
   function enterExploreMode(categoryKey, targetPhotoUrl, opts) {
     opts = opts || {};
+    if (exploreExitTimer) {
+      clearTimeout(exploreExitTimer);
+      exploreExitTimer = null;
+    }
+    stage.classList.remove('is-exiting-explore');
+
     if (categoryKey) {
       const catIndex = continents.findIndex(c => c.key === categoryKey);
       if (catIndex !== -1 && catIndex !== idx) {
@@ -1145,11 +1282,20 @@
 
     inExploreMode = true;
     stage.classList.add('explore-mode');
+    stage.classList.remove('is-immersive');
     resetViewerZoom(false);
     stopAutoplay();
 
     const currentCat = continents[idx];
     exploreCatBadge.textContent = currentCat.name;
+
+    if (exploreSubcatSwitch) {
+      const hasSubcats = !!currentCat.subcollections;
+      exploreSubcatSwitch.classList.toggle('is-hidden', !hasSubcats);
+      if (hasSubcats) {
+        syncSubcatUI(currentCat.activeSubcat || 'wildlife');
+      }
+    }
 
     exploreCardsTrack.innerHTML = '';
     activePhotoIndex = 0;
@@ -1188,6 +1334,7 @@
 
     updateExploreCount();
     triggerExploreIntroTimer();
+    updateFullscreenBtnState();
 
     // Prevent any slide-in glitch from the top: set pill position instantly for the first image
     if (exploreTopCenter) {
@@ -1268,7 +1415,12 @@
     }
     if (exploreCardsIntroTimer) clearTimeout(exploreCardsIntroTimer);
     exploreCardsIntroTimer = null;
+
+    // Coordinate clean unmount so Explore HUD never overlaps with Gallery titles or top nav
+    stage.classList.add('is-exiting-explore');
     stage.classList.remove('explore-mode', 'explore-cards-intro', 'is-zoomed');
+    updateFullscreenBtnState();
+
     if (exploreViewerImgA) {
       exploreViewerImgA.classList.remove('active', 'prev');
       exploreViewerImgA.removeAttribute('src');
@@ -1281,6 +1433,13 @@
       exploreViewerImgB.style.transform = '';
       exploreViewerImgB.style.transition = '';
     }
+
+    if (exploreExitTimer) clearTimeout(exploreExitTimer);
+    exploreExitTimer = window.setTimeout(() => {
+      stage.classList.remove('is-exiting-explore');
+      exploreExitTimer = null;
+    }, 220);
+
     render(idx);
     restartAutoplay();
     if (!opts.skipHistory) {
@@ -1353,25 +1512,19 @@
     const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
     if (!isFs) {
       const docEl = document.documentElement;
-      if (docEl.requestFullscreen) {
-        docEl.requestFullscreen().catch(() => {});
-      } else if (docEl.webkitRequestFullscreen) {
-        docEl.webkitRequestFullscreen();
-      } else if (docEl.mozRequestFullScreen) {
-        docEl.mozRequestFullScreen();
-      } else if (docEl.msRequestFullscreen) {
-        docEl.msRequestFullscreen();
-      }
+      try {
+        if (docEl.requestFullscreen) docEl.requestFullscreen().catch(() => {});
+        else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
+        else if (docEl.mozRequestFullScreen) docEl.mozRequestFullScreen();
+        else if (docEl.msRequestFullscreen) docEl.msRequestFullscreen();
+      } catch (err) {}
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen().catch(() => {});
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      }
+      try {
+        if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+        else if (document.msExitFullscreen) document.msExitFullscreen();
+      } catch (err) {}
     }
   }
 
@@ -1428,7 +1581,10 @@
     exploreNextBtn.addEventListener('touchend', handleExploreNext);
   }
 
+  let lastTouchHandledAt = 0;
+
   exploreViewerContainer.addEventListener('click', (e) => {
+    if (performance.now() - lastTouchHandledAt < 450) return;
     if (e.target.closest('.explore-nav-arrow') || e.target.closest('.explore-top-bar') || e.target.closest('.explore-cards-wrap')) return;
     if (viewerZoomScale > 1.05) return;
     triggerExploreIntroTimer();
@@ -1439,33 +1595,48 @@
     const currentCat = continents[idx];
     if (!currentCat || !currentCat.all) return;
 
-    if (clickX > width * 0.72) {
+    if (clickX > width * 0.56) {
       selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
-    } else if (clickX < width * 0.28) {
+    } else if (clickX < width * 0.44) {
       selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
     }
   });
 
   // Touch Controller for Pinch-to-Zoom and Panning in Explore Lightbox
+  let viewerTouchStartX = 0;
+  let viewerTouchStartY = 0;
+  let viewerTouchMoved = false;
+
   exploreViewerContainer.addEventListener('touchstart', (e) => {
     if (e.touches.length === 2) {
       isPinching = true;
       isPanning = false;
+      viewerTouchMoved = true;
       initialPinchDistance = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
         e.touches[0].clientY - e.touches[1].clientY
       );
       initialPinchScale = viewerZoomScale;
-    } else if (e.touches.length === 1 && viewerZoomScale > 1.05) {
-      isPanning = true;
-      panStartX = e.touches[0].clientX;
-      panStartY = e.touches[0].clientY;
-      initialPanX = viewerPanX;
-      initialPanY = viewerPanY;
+    } else if (e.touches.length === 1) {
+      viewerTouchStartX = e.touches[0].clientX;
+      viewerTouchStartY = e.touches[0].clientY;
+      viewerTouchMoved = false;
+      if (viewerZoomScale > 1.05) {
+        isPanning = true;
+        panStartX = e.touches[0].clientX;
+        panStartY = e.touches[0].clientY;
+        initialPanX = viewerPanX;
+        initialPanY = viewerPanY;
+      }
     }
   }, { passive: true });
 
   exploreViewerContainer.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 1 && !viewerTouchMoved) {
+      if (Math.hypot(e.touches[0].clientX - viewerTouchStartX, e.touches[0].clientY - viewerTouchStartY) > 12) {
+        viewerTouchMoved = true;
+      }
+    }
     if (isPinching && e.touches.length === 2 && initialPinchDistance) {
       const currentDist = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
@@ -1494,6 +1665,7 @@
     if (e.target.closest('.explore-nav-arrow') || e.target.closest('.explore-close-pill')) return;
 
     if (e.touches.length === 0) {
+      lastTouchHandledAt = performance.now();
       if (isPinching) {
         isPinching = false;
         if (viewerZoomScale < 1.08) {
@@ -1501,14 +1673,18 @@
         } else {
           applyViewerTransform(true);
         }
+        return;
       } else if (isPanning) {
         isPanning = false;
         applyViewerTransform(true);
+        if (viewerTouchMoved) return;
       }
 
-      // Double-tap detection
+      if (viewerTouchMoved) return;
+
+      // Double-tap to toggle 2.2x zoom
       const now = performance.now();
-      if (now - lastTapTime < 320 && !isPinching) {
+      if (now - lastTapTime < 300) {
         if (viewerZoomScale > 1.05) {
           resetViewerZoom(true);
         } else {
@@ -1521,7 +1697,18 @@
       } else {
         lastTapTime = now;
         if (viewerZoomScale <= 1.05) {
-          triggerExploreIntroTimer();
+          const tapX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : viewerTouchStartX;
+          const rect = exploreViewerContainer.getBoundingClientRect();
+          const relX = tapX - rect.left;
+          const width = rect.width;
+          const currentCat = continents[idx];
+          if (currentCat && currentCat.all) {
+            if (relX > width * 0.72) {
+              selectExplorePhoto((activePhotoIndex + 1) % currentCat.all.length);
+            } else if (relX < width * 0.28) {
+              selectExplorePhoto((activePhotoIndex - 1 + currentCat.all.length) % currentCat.all.length);
+            }
+          }
         }
       }
     } else if (e.touches.length === 1 && isPinching) {
